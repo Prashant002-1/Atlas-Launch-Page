@@ -77,7 +77,6 @@ a:focus-visible {
 
 .site-header {
   padding-bottom: 1.35rem;
-  border-bottom: 1px solid var(--line);
 }
 
 .brand {
