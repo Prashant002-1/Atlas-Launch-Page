@@ -142,6 +142,25 @@ main {
   text-transform: uppercase;
 }
 
+.site-footer {
+  display: flex;
+  padding-top: 1.35rem;
+  justify-content: flex-end;
+}
+
+.site-footer a {
+  color: var(--faint);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.site-footer a:hover {
+  color: var(--ink);
+}
+
 .page-shell--document main {
   display: block;
 }
@@ -183,7 +202,8 @@ main {
 
 @media (prefers-reduced-motion: no-preference) {
   .site-header,
-  .hero {
+  .hero,
+  .site-footer {
     animation: enter 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
@@ -191,6 +211,9 @@ main {
     animation-delay: 70ms;
   }
 
+  .site-footer {
+    animation-delay: 120ms;
+  }
 }
 
 @keyframes enter {
