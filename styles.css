@@ -271,28 +271,57 @@ html.reduced-motion [data-reveal] {
 /* The halftone is the original artwork re-lit: same shoreline, ink on paper
    instead of light on a dark ground. It sits to one side and fades out on
    every edge, so it reads as a printed plate rather than a page wash. */
+/* The original halftone, re-lit rather than re-made.
+ *
+ * Instead of shipping a second copy of the artwork, the existing plate is used
+ * as a luminance mask over a flat green fill. Its bright dots (the landmass)
+ * become ink on paper and its dark ground drops out entirely — the same
+ * shoreline the dark cut had, inverted into the light system for zero extra
+ * bytes. Two gradient masks are intersected with it so the plate is full-bleed
+ * but thins out over the left column, keeping the headline on clean paper.
+ */
 .hero-field {
   position: absolute;
   inset: -7rem 0 auto 0;
-  width: 100%;
   height: clamp(34rem, 92vh, 58rem);
-  object-fit: cover;
-  object-position: 62% 38%;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.62;
-  /* Full bleed like the original, but thinned out over the left column so the
-     headline sits on clean paper. Fades on every edge — no cropped rectangle. */
-  mask-image:
-    linear-gradient(to bottom, #000 0%, #000 52%, transparent 92%),
-    linear-gradient(to right, transparent 4%, rgba(0, 0, 0, 0.28) 34%, #000 72%);
-  -webkit-mask-composite: source-in;
-  mask-composite: intersect;
   transform: translate3d(
     calc((var(--ptr-x, 0.5) - 0.5) * -16px),
     calc(var(--scroll, 0) * -40px),
     0
   );
+}
+
+@supports (mask-mode: luminance) or (-webkit-mask-mode: luminance) {
+  .hero-field {
+    background-color: #14543d;
+    opacity: 0.5;
+
+    -webkit-mask-image:
+      url("/art/atlas-halftone-field.webp"),
+      linear-gradient(to bottom, #000 0%, #000 52%, transparent 92%),
+      linear-gradient(to right, transparent 4%, rgba(0, 0, 0, 0.3) 34%, #000 72%);
+    mask-image:
+      url("/art/atlas-halftone-field.webp"),
+      linear-gradient(to bottom, #000 0%, #000 52%, transparent 92%),
+      linear-gradient(to right, transparent 4%, rgba(0, 0, 0, 0.3) 34%, #000 72%);
+
+    -webkit-mask-mode: luminance, alpha, alpha;
+    mask-mode: luminance, alpha, alpha;
+
+    -webkit-mask-size: cover, 100% 100%, 100% 100%;
+    mask-size: cover, 100% 100%, 100% 100%;
+
+    -webkit-mask-position: 62% 38%, center, center;
+    mask-position: 62% 38%, center, center;
+
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+  }
 }
 
 .hero-inner {
@@ -457,9 +486,22 @@ html.reduced-motion [data-reveal] {
   }
   .hero-field {
     top: -4rem;
-    height: clamp(28rem, 70vh, 40rem);
-    opacity: 0.42;
-    mask-image: linear-gradient(to bottom, #000 0%, #000 44%, transparent 88%);
+    height: clamp(26rem, 62vh, 38rem);
+  }
+  @supports (mask-mode: luminance) or (-webkit-mask-mode: luminance) {
+    .hero-field {
+      opacity: 0.34;
+      -webkit-mask-image:
+        url("/art/atlas-halftone-field.webp"),
+        linear-gradient(to bottom, #000 0%, #000 40%, transparent 88%);
+      mask-image:
+        url("/art/atlas-halftone-field.webp"),
+        linear-gradient(to bottom, #000 0%, #000 40%, transparent 88%);
+      -webkit-mask-mode: luminance, alpha;
+      mask-mode: luminance, alpha;
+      -webkit-mask-size: cover, 100% 100%;
+      mask-size: cover, 100% 100%;
+    }
   }
 }
 
