@@ -8,7 +8,7 @@
       content="Atlas is the agentic LMS where teachers see and shape learning."
     />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#071a16" />
+    <meta name="theme-color" content="#f1f4ee" />
     <link rel="canonical" href="https://atlas-lms.com/" />
 
     <meta property="og:site_name" content="Atlas" />
@@ -29,9 +29,17 @@
 
     <title>Atlas | Make learning visible</title>
     <link rel="icon" href="/brand/atlas-mark.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/geist-sans-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="stylesheet" href="/vendor/lenis.css" />
     <link rel="stylesheet" href="/styles.css" />
     <script src="/vendor/lenis.min.js" defer></script>
+    <script src="/field.js" defer></script>
     <script src="/motion.js" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
@@ -39,121 +47,295 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <div class="site launch-cut">
-      <header class="site-header site-header-launch" aria-label="Atlas">
+    <div class="site">
+      <header class="site-header" aria-label="Atlas">
         <a class="brand" href="/" aria-label="Atlas home">
-          <img src="/brand/atlas-mark.svg" alt="" width="44" height="44" />
+          <img src="/brand/atlas-mark.svg" alt="" width="34" height="34" />
           <span>Atlas</span>
         </a>
 
-        <a
-          class="header-cta"
-          href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
-        >
-          Launch access
-        </a>
+        <div class="header-end">
+          <span class="header-status"><i></i>Launching soon</span>
+          <a
+            class="header-cta"
+            href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
+          >
+            Launch access
+          </a>
+        </div>
       </header>
 
       <main id="main">
-        <section class="hero launch-hero" aria-labelledby="hero-title">
-          <div class="hero-grid" aria-hidden="true"></div>
-          <div class="hero-print" aria-hidden="true"></div>
+        <!-- ── Hero ─────────────────────────────────────────────────────── -->
+        <section class="hero" aria-labelledby="hero-title">
+          <canvas class="hero-field" data-field aria-hidden="true"></canvas>
 
-          <div class="hero-copy">
-            <p class="eyebrow launch-tagline">
-              Agentic LMS where teachers see and shape learning
-            </p>
-            <h1 id="hero-title">
-              <span>Make learning</span>
-              <span class="headline-accent">visible.</span>
-            </h1>
-            <div class="hero-argument">
-              <p class="hero-intro">
-                Atlas gives every student and teacher a personal agent. It
-                knows the course, remembers what matters, and stays with the
+          <div class="hero-inner">
+            <div class="hero-copy">
+              <p class="eyebrow" data-reveal>
+                <span class="tick" aria-hidden="true"></span>
+                Agentic LMS
+              </p>
+              <h1 id="hero-title" data-reveal data-reveal-delay="1">
+                <span class="line">Give every student</span>
+                <span class="line">a <em>personal</em> agent.</span>
+              </h1>
+            </div>
+
+            <div class="hero-aside">
+              <p class="hero-lede" data-reveal data-reveal-delay="2">
+                It knows the course, remembers what matters, and stays with the
                 work as people reason, revise, and learn.
               </p>
-              <div class="hero-actions">
+              <div class="hero-actions" data-reveal data-reveal-delay="3">
                 <a
                   class="button button-primary"
                   href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
                 >
                   Request launch access
                 </a>
+                <a class="button button-quiet" href="/demo">
+                  See it working
+                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                    <path
+                      d="M3 8h9M8.5 4l4 4-4 4"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.6"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </a>
               </div>
+            </div>
+          </div>
+
+          <div class="hero-rule" aria-hidden="true">
+            <span class="footer-meta">Teachers see and shape learning</span>
+            <span class="ticks"></span>
+            <span class="footer-meta">01</span>
+          </div>
+        </section>
+
+        <!-- ── 02 · The shift ───────────────────────────────────────────── -->
+        <section class="section shift" aria-labelledby="shift-title">
+          <div class="shell">
+            <p class="section-index" data-reveal>
+              <span>02</span><i></i><span>The shift</span>
+            </p>
+
+            <div class="shift-grid">
+              <h2 id="shift-title" data-reveal>
+                The answer stopped being <em>proof</em>.
+              </h2>
+
+              <div class="shift-body" data-reveal data-reveal-delay="1">
+                <p>
+                  Students already work with AI. A finished assignment no longer
+                  shows who did the thinking.
+                </p>
+                <p>
+                  So teachers are left to guess, or to police. Neither one is
+                  teaching. Atlas changes what the course records in the first
+                  place.
+                </p>
+              </div>
+            </div>
+
+            <div class="contrast" data-reveal data-reveal-delay="2">
+              <article class="contrast-side">
+                <span class="contrast-label">What was handed in</span>
+                <div class="contrast-slab" aria-hidden="true">
+                  <i style="--w: 100%"></i>
+                  <i style="--w: 94%"></i>
+                  <i style="--w: 97%"></i>
+                  <i style="--w: 58%"></i>
+                </div>
+                <p>Finished, clean, and silent about how it got there.</p>
+              </article>
+
+              <div class="contrast-pivot" aria-hidden="true">
+                <svg viewBox="0 0 40 40" width="38" height="38">
+                  <circle
+                    cx="20"
+                    cy="20"
+                    r="19"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1"
+                    opacity=".28"
+                  />
+                  <path
+                    d="M12 20h16M23 15l5 5-5 5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+
+              <article class="contrast-side is-new">
+                <span class="contrast-label">What actually happened</span>
+                <div class="contrast-thread" aria-hidden="true">
+                  <span class="node is-live"></span>
+                  <span class="node"></span>
+                  <span class="node is-wrong"></span>
+                  <span class="node"></span>
+                  <span class="node is-live"></span>
+                </div>
+                <p>The route taken — including the turn that went nowhere.</p>
+              </article>
             </div>
           </div>
         </section>
 
-        <section
-          id="personal-layer"
-          class="product-route section-shell launch-personal-layer"
-          aria-labelledby="personal-layer-title"
-        >
-          <div class="product-route-heading">
-            <h2 id="personal-layer-title">
-              A personal Atlas on both sides of the course.
-            </h2>
-            <p>
-              Each personal agent works for one person. The shared course
-              agent carries the teacher’s materials and teaching rules to
-              students.
+        <!-- ── 03 · Governance ──────────────────────────────────────────── -->
+        <section class="section govern" aria-labelledby="govern-title">
+          <div class="shell">
+            <p class="section-index" data-reveal>
+              <span>03</span><i></i><span>Governance</span>
             </p>
-          </div>
-          <div class="product-route-grid">
-            <article>
-              <span>Student Atlas / Across courses</span>
-              <h3>Work with the full student record.</h3>
-              <p>
-                Reads the student’s courses, due work, grades, feedback, and
-                learning profile.
+
+            <div class="govern-head">
+              <h2 id="govern-title" data-reveal>
+                Agents that answer to the <em>teacher</em>.
+              </h2>
+              <p data-reveal data-reveal-delay="1">
+                The teacher sets the terms for how AI takes part in their
+                course. Nothing runs outside them.
               </p>
-              <strong>Works for one student</strong>
-            </article>
-            <article>
-              <span>Teacher Atlas / Inside a course</span>
-              <h3>Plan and operate the course.</h3>
-              <p>
-                Helps with planning, drafting, review, and course work from the
-                current record.
-              </p>
-              <strong>Works for one teacher</strong>
-            </article>
-            <article>
-              <span>Course agent / Shared with students</span>
-              <h3>Carry the course into student work.</h3>
-              <p>
-                Uses selected materials, teaching behavior, and course rules
-                while students work through problems.
-              </p>
-              <strong>Configured by the teacher</strong>
-            </article>
+            </div>
+
+            <div class="govern-list" data-reveal-group>
+              <article>
+                <span class="card-index" aria-hidden="true">i</span>
+                <div>
+                  <h3>Set the terms.</h3>
+                  <p>
+                    Every piece of work declares how AI participates. The course
+                    decides — not the student, and not the vendor.
+                  </p>
+                </div>
+              </article>
+
+              <article>
+                <span class="card-index" aria-hidden="true">ii</span>
+                <div>
+                  <h3>Assign an agent.</h3>
+                  <p>
+                    Put an agent beside a student to work a problem through with
+                    them, shaped by the material the teacher gave it.
+                  </p>
+                </div>
+              </article>
+
+              <article>
+                <span class="card-index" aria-hidden="true">iii</span>
+                <div>
+                  <h3>Agents overseeing agents.</h3>
+                  <p>
+                    Agents can raise and supervise other agents, all of it held
+                    inside the boundaries the course already defines.
+                  </p>
+                </div>
+              </article>
+            </div>
           </div>
         </section>
 
-        <section class="closing launch-closing" aria-labelledby="closing-title">
-          <div class="closing-grid" aria-hidden="true"></div>
-          <div class="closing-print" aria-hidden="true"></div>
-          <div class="closing-mark" aria-hidden="true">
-            <img src="/brand/atlas-mark.svg" alt="" width="84" height="84" />
+        <!-- ── 04 · Evidence ────────────────────────────────────────────── -->
+        <section class="visible" aria-labelledby="visible-title">
+          <div class="visible-field" aria-hidden="true"></div>
+
+          <div class="shell visible-inner">
+            <div>
+              <p class="section-index" data-reveal>
+                <span>04</span><i></i><span>Evidence</span>
+              </p>
+              <h2 id="visible-title" data-reveal>
+                Make learning <em>visible</em>.
+              </h2>
+            </div>
+
+            <p data-reveal data-reveal-delay="1">
+              When a course can see how an answer was reached, assessment stops
+              guessing and teaching gets its attention back.
+            </p>
           </div>
-          <h2 id="closing-title">Give every student a personal Atlas.</h2>
-          <a
-            class="button button-light"
-            href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
+        </section>
+
+        <!-- ── 05 · Close ───────────────────────────────────────────────── -->
+        <section class="closing" aria-labelledby="closing-title">
+          <!-- The mark, told as a sequence: a scale is measured, paths
+               resolve, one point of orientation lands. -->
+          <svg
+            class="closing-mark"
+            data-mark
+            viewBox="70 95 380 350"
+            width="74"
+            height="74"
+            aria-hidden="true"
           >
-            Contact Atlas
-          </a>
+            <g fill="none" stroke="currentColor" stroke-linecap="butt">
+              <path class="tick" d="M140 118.5 V137" stroke-width="5" />
+              <path class="tick" d="M180 110 V124" stroke-width="4" />
+              <path class="tick" d="M220 110 V125" stroke-width="4" />
+              <path class="tick" d="M300 110 V125" stroke-width="4" />
+              <path class="tick" d="M340 110 V124" stroke-width="4" />
+              <path class="tick" d="M380 118.5 V137" stroke-width="5" />
+            </g>
+            <path
+              class="beam beam-1"
+              d="M260 132 L430 426 H90 L260 132Z"
+              fill="currentColor"
+              opacity="0.13"
+            />
+            <path
+              class="beam beam-2"
+              d="M260 132 L348 426 H172 L260 132Z"
+              fill="currentColor"
+              opacity="0.32"
+            />
+            <path
+              class="beam beam-3"
+              d="M260 132 L300 426 H220 L260 132Z"
+              fill="currentColor"
+            />
+            <circle class="fix" cx="260" cy="132" r="9" fill="#0f6b45" />
+          </svg>
+
+          <h2 id="closing-title" data-reveal>Start with one course.</h2>
+
+          <p class="closing-note" data-reveal data-reveal-delay="1">
+            Atlas is opening to a small number of teachers before general
+            release.
+          </p>
+
+          <div class="closing-actions" data-reveal data-reveal-delay="2">
+            <a
+              class="button button-primary button-lg"
+              href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
+            >
+              Request launch access
+            </a>
+          </div>
         </section>
       </main>
 
-      <footer class="site-footer launch-footer">
-        <a class="brand footer-brand" href="/" aria-label="Atlas home">
-          <img src="/brand/atlas-mark.svg" alt="" width="36" height="36" />
-          <span>Atlas</span>
-        </a>
-        <p>Agentic LMS where teachers see and shape learning.</p>
-        <a class="footer-contact" href="mailto:contact@atlas-lms.com">Contact</a>
+      <footer class="site-footer">
+        <div class="shell footer-inner">
+          <a class="brand footer-brand" href="/" aria-label="Atlas home">
+            <img src="/brand/atlas-mark.svg" alt="" width="28" height="28" />
+            <span>Atlas</span>
+          </a>
+          <span class="footer-meta">Teachers see and shape learning</span>
+          <a class="footer-contact" href="mailto:contact@atlas-lms.com">
+            contact@atlas-lms.com
+          </a>
+        </div>
       </footer>
     </div>
   </body>
