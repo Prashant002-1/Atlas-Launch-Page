@@ -13,14 +13,12 @@
   font-style: normal;
 }
 
-/* ─────────────────────────────────────────────────────────────────────────
-   Tokens — the light half of the Atlas system, not a second identity.
-   ───────────────────────────────────────────────────────────────────────── */
 :root {
   color-scheme: light;
 
   --paper: #f1f4ee;
   --paper-lift: #f7f9f4;
+  --paper-sink: #e5ebe2;
 
   --ink: #0a1f19;
   --ink-soft: #2f4a41;
@@ -29,35 +27,28 @@
   --line: rgba(10, 31, 25, 0.11);
   --line-strong: rgba(10, 31, 25, 0.2);
 
-  --brand-deep: #174c37;
+  --brand: #72d49a;
+  --brand-deep: #14543d;
+
+  --deep: #071a16;
+  --deep-lift: #0e2620;
 
   --font-sans: "Geist", "Avenir Next", "Helvetica Neue", sans-serif;
   --font-mono: "Geist Mono", "SFMono-Regular", Consolas, monospace;
 
-  /* rem-anchored so zoom and raised base sizes still work.
-     Body is fixed — 16px is already the tuned minimum. */
-  --text-display: clamp(2.65rem, 5vw + 0.9rem, 5.75rem);
-  --text-h2: clamp(1.95rem, 2.9vw + 0.9rem, 3.4rem);
-  --text-lead: clamp(1.06rem, 0.7vw + 0.85rem, 1.28rem);
+  /* One enormous moment, then a real drop. The ratio does the work. */
+  --text-hero: clamp(3rem, 7.4vw + 0.6rem, 8.5rem);
+  --text-h2: clamp(2rem, 3.4vw + 0.9rem, 4rem);
+  --text-h3: clamp(1.15rem, 0.5vw + 1rem, 1.4rem);
+  --text-lead: clamp(1.06rem, 0.6vw + 0.88rem, 1.25rem);
   --text-body: 1rem;
   --text-small: 0.9rem;
-
-  --leading-display: 1.04;
-  --leading-heading: 1.16;
-  --leading-lead: 1.52;
-  --leading-body: 1.66;
-
-  --tracking-display: -0.028em;
-  --tracking-heading: -0.02em;
+  --text-micro: 0.74rem;
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
-
-  --r-control: 3px;
-
-  --shell: min(100% - 2.75rem, 76rem);
+  --shell: min(100% - 2.75rem, 78rem);
 }
 
-/* ── base ───────────────────────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -79,7 +70,7 @@ body {
   color: var(--ink);
   font-family: var(--font-sans);
   font-size: var(--text-body);
-  line-height: var(--leading-body);
+  line-height: 1.66;
   font-weight: 400;
   font-kerning: auto;
   font-variant-ligatures: common-ligatures contextual;
@@ -95,23 +86,22 @@ svg {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   margin: 0;
   font-weight: 450;
   text-wrap: balance;
 }
-
 p {
   margin: 0;
   text-wrap: pretty;
 }
-
 a {
   color: inherit;
 }
 
 ::selection {
-  background: #9ae7b8;
+  background: var(--brand);
   color: var(--ink);
 }
 
@@ -130,7 +120,7 @@ a {
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: var(--text-micro);
   text-decoration: none;
 }
 .skip-link:focus {
@@ -141,17 +131,15 @@ a {
 .site {
   position: relative;
 }
-
 .shell {
   width: var(--shell);
   margin-inline: auto;
 }
 
 /* ── reveal ─────────────────────────────────────────────────────────────── */
-/* Gated on .js so the page stays legible if scripting fails. */
 html.js [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 12px, 0);
+  transform: translate3d(0, 14px, 0);
   transition:
     opacity 0.8s var(--ease),
     transform 0.8s var(--ease);
@@ -166,61 +154,50 @@ html.reduced-motion [data-reveal] {
   transition: none;
 }
 
-/* ── buttons ────────────────────────────────────────────────────────────── */
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  margin-top: 1.9rem;
-}
-.actions-center {
-  justify-content: center;
-}
-
+/* ── controls ───────────────────────────────────────────────────────────── */
 .button {
-  --btn-bg: transparent;
-  --btn-fg: var(--ink);
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.82rem 1.35rem;
+  padding: 0.9rem 1.5rem;
   border: 1px solid transparent;
-  border-radius: var(--r-control);
-  background: var(--btn-bg);
-  color: var(--btn-fg);
+  border-radius: 3px;
+  background: var(--ink);
+  color: var(--paper-lift);
   font-size: var(--text-small);
   font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
-  transition:
-    background-color 0.16s linear,
-    color 0.16s linear,
-    border-color 0.16s linear;
+  transition: background-color 0.16s linear;
 }
-.button-primary {
-  --btn-bg: var(--ink);
-  --btn-fg: var(--paper-lift);
-}
-.button-primary:hover {
-  --btn-bg: var(--brand-deep);
-}
-.button-quiet {
-  --btn-fg: var(--ink-soft);
-  border-color: var(--line-strong);
-}
-.button-quiet:hover {
-  --btn-fg: var(--ink);
-  border-color: var(--ink);
-}
-.button-quiet svg {
-  transition: transform 0.4s var(--ease);
-}
-.button-quiet:hover svg {
-  transform: translateX(3px);
+.button:hover {
+  background: var(--brand-deep);
 }
 .button-lg {
-  padding: 1rem 1.75rem;
+  padding: 1.05rem 1.9rem;
   font-size: 1rem;
+}
+
+/* Secondary path is a text link, never a second button. Two equal actions in
+   one viewport makes people defer and take neither. */
+.textlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: var(--text-small);
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 0.16s linear;
+}
+.textlink:hover {
+  color: var(--ink);
+}
+.textlink svg {
+  transition: transform 0.4s var(--ease);
+}
+.textlink:hover svg {
+  transform: translateX(3px);
 }
 
 /* ── header ─────────────────────────────────────────────────────────────── */
@@ -233,9 +210,8 @@ html.reduced-motion [data-reveal] {
   gap: 1rem;
   width: var(--shell);
   margin-inline: auto;
-  padding: 1.4rem 0;
+  padding: 1.5rem 0;
 }
-
 .brand {
   display: inline-flex;
   align-items: center;
@@ -249,7 +225,6 @@ html.reduced-motion [data-reveal] {
   width: 34px;
   height: 34px;
 }
-
 .header-cta {
   font-size: var(--text-small);
   font-weight: 500;
@@ -262,63 +237,47 @@ html.reduced-motion [data-reveal] {
   border-color: var(--ink);
 }
 
-/* ── hero ───────────────────────────────────────────────────────────────── */
+/* ── 1 · hero ───────────────────────────────────────────────────────────── */
+/* Stacked, not split. A headline and a copy block side by side at the same
+   height are two focal points competing; stacking makes the order obvious. */
 .hero {
   position: relative;
-  padding: clamp(4rem, 12vh, 9rem) 0 clamp(3rem, 8vh, 6rem);
+  padding: clamp(4.5rem, 8vw, 9rem) 0 clamp(5rem, 8.5vw, 10rem);
 }
 
-/* The halftone is the original artwork re-lit: same shoreline, ink on paper
-   instead of light on a dark ground. It sits to one side and fades out on
-   every edge, so it reads as a printed plate rather than a page wash. */
-/* The original halftone, re-lit rather than re-made.
- *
- * Instead of shipping a second copy of the artwork, the existing plate is used
- * as a luminance mask over a flat green fill. Its bright dots (the landmass)
- * become ink on paper and its dark ground drops out entirely — the same
- * shoreline the dark cut had, inverted into the light system for zero extra
- * bytes. Two gradient masks are intersected with it so the plate is full-bleed
- * but thins out over the left column, keeping the headline on clean paper.
- */
 .hero-field {
   position: absolute;
-  inset: -7rem 0 auto 0;
-  height: clamp(34rem, 92vh, 58rem);
+  inset: -8rem 0 auto 0;
+  height: clamp(38rem, 105vh, 68rem);
   z-index: 0;
   pointer-events: none;
   transform: translate3d(
-    calc((var(--ptr-x, 0.5) - 0.5) * -16px),
-    calc(var(--scroll, 0) * -40px),
+    calc((var(--ptr-x, 0.5) - 0.5) * -18px),
+    calc(var(--scroll, 0) * -46px),
     0
   );
 }
 
 @supports (mask-mode: luminance) or (-webkit-mask-mode: luminance) {
   .hero-field {
-    background-color: #14543d;
+    background-color: var(--brand-deep);
     opacity: 0.5;
-
     -webkit-mask-image:
       url("/art/atlas-halftone-field.webp"),
-      linear-gradient(to bottom, #000 0%, #000 52%, transparent 92%),
-      linear-gradient(to right, transparent 4%, rgba(0, 0, 0, 0.3) 34%, #000 72%);
+      linear-gradient(to bottom, #000 0%, #000 54%, transparent 92%),
+      linear-gradient(to right, transparent 2%, rgba(0, 0, 0, 0.22) 30%, #000 70%);
     mask-image:
       url("/art/atlas-halftone-field.webp"),
-      linear-gradient(to bottom, #000 0%, #000 52%, transparent 92%),
-      linear-gradient(to right, transparent 4%, rgba(0, 0, 0, 0.3) 34%, #000 72%);
-
+      linear-gradient(to bottom, #000 0%, #000 54%, transparent 92%),
+      linear-gradient(to right, transparent 2%, rgba(0, 0, 0, 0.22) 30%, #000 70%);
     -webkit-mask-mode: luminance, alpha, alpha;
     mask-mode: luminance, alpha, alpha;
-
     -webkit-mask-size: cover, 100% 100%, 100% 100%;
     mask-size: cover, 100% 100%, 100% 100%;
-
-    -webkit-mask-position: 62% 38%, center, center;
-    mask-position: 62% 38%, center, center;
-
+    -webkit-mask-position: 64% 34%, center, center;
+    mask-position: 64% 34%, center, center;
     -webkit-mask-repeat: no-repeat;
     mask-repeat: no-repeat;
-
     -webkit-mask-composite: source-in;
     mask-composite: intersect;
   }
@@ -329,100 +288,365 @@ html.reduced-motion [data-reveal] {
   z-index: 1;
   width: var(--shell);
   margin-inline: auto;
-  display: grid;
-  grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
-  gap: clamp(2rem, 5vw, 5rem);
-  align-items: end;
 }
 
 .hero h1 {
-  font-size: var(--text-display);
-  line-height: var(--leading-display);
-  letter-spacing: var(--tracking-display);
-  max-width: 13ch;
+  font-size: var(--text-hero);
+  line-height: 0.96;
+  letter-spacing: -0.035em;
+  max-width: 15ch;
 }
 
-.hero-aside {
-  padding-bottom: 0.5rem;
+/* Spacing does the grouping: tight to the headline, a real gap before action */
+.hero-sub {
+  margin-top: 1.6rem;
+  max-width: 40ch;
+  font-size: var(--text-lead);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.hero-cta {
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  flex-wrap: wrap;
+}
+
+/* ── shared section rhythm (intervals vary on purpose) ──────────────────── */
+.section {
+  position: relative;
+  padding-block: clamp(5.5rem, 8.5vw, 10rem);
+}
+.section h2,
+.problem h2,
+.origin h2,
+.closing h2 {
+  font-size: var(--text-h2);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+/* ── 2 · problem — the one temperature change ───────────────────────────── */
+.problem {
+  background: var(--deep);
+  color: #eaf0ea;
+  padding-block: clamp(6rem, 9vw, 11rem);
+}
+.problem h2 {
+  max-width: 18ch;
+}
+
+.deadends {
+  margin-top: clamp(3rem, 5vw, 5rem);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  background: rgba(234, 240, 234, 0.16);
+  border-block: 1px solid rgba(234, 240, 234, 0.16);
+}
+.deadends article {
+  background: var(--deep);
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
+  display: grid;
+  gap: 0.7rem;
+  align-content: start;
+}
+.deadend-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: rgba(234, 240, 234, 0.38);
+}
+.deadends h3 {
+  font-size: clamp(1.5rem, 2vw + 0.8rem, 2.1rem);
+  letter-spacing: -0.02em;
+  /* struck through: these are the dead ends */
+  text-decoration: line-through;
+  text-decoration-color: rgba(234, 240, 234, 0.3);
+  text-decoration-thickness: 1px;
+}
+.deadends p {
+  color: rgba(234, 240, 234, 0.66);
   max-width: 34ch;
 }
-.hero-aside > p {
+.problem-close {
+  margin-top: clamp(2.25rem, 3.5vw, 3.5rem);
   font-size: var(--text-lead);
-  line-height: var(--leading-lead);
+  line-height: 1.5;
+  color: #eaf0ea;
+  max-width: 44ch;
+}
+
+/* ── 3 · the dial — render the control ──────────────────────────────────── */
+.dial-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  gap: clamp(2.5rem, 6vw, 6rem);
+  align-items: center;
+}
+.dial-copy h2 {
+  max-width: 14ch;
+}
+.dial-copy p {
+  margin-top: 1.5rem;
+  font-size: var(--text-lead);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 40ch;
+}
+
+.dial {
+  margin: 0;
+  padding: clamp(1.75rem, 3.5vw, 2.75rem);
+  background: var(--paper-lift);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  box-shadow: 0 1px 0 rgba(10, 31, 25, 0.04), 0 18px 40px -32px rgba(10, 31, 25, 0.5);
+}
+.dial figcaption {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--muted);
+  padding-bottom: clamp(1.75rem, 3vw, 2.75rem);
+}
+
+.dial-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-items: center;
+  height: 18px;
+}
+.dial-rail,
+.dial-fill {
+  position: absolute;
+  left: 6%;
+  right: 6%;
+  height: 2px;
+  border-radius: 2px;
+}
+.dial-rail {
+  background: var(--paper-sink);
+}
+.dial-fill {
+  right: auto;
+  width: 31%;
+  background: var(--brand-deep);
+}
+.dial-stop {
+  position: relative;
+  justify-self: center;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--paper-lift);
+  border: 1.5px solid var(--paper-sink);
+}
+.dial-stop.is-active {
+  width: 18px;
+  height: 18px;
+  background: var(--brand-deep);
+  border-color: var(--brand-deep);
+  box-shadow: 0 0 0 5px rgba(20, 84, 61, 0.12);
+}
+
+.dial-scale {
+  list-style: none;
+  margin: 0.85rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--muted);
+}
+.dial-scale li {
+  text-align: center;
+}
+.dial-scale li.is-active {
+  color: var(--brand-deep);
+  font-weight: 600;
+}
+
+.dial-note {
+  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--line);
+  font-size: var(--text-small);
   color: var(--ink-soft);
 }
 
-/* ── sections ───────────────────────────────────────────────────────────── */
-.section {
-  position: relative;
-  padding-block: clamp(6rem, 16vh, 12rem);
+/* ── 4 · the record — show the trail ────────────────────────────────────── */
+.record-section {
+  background: var(--paper-sink);
+}
+.record-title {
+  max-width: 20ch;
+  margin-bottom: clamp(2.5rem, 4.5vw, 4.5rem);
 }
 
-.section h2 {
-  font-size: var(--text-h2);
-  line-height: var(--leading-heading);
-  letter-spacing: var(--tracking-heading);
-  max-width: 16ch;
-}
-
-.split {
+.record {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(2rem, 6vw, 6rem);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+  gap: clamp(2.5rem, 6vw, 5rem);
   align-items: start;
 }
 
-.split-body {
-  display: grid;
-  gap: 1.1rem;
-  max-width: 42ch;
-  padding-top: 0.5rem;
-  font-size: var(--text-lead);
-  line-height: var(--leading-lead);
-  color: var(--ink-soft);
-}
-
-/* Three plain statements. No numbering, no headings above them — each one is
-   a complete thought and stands on its own. */
-.statements {
+.trace {
   list-style: none;
-  margin: clamp(3rem, 7vh, 5rem) 0 0;
+  margin: 0;
   padding: 0;
   display: grid;
-  gap: 0;
-  max-width: 60rem;
 }
-.statements li {
-  padding-block: clamp(1.6rem, 3.5vh, 2.4rem);
-  border-top: 1px solid var(--line);
+.trace li {
+  position: relative;
+  padding: 0 0 clamp(1.6rem, 2.6vw, 2.3rem) 2.5rem;
+}
+.trace li:last-child {
+  padding-bottom: 0;
+}
+/* the thread running through the turns */
+.trace li::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1.15rem;
+  bottom: -0.15rem;
+  width: 1px;
+  background: var(--line-strong);
+}
+.trace li:last-child::before {
+  display: none;
+}
+.trace-mark {
+  position: absolute;
+  left: 0;
+  top: 0.55rem;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1.5px solid var(--brand-deep);
+}
+.trace li.is-wrong .trace-mark {
+  border-style: dashed;
+  border-color: var(--muted);
+}
+.trace li.is-final .trace-mark {
+  background: var(--brand-deep);
+}
+.trace-turn {
   font-size: var(--text-lead);
-  line-height: var(--leading-lead);
-  color: var(--ink-soft);
-  max-width: 52ch;
+  line-height: 1.45;
+  color: var(--ink);
+  max-width: 40ch;
 }
-.statements li:last-child {
-  border-bottom: 1px solid var(--line);
+.trace li.is-wrong .trace-turn {
+  color: var(--muted);
+}
+.trace-note {
+  display: block;
+  margin-top: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--muted);
 }
 
-/* ── close ──────────────────────────────────────────────────────────────── */
+.record-aside {
+  display: grid;
+  gap: 1.5rem;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border-left: 2px solid var(--brand-deep);
+  background: var(--paper-lift);
+}
+.record-aside p {
+  font-size: var(--text-small);
+  color: var(--ink-soft);
+}
+.record-punch {
+  font-size: var(--text-lead) !important;
+  line-height: 1.4;
+  color: var(--ink) !important;
+  font-weight: 450;
+  letter-spacing: -0.015em;
+}
+
+/* ── 5 · two vantage points ─────────────────────────────────────────────── */
+.pair-section h2 {
+  max-width: 20ch;
+  margin-bottom: clamp(2.5rem, 4.5vw, 4.5rem);
+}
+.pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+.pair article {
+  padding-top: 1.6rem;
+  border-top: 2px solid var(--ink);
+  display: grid;
+  gap: 0.8rem;
+}
+.pair article:last-child {
+  border-top-color: var(--brand-deep);
+}
+.pair h3 {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  color: var(--muted);
+}
+.pair p {
+  font-size: clamp(1.15rem, 1.1vw + 0.9rem, 1.6rem);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  max-width: 26ch;
+}
+
+/* ── 6 · origin — narrow, quiet, different register ─────────────────────── */
+.origin {
+  padding-block: clamp(6rem, 9vw, 11rem);
+  background: var(--paper-lift);
+  border-block: 1px solid var(--line);
+}
+.origin-inner {
+  width: min(100% - 2.75rem, 44rem);
+  margin-inline: auto;
+  display: grid;
+  gap: 1.6rem;
+}
+.origin h2 {
+  max-width: 24ch;
+  margin-bottom: 0.5rem;
+}
+.origin p {
+  font-size: var(--text-lead);
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* ── 7 · close — largest, simplest ──────────────────────────────────────── */
 .closing {
   position: relative;
   text-align: center;
-  padding-block: clamp(6rem, 16vh, 11rem);
+  padding-block: clamp(6.5rem, 11vw, 13rem);
 }
-
 .closing-mark {
-  width: 64px;
-  height: 64px;
-  margin: 0 auto clamp(1.8rem, 4vh, 2.6rem);
+  width: 56px;
+  height: 56px;
+  margin: 0 auto clamp(1.75rem, 3vw, 2.75rem);
 }
-
 .closing h2 {
-  font-size: var(--text-h2);
-  line-height: var(--leading-heading);
-  letter-spacing: var(--tracking-heading);
-  max-width: 18ch;
+  font-size: clamp(2.5rem, 5.6vw + 0.6rem, 6.5rem);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  max-width: 14ch;
   margin-inline: auto;
+}
+.closing-cta {
+  margin-top: clamp(2.25rem, 3.5vw, 3.25rem);
+  justify-content: center;
 }
 
 /* ── footer ─────────────────────────────────────────────────────────────── */
@@ -467,36 +691,33 @@ html.reduced-motion [data-reveal] {
 }
 .not-found h1 {
   font-size: var(--text-h2);
-  line-height: var(--leading-heading);
-  letter-spacing: var(--tracking-heading);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
   max-width: 16ch;
 }
 
 /* ── responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 62rem) {
-  .hero-inner,
-  .split {
+  .dial-grid,
+  .record {
     grid-template-columns: minmax(0, 1fr);
   }
-  .hero h1 {
-    max-width: 16ch;
-  }
-  .hero-aside {
+  .record-aside {
     max-width: 46ch;
   }
   .hero-field {
     top: -4rem;
-    height: clamp(26rem, 62vh, 38rem);
+    height: clamp(28rem, 70vh, 44rem);
   }
   @supports (mask-mode: luminance) or (-webkit-mask-mode: luminance) {
     .hero-field {
       opacity: 0.34;
       -webkit-mask-image:
         url("/art/atlas-halftone-field.webp"),
-        linear-gradient(to bottom, #000 0%, #000 40%, transparent 88%);
+        linear-gradient(to bottom, #000 0%, #000 42%, transparent 88%);
       mask-image:
         url("/art/atlas-halftone-field.webp"),
-        linear-gradient(to bottom, #000 0%, #000 40%, transparent 88%);
+        linear-gradient(to bottom, #000 0%, #000 42%, transparent 88%);
       -webkit-mask-mode: luminance, alpha;
       mask-mode: luminance, alpha;
       -webkit-mask-size: cover, 100% 100%;
@@ -505,15 +726,35 @@ html.reduced-motion [data-reveal] {
   }
 }
 
+@media (max-width: 46rem) {
+  .deadends,
+  .pair {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .deadends {
+    gap: 1px;
+  }
+  .pair {
+    gap: 2.5rem;
+  }
+}
+
 @media (max-width: 40rem) {
   :root {
-    --shell: min(100% - 2rem, 76rem);
+    --shell: min(100% - 2rem, 78rem);
   }
   .site-header {
     padding-block: 1.1rem;
   }
   .hero h1 {
     max-width: none;
+    letter-spacing: -0.03em;
+  }
+  .hero-cta {
+    gap: 1.25rem;
+  }
+  .dial-scale {
+    font-size: 0.66rem;
   }
   .footer-inner {
     flex-direction: column;

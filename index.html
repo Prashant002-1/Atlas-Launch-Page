@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Atlas is the agentic LMS where teachers see and shape learning."
+      content="Atlas is a learning management system with a personal AI agent for every teacher and student. Teachers set how much help the AI gives. Atlas grades the thinking, not the answer."
     />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#f1f4ee" />
@@ -15,7 +15,7 @@
     <meta property="og:title" content="Atlas | Make learning visible" />
     <meta
       property="og:description"
-      content="The agentic LMS where teachers see and shape learning."
+      content="A learning management system with a personal AI agent for every teacher and student."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://atlas-lms.com/" />
@@ -24,7 +24,7 @@
     <meta name="twitter:title" content="Atlas | Make learning visible" />
     <meta
       name="twitter:description"
-      content="The agentic LMS where teachers see and shape learning."
+      content="A learning management system with a personal AI agent for every teacher and student."
     />
 
     <title>Atlas | Make learning visible</title>
@@ -61,6 +61,7 @@
       </header>
 
       <main id="main">
+        <!-- 1 ── Hero. One statement, one action. Everything else recedes. -->
         <section class="hero" aria-labelledby="hero-title">
           <div class="hero-field" aria-hidden="true"></div>
 
@@ -69,85 +70,217 @@
               Give every student a personal agent.
             </h1>
 
-            <div class="hero-aside">
-              <p data-reveal data-reveal-delay="1">
-                Atlas is an LMS where teachers control how AI takes part in
-                their course.
-              </p>
-              <div class="actions" data-reveal data-reveal-delay="2">
-                <a
-                  class="button button-primary"
-                  href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
-                >
-                  Request launch access
-                </a>
-                <a class="button button-quiet" href="/demo">
-                  See it working
-                  <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
-                    <path
-                      d="M3 8h9M8.5 4l4 4-4 4"
-                      fill="none"
-                      stroke="currentColor"
-                      stroke-width="1.6"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </a>
-              </div>
+            <p class="hero-sub" data-reveal data-reveal-delay="1">
+              A learning management system where the teacher sets the rules the
+              AI plays by.
+            </p>
+
+            <div class="hero-cta" data-reveal data-reveal-delay="2">
+              <a
+                class="button button-primary button-lg"
+                href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
+              >
+                Request launch access
+              </a>
+              <a class="textlink" href="/demo">
+                See it working
+                <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+                  <path
+                    d="M3 8h9M8.5 4l4 4-4 4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
             </div>
           </div>
         </section>
 
-        <section class="section problem" aria-labelledby="problem-title">
-          <div class="shell split">
-            <h2 id="problem-title" data-reveal>
-              Teachers are judging AI output, not learning.
-            </h2>
-            <div class="split-body" data-reveal data-reveal-delay="1">
-              <p>
-                Students already work with AI. What gets handed in shows a
-                result, never the thinking behind it.
-              </p>
-              <p>Atlas records the work itself.</p>
-            </div>
-          </div>
-        </section>
-
-        <section class="section govern" aria-labelledby="govern-title">
+        <!-- 2 ── The problem. Inverted band: the one temperature change. -->
+        <section class="problem" aria-labelledby="problem-title">
           <div class="shell">
-            <h2 id="govern-title" data-reveal>
-              Agents that answer to the teacher.
+            <h2 id="problem-title" data-reveal>
+              Right now there are two options, and both of them lose.
             </h2>
 
-            <ul class="statements" data-reveal-group>
-              <li>Teachers decide how AI takes part in every piece of work.</li>
-              <li>
-                An agent can sit with a student and work a problem through with
-                them.
-              </li>
-              <li>
-                Agents can raise and oversee other agents, inside the same
-                limits.
-              </li>
-            </ul>
+            <div class="deadends" data-reveal-group>
+              <article>
+                <span class="deadend-num" aria-hidden="true">01</span>
+                <h3>Ban it</h3>
+                <p>
+                  Students use it anyway. The rule just moves the work somewhere
+                  the teacher cannot see.
+                </p>
+              </article>
+              <article>
+                <span class="deadend-num" aria-hidden="true">02</span>
+                <h3>Police it</h3>
+                <p>
+                  Hours spent deciding whether a paragraph was written by a
+                  person. Detection does not work, and the time is gone.
+                </p>
+              </article>
+            </div>
+
+            <p class="problem-close" data-reveal>
+              Either way the teacher ends up judging AI output instead of
+              learning.
+            </p>
           </div>
         </section>
 
+        <!-- 3 ── The dial. The signature artifact: render the control. -->
+        <section class="section dial-section" aria-labelledby="dial-title">
+          <div class="shell dial-grid">
+            <div class="dial-copy">
+              <h2 id="dial-title" data-reveal>
+                You set how much help the AI gives.
+              </h2>
+              <p data-reveal data-reveal-delay="1">
+                Not once for the whole course — for every single assignment.
+                The agent carries your materials, your rubric, and your
+                teaching style, and it will not step past the line you draw.
+              </p>
+            </div>
+
+            <figure class="dial" data-reveal data-reveal-delay="1">
+              <figcaption>Essay 2 &middot; Rhetorical analysis</figcaption>
+
+              <div class="dial-track" aria-hidden="true">
+                <span class="dial-rail"></span>
+                <span class="dial-fill"></span>
+                <span class="dial-stop"></span>
+                <span class="dial-stop is-active"></span>
+                <span class="dial-stop"></span>
+                <span class="dial-stop"></span>
+              </div>
+
+              <ul class="dial-scale">
+                <li>Banned</li>
+                <li class="is-active">Hints only</li>
+                <li>Guided</li>
+                <li>Full</li>
+              </ul>
+
+              <p class="dial-note">
+                The agent may ask questions and point to course material. It
+                will not produce a thesis, an outline, or a paragraph.
+              </p>
+            </figure>
+          </div>
+        </section>
+
+        <!-- 4 ── The record. Artifact: what actually gets graded. -->
+        <section class="section record-section" aria-labelledby="record-title">
+          <div class="shell">
+            <h2 id="record-title" class="record-title" data-reveal>
+              Atlas grades the thinking, not the answer.
+            </h2>
+
+            <div class="record" data-reveal data-reveal-delay="1">
+              <ol class="trace">
+                <li>
+                  <span class="trace-mark" aria-hidden="true"></span>
+                  <p class="trace-turn">
+                    &ldquo;Is the repetition here just for rhythm?&rdquo;
+                  </p>
+                  <span class="trace-note">Asked before guessing</span>
+                </li>
+                <li class="is-wrong">
+                  <span class="trace-mark" aria-hidden="true"></span>
+                  <p class="trace-turn">
+                    Argued it was a logical appeal. Followed it two paragraphs.
+                  </p>
+                  <span class="trace-note">Wrong turn, taken honestly</span>
+                </li>
+                <li>
+                  <span class="trace-mark" aria-hidden="true"></span>
+                  <p class="trace-turn">
+                    Reread the passage. Rebuilt the claim around cadence.
+                  </p>
+                  <span class="trace-note">Recovered without being told</span>
+                </li>
+                <li class="is-final">
+                  <span class="trace-mark" aria-hidden="true"></span>
+                  <p class="trace-turn">Final draft submitted.</p>
+                  <span class="trace-note">One piece of the grade</span>
+                </li>
+              </ol>
+
+              <aside class="record-aside">
+                <p>
+                  The questions asked, the reasoning, the wrong turns, the
+                  revisions. All of it is the work.
+                </p>
+                <p class="record-punch">
+                  Copy the answer and there is nothing left to grade.
+                </p>
+              </aside>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5 ── Two agents. Split: let the difference be visible. -->
+        <section class="section pair-section" aria-labelledby="pair-title">
+          <div class="shell">
+            <h2 id="pair-title" data-reveal>One system, two vantage points.</h2>
+
+            <div class="pair" data-reveal-group>
+              <article>
+                <h3>For the student</h3>
+                <p>
+                  An agent that remembers every mistake you have made and keeps
+                  returning to the things you have not got yet.
+                </p>
+              </article>
+              <article>
+                <h3>For the teacher</h3>
+                <p>
+                  Where the class is struggling, and why — before it shows up in
+                  the grades.
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6 ── Origin. Peak proof at ~65%. Quiet, narrow, editorial. -->
+        <section class="origin" aria-labelledby="origin-title">
+          <div class="origin-inner">
+            <h2 id="origin-title" data-reveal>
+              We spent four years inside these systems as students.
+            </h2>
+            <p data-reveal data-reveal-delay="1">
+              We watched classmates use AI on everything and watched teachers
+              lose whole evenings deciding whether to believe an essay. Every
+              teacher we spoke to said the same thing: they had no way to see
+              how AI was being used, let alone govern it.
+            </p>
+            <p data-reveal data-reveal-delay="2">
+              The learning management system already sits between the teacher
+              and the student. It is where this gets fixed.
+            </p>
+          </div>
+        </section>
+
+        <!-- 7 ── Close. Largest, simplest thing on the page. -->
         <section class="closing" aria-labelledby="closing-title">
           <img
             class="closing-mark"
             src="/brand/atlas-mark.svg"
             alt=""
             aria-hidden="true"
-            width="64"
-            height="64"
+            width="56"
+            height="56"
             data-reveal
           />
           <h2 id="closing-title" data-reveal data-reveal-delay="1">
             Make learning visible.
           </h2>
-          <div class="actions actions-center" data-reveal data-reveal-delay="2">
+          <div class="hero-cta closing-cta" data-reveal data-reveal-delay="2">
             <a
               class="button button-primary button-lg"
               href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
