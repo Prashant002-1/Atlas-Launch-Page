@@ -58,7 +58,6 @@
 
   function revealAll() {
     document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-visible"));
-    document.querySelectorAll("[data-mark]").forEach((el) => el.classList.add("is-visible"));
   }
 
   if (reduced.matches) {
@@ -110,21 +109,7 @@
     setTimeout(sweep, 400);
     setTimeout(() => {
       pending.forEach(release);
-      document.querySelectorAll("[data-mark]").forEach((el) => el.classList.add("is-visible"));
-    }, 2600);
-
-    // The mark plays its sequence once, when it comes into view.
-    const markIO = new IntersectionObserver(
-      (entries, obs) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          entry.target.classList.add("is-visible");
-          obs.unobserve(entry.target);
-        }
-      },
-      { threshold: 0.5 },
-    );
-    document.querySelectorAll("[data-mark]").forEach((el) => markIO.observe(el));
+      }, 2600);
 
     /* ── normalized inputs ──────────────────────────────────────────────── */
     const damp = (cur, tgt, half, dt) => tgt + (cur - tgt) * Math.pow(2, -dt / half);

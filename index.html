@@ -39,7 +39,6 @@
     <link rel="stylesheet" href="/vendor/lenis.css" />
     <link rel="stylesheet" href="/styles.css" />
     <script src="/vendor/lenis.min.js" defer></script>
-    <script src="/field.js" defer></script>
     <script src="/motion.js" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
@@ -53,41 +52,37 @@
           <img src="/brand/atlas-mark.svg" alt="" width="34" height="34" />
           <span>Atlas</span>
         </a>
-
-        <div class="header-end">
-          <span class="header-status"><i></i>Launching soon</span>
-          <a
-            class="header-cta"
-            href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
-          >
-            Launch access
-          </a>
-        </div>
+        <a
+          class="header-cta"
+          href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
+        >
+          Launch access
+        </a>
       </header>
 
       <main id="main">
-        <!-- ── Hero ─────────────────────────────────────────────────────── -->
         <section class="hero" aria-labelledby="hero-title">
-          <canvas class="hero-field" data-field aria-hidden="true"></canvas>
+          <img
+            class="hero-field"
+            src="/art/halftone-light.webp"
+            alt=""
+            aria-hidden="true"
+            width="1100"
+            height="733"
+            fetchpriority="high"
+          />
 
           <div class="hero-inner">
-            <div class="hero-copy">
-              <p class="eyebrow" data-reveal>
-                <span class="tick" aria-hidden="true"></span>
-                Agentic LMS
-              </p>
-              <h1 id="hero-title" data-reveal data-reveal-delay="1">
-                <span class="line">Give every student</span>
-                <span class="line">a <em>personal</em> agent.</span>
-              </h1>
-            </div>
+            <h1 id="hero-title" data-reveal>
+              Give every student a personal agent.
+            </h1>
 
             <div class="hero-aside">
-              <p class="hero-lede" data-reveal data-reveal-delay="2">
-                It knows the course, remembers what matters, and stays with the
-                work as people reason, revise, and learn.
+              <p data-reveal data-reveal-delay="1">
+                Atlas is an LMS where teachers control how AI takes part in
+                their course.
               </p>
-              <div class="hero-actions" data-reveal data-reveal-delay="3">
+              <div class="actions" data-reveal data-reveal-delay="2">
                 <a
                   class="button button-primary"
                   href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
@@ -110,211 +105,57 @@
               </div>
             </div>
           </div>
-
-          <div class="hero-rule" aria-hidden="true">
-            <span class="footer-meta">Teachers see and shape learning</span>
-            <span class="ticks"></span>
-            <span class="footer-meta">01</span>
-          </div>
         </section>
 
-        <!-- ── 02 · The shift ───────────────────────────────────────────── -->
-        <section class="section shift" aria-labelledby="shift-title">
-          <div class="shell">
-            <p class="section-index" data-reveal>
-              <span>02</span><i></i><span>The shift</span>
-            </p>
-
-            <div class="shift-grid">
-              <h2 id="shift-title" data-reveal>
-                The answer stopped being <em>proof</em>.
-              </h2>
-
-              <div class="shift-body" data-reveal data-reveal-delay="1">
-                <p>
-                  Students already work with AI. A finished assignment no longer
-                  shows who did the thinking.
-                </p>
-                <p>
-                  So teachers are left to guess, or to police. Neither one is
-                  teaching. Atlas changes what the course records in the first
-                  place.
-                </p>
-              </div>
-            </div>
-
-            <div class="contrast" data-reveal data-reveal-delay="2">
-              <article class="contrast-side">
-                <span class="contrast-label">What was handed in</span>
-                <div class="contrast-slab" aria-hidden="true">
-                  <i style="--w: 100%"></i>
-                  <i style="--w: 94%"></i>
-                  <i style="--w: 97%"></i>
-                  <i style="--w: 58%"></i>
-                </div>
-                <p>Finished, clean, and silent about how it got there.</p>
-              </article>
-
-              <div class="contrast-pivot" aria-hidden="true">
-                <svg viewBox="0 0 40 40" width="38" height="38">
-                  <circle
-                    cx="20"
-                    cy="20"
-                    r="19"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1"
-                    opacity=".28"
-                  />
-                  <path
-                    d="M12 20h16M23 15l5 5-5 5"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </div>
-
-              <article class="contrast-side is-new">
-                <span class="contrast-label">What actually happened</span>
-                <div class="contrast-thread" aria-hidden="true">
-                  <span class="node is-live"></span>
-                  <span class="node"></span>
-                  <span class="node is-wrong"></span>
-                  <span class="node"></span>
-                  <span class="node is-live"></span>
-                </div>
-                <p>The route taken — including the turn that went nowhere.</p>
-              </article>
+        <section class="section problem" aria-labelledby="problem-title">
+          <div class="shell split">
+            <h2 id="problem-title" data-reveal>
+              Teachers are judging AI output, not learning.
+            </h2>
+            <div class="split-body" data-reveal data-reveal-delay="1">
+              <p>
+                Students already work with AI. What gets handed in shows a
+                result, never the thinking behind it.
+              </p>
+              <p>Atlas records the work itself.</p>
             </div>
           </div>
         </section>
 
-        <!-- ── 03 · Governance ──────────────────────────────────────────── -->
         <section class="section govern" aria-labelledby="govern-title">
           <div class="shell">
-            <p class="section-index" data-reveal>
-              <span>03</span><i></i><span>Governance</span>
-            </p>
+            <h2 id="govern-title" data-reveal>
+              Agents that answer to the teacher.
+            </h2>
 
-            <div class="govern-head">
-              <h2 id="govern-title" data-reveal>
-                Agents that answer to the <em>teacher</em>.
-              </h2>
-              <p data-reveal data-reveal-delay="1">
-                The teacher sets the terms for how AI takes part in their
-                course. Nothing runs outside them.
-              </p>
-            </div>
-
-            <div class="govern-list" data-reveal-group>
-              <article>
-                <span class="card-index" aria-hidden="true">i</span>
-                <div>
-                  <h3>Set the terms.</h3>
-                  <p>
-                    Every piece of work declares how AI participates. The course
-                    decides — not the student, and not the vendor.
-                  </p>
-                </div>
-              </article>
-
-              <article>
-                <span class="card-index" aria-hidden="true">ii</span>
-                <div>
-                  <h3>Assign an agent.</h3>
-                  <p>
-                    Put an agent beside a student to work a problem through with
-                    them, shaped by the material the teacher gave it.
-                  </p>
-                </div>
-              </article>
-
-              <article>
-                <span class="card-index" aria-hidden="true">iii</span>
-                <div>
-                  <h3>Agents overseeing agents.</h3>
-                  <p>
-                    Agents can raise and supervise other agents, all of it held
-                    inside the boundaries the course already defines.
-                  </p>
-                </div>
-              </article>
-            </div>
+            <ul class="statements" data-reveal-group>
+              <li>Teachers decide how AI takes part in every piece of work.</li>
+              <li>
+                An agent can sit with a student and work a problem through with
+                them.
+              </li>
+              <li>
+                Agents can raise and oversee other agents, inside the same
+                limits.
+              </li>
+            </ul>
           </div>
         </section>
 
-        <!-- ── 04 · Evidence ────────────────────────────────────────────── -->
-        <section class="visible" aria-labelledby="visible-title">
-          <div class="visible-field" aria-hidden="true"></div>
-
-          <div class="shell visible-inner">
-            <div>
-              <p class="section-index" data-reveal>
-                <span>04</span><i></i><span>Evidence</span>
-              </p>
-              <h2 id="visible-title" data-reveal>
-                Make learning <em>visible</em>.
-              </h2>
-            </div>
-
-            <p data-reveal data-reveal-delay="1">
-              When a course can see how an answer was reached, assessment stops
-              guessing and teaching gets its attention back.
-            </p>
-          </div>
-        </section>
-
-        <!-- ── 05 · Close ───────────────────────────────────────────────── -->
         <section class="closing" aria-labelledby="closing-title">
-          <!-- The mark, told as a sequence: a scale is measured, paths
-               resolve, one point of orientation lands. -->
-          <svg
+          <img
             class="closing-mark"
-            data-mark
-            viewBox="70 95 380 350"
-            width="74"
-            height="74"
+            src="/brand/atlas-mark.svg"
+            alt=""
             aria-hidden="true"
-          >
-            <g fill="none" stroke="currentColor" stroke-linecap="butt">
-              <path class="tick" d="M140 118.5 V137" stroke-width="5" />
-              <path class="tick" d="M180 110 V124" stroke-width="4" />
-              <path class="tick" d="M220 110 V125" stroke-width="4" />
-              <path class="tick" d="M300 110 V125" stroke-width="4" />
-              <path class="tick" d="M340 110 V124" stroke-width="4" />
-              <path class="tick" d="M380 118.5 V137" stroke-width="5" />
-            </g>
-            <path
-              class="beam beam-1"
-              d="M260 132 L430 426 H90 L260 132Z"
-              fill="currentColor"
-              opacity="0.13"
-            />
-            <path
-              class="beam beam-2"
-              d="M260 132 L348 426 H172 L260 132Z"
-              fill="currentColor"
-              opacity="0.32"
-            />
-            <path
-              class="beam beam-3"
-              d="M260 132 L300 426 H220 L260 132Z"
-              fill="currentColor"
-            />
-            <circle class="fix" cx="260" cy="132" r="9" fill="#0f6b45" />
-          </svg>
-
-          <h2 id="closing-title" data-reveal>Start with one course.</h2>
-
-          <p class="closing-note" data-reveal data-reveal-delay="1">
-            Atlas is opening to a small number of teachers before general
-            release.
-          </p>
-
-          <div class="closing-actions" data-reveal data-reveal-delay="2">
+            width="64"
+            height="64"
+            data-reveal
+          />
+          <h2 id="closing-title" data-reveal data-reveal-delay="1">
+            Make learning visible.
+          </h2>
+          <div class="actions actions-center" data-reveal data-reveal-delay="2">
             <a
               class="button button-primary button-lg"
               href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
@@ -331,7 +172,6 @@
             <img src="/brand/atlas-mark.svg" alt="" width="28" height="28" />
             <span>Atlas</span>
           </a>
-          <span class="footer-meta">Teachers see and shape learning</span>
           <a class="footer-contact" href="mailto:contact@atlas-lms.com">
             contact@atlas-lms.com
           </a>

@@ -12,91 +12,49 @@
   font-display: swap;
   font-style: normal;
 }
-@font-face {
-  font-family: "Spectral";
-  src: url("/fonts/spectral-400.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Spectral";
-  src: url("/fonts/spectral-400-italic.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-  font-style: italic;
-}
 
 /* ─────────────────────────────────────────────────────────────────────────
-   Tokens
-
-   The launch surface is the light half of the Atlas system, not a second
-   identity. Ink and accent are the app's own greens; the canvas is the paper
-   the app already defines, opened up and given air. Green is reserved for
-   state, action, and one accent word per headline — nothing else.
+   Tokens — the light half of the Atlas system, not a second identity.
    ───────────────────────────────────────────────────────────────────────── */
 :root {
   color-scheme: light;
 
   --paper: #f1f4ee;
   --paper-lift: #f7f9f4;
-  --paper-sink: #e6ebe2;
 
   --ink: #0a1f19;
   --ink-soft: #2f4a41;
-  --muted: #66786e;
-  --faint: #93a49a;
+  --muted: #61736a;
 
-  --line: rgba(10, 31, 25, 0.1);
+  --line: rgba(10, 31, 25, 0.11);
   --line-strong: rgba(10, 31, 25, 0.2);
 
-  /* accent — the app's brand green, plus a text-safe darkening of it */
-  --brand: #72d49a;
-  --brand-bright: #9ae7b8;
-  --brand-ink: #0f6b45;
   --brand-deep: #174c37;
-
-  /* the single inverted band */
-  --deep: #071a16;
 
   --font-sans: "Geist", "Avenir Next", "Helvetica Neue", sans-serif;
   --font-mono: "Geist Mono", "SFMono-Regular", Consolas, monospace;
-  --font-editorial: "Spectral", "Iowan Old Style", Georgia, serif;
 
-  /* Fluid scale, rem-anchored so zoom and raised base sizes still work.
-     Body is deliberately fixed — 16px is already the tuned minimum. */
-  --text-display: clamp(2.75rem, 5vw + 1rem, 6rem);
-  --text-h2: clamp(2rem, 3vw + 0.9rem, 3.5rem);
-  --text-h3: clamp(1.2rem, 0.7vw + 1rem, 1.55rem);
-  --text-lead: clamp(1.06rem, 0.7vw + 0.85rem, 1.3rem);
+  /* rem-anchored so zoom and raised base sizes still work.
+     Body is fixed — 16px is already the tuned minimum. */
+  --text-display: clamp(2.65rem, 5vw + 0.9rem, 5.75rem);
+  --text-h2: clamp(1.95rem, 2.9vw + 0.9rem, 3.4rem);
+  --text-lead: clamp(1.06rem, 0.7vw + 0.85rem, 1.28rem);
   --text-body: 1rem;
   --text-small: 0.9rem;
-  --text-label: 0.715rem;
 
-  --leading-display: 1.02;
-  --leading-heading: 1.14;
-  --leading-lead: 1.5;
-  --leading-body: 1.68;
+  --leading-display: 1.04;
+  --leading-heading: 1.16;
+  --leading-lead: 1.52;
+  --leading-body: 1.66;
 
   --tracking-display: -0.028em;
   --tracking-heading: -0.02em;
-  --tracking-label: 0.11em;
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* radii vary by element class on purpose — one radius everywhere is a tell */
   --r-control: 3px;
-  --r-card: 7px;
 
-  --shell: min(100% - 2.75rem, 78rem);
-
-  /* published by motion.js; declared so CSS resolves before JS runs */
-  --scroll: 0;
-  --scroll-vel: 0;
-  --ptr-x: 0.5;
-  --ptr-y: 0.5;
-  --ptr-energy: 0;
+  --shell: min(100% - 2.75rem, 76rem);
 }
 
 /* ── base ───────────────────────────────────────────────────────────────── */
@@ -130,28 +88,14 @@ body {
   overflow-x: hidden;
 }
 
-/* Paper tooth. Static, low amplitude — should register as stock, not noise. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.5;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
-  mix-blend-mode: multiply;
-}
-
 img,
-svg,
-canvas {
+svg {
   display: block;
   max-width: 100%;
 }
 
 h1,
-h2,
-h3 {
+h2 {
   margin: 0;
   font-weight: 450;
   text-wrap: balance;
@@ -167,12 +111,12 @@ a {
 }
 
 ::selection {
-  background: var(--brand);
-  color: var(--deep);
+  background: #9ae7b8;
+  color: var(--ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--brand-ink);
+  outline: 2px solid var(--brand-deep);
   outline-offset: 3px;
   border-radius: 1px;
 }
@@ -186,9 +130,7 @@ a {
   background: var(--ink);
   color: var(--paper);
   font-family: var(--font-mono);
-  font-size: var(--text-label);
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
+  font-size: 0.75rem;
   text-decoration: none;
 }
 .skip-link:focus {
@@ -198,7 +140,6 @@ a {
 
 .site {
   position: relative;
-  z-index: 1;
 }
 
 .shell {
@@ -207,15 +148,13 @@ a {
 }
 
 /* ── reveal ─────────────────────────────────────────────────────────────── */
-/* Gated on .js so the page is fully legible with scripting off or broken.
-   A marketing page that renders blank when one script fails is a worse
-   failure than any missing animation. */
+/* Gated on .js so the page stays legible if scripting fails. */
 html.js [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 14px, 0);
+  transform: translate3d(0, 12px, 0);
   transition:
-    opacity 0.85s var(--ease),
-    transform 0.85s var(--ease);
+    opacity 0.8s var(--ease),
+    transform 0.8s var(--ease);
 }
 html.js [data-reveal].is-visible {
   opacity: 1;
@@ -227,32 +166,17 @@ html.reduced-motion [data-reveal] {
   transition: none;
 }
 
-/* ── shared type roles ──────────────────────────────────────────────────── */
-.eyebrow,
-.section-index,
-.card-index,
-.contrast-label,
-.header-status,
-.footer-meta {
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  font-weight: 500;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-}
-
-/* The one accent face. Reserved for a single word per headline — never used
-   for running text, which keeps it an event rather than a texture. */
-h1 em,
-h2 em {
-  font-family: var(--font-editorial);
-  font-style: italic;
-  font-weight: 400;
-  color: var(--brand-ink);
-  letter-spacing: -0.012em;
-}
-
 /* ── buttons ────────────────────────────────────────────────────────────── */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.9rem;
+}
+.actions-center {
+  justify-content: center;
+}
+
 .button {
   --btn-bg: transparent;
   --btn-fg: var(--ink);
@@ -266,7 +190,6 @@ h2 em {
   color: var(--btn-fg);
   font-size: var(--text-small);
   font-weight: 500;
-  letter-spacing: -0.005em;
   text-decoration: none;
   white-space: nowrap;
   transition:
@@ -274,7 +197,6 @@ h2 em {
     color 0.16s linear,
     border-color 0.16s linear;
 }
-
 .button-primary {
   --btn-bg: var(--ink);
   --btn-fg: var(--paper-lift);
@@ -282,7 +204,6 @@ h2 em {
 .button-primary:hover {
   --btn-bg: var(--brand-deep);
 }
-
 .button-quiet {
   --btn-fg: var(--ink-soft);
   border-color: var(--line-strong);
@@ -297,15 +218,6 @@ h2 em {
 .button-quiet:hover svg {
   transform: translateX(3px);
 }
-
-.button-light {
-  --btn-bg: var(--brand);
-  --btn-fg: var(--deep);
-}
-.button-light:hover {
-  --btn-bg: var(--brand-bright);
-}
-
 .button-lg {
   padding: 1rem 1.75rem;
   font-size: 1rem;
@@ -338,37 +250,6 @@ h2 em {
   height: 34px;
 }
 
-.header-end {
-  display: flex;
-  align-items: center;
-  gap: 1.4rem;
-}
-
-.header-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--muted);
-}
-.header-status i {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--brand-ink);
-  animation: pulse 3.4s var(--ease) infinite;
-}
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.35;
-    transform: scale(0.85);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
 .header-cta {
   font-size: var(--text-small);
   font-weight: 500;
@@ -384,36 +265,34 @@ h2 em {
 /* ── hero ───────────────────────────────────────────────────────────────── */
 .hero {
   position: relative;
-  padding: clamp(3.5rem, 10vh, 8rem) 0 clamp(2rem, 5vh, 4rem);
-  /* not clipped — the field runs up behind the header and is bounded by its
-     own mask instead, so it has no hard edge anywhere */
+  padding: clamp(4rem, 12vh, 9rem) 0 clamp(3rem, 8vh, 6rem);
 }
 
+/* The halftone is the original artwork re-lit: same shoreline, ink on paper
+   instead of light on a dark ground. It sits to one side and fades out on
+   every edge, so it reads as a printed plate rather than a page wash. */
 .hero-field {
   position: absolute;
-  inset: -13rem -8% auto -8%;
-  height: min(135%, 76rem);
+  inset: -7rem 0 auto 0;
+  width: 100%;
+  height: clamp(34rem, 92vh, 58rem);
+  object-fit: cover;
+  object-position: 62% 38%;
   z-index: 0;
   pointer-events: none;
-  /* CSS fallback, designed first — the canvas only enhances it */
-  background:
-    radial-gradient(
-      120% 90% at 76% 16%,
-      rgba(114, 212, 154, 0.32),
-      transparent 62%
-    ),
-    radial-gradient(
-      90% 80% at 10% 74%,
-      rgba(23, 76, 55, 0.13),
-      transparent 60%
-    );
-  /* fades on every side, so the screen dissolves into paper rather than
-     stopping at a rectangle */
+  opacity: 0.62;
+  /* Full bleed like the original, but thinned out over the left column so the
+     headline sits on clean paper. Fades on every edge — no cropped rectangle. */
   mask-image:
-    linear-gradient(to bottom, transparent 0%, #000 16%, #000 58%, transparent 94%),
-    linear-gradient(to right, transparent 0%, #000 9%, #000 88%, transparent 100%);
+    linear-gradient(to bottom, #000 0%, #000 52%, transparent 92%),
+    linear-gradient(to right, transparent 4%, rgba(0, 0, 0, 0.28) 34%, #000 72%);
   -webkit-mask-composite: source-in;
   mask-composite: intersect;
+  transform: translate3d(
+    calc((var(--ptr-x, 0.5) - 0.5) * -16px),
+    calc(var(--scroll, 0) * -40px),
+    0
+  );
 }
 
 .hero-inner {
@@ -421,26 +300,10 @@ h2 em {
   z-index: 1;
   width: var(--shell);
   margin-inline: auto;
-  /* asymmetric — the page should not open on a symmetry axis */
   display: grid;
   grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
   gap: clamp(2rem, 5vw, 5rem);
   align-items: end;
-}
-
-.eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.7rem;
-  margin-bottom: clamp(1.5rem, 3vw, 2.4rem);
-  color: var(--brand-ink);
-}
-.eyebrow .tick {
-  display: block;
-  width: 26px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.55;
 }
 
 .hero h1 {
@@ -449,343 +312,70 @@ h2 em {
   letter-spacing: var(--tracking-display);
   max-width: 13ch;
 }
-.hero h1 .line {
-  display: block;
-}
 
 .hero-aside {
-  padding-bottom: 0.6rem;
+  padding-bottom: 0.5rem;
   max-width: 34ch;
 }
-
-.hero-lede {
+.hero-aside > p {
   font-size: var(--text-lead);
   line-height: var(--leading-lead);
   color: var(--ink-soft);
-  padding-left: 1.15rem;
-  border-left: 1px solid var(--line-strong);
 }
 
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem;
-  margin-top: 1.9rem;
-}
-
-/* measured rule under the hero — the mark's tick scale, made architectural */
-.hero-rule {
-  position: relative;
-  z-index: 1;
-  width: var(--shell);
-  margin: clamp(3rem, 8vh, 6rem) auto 0;
-  display: flex;
-  align-items: flex-end;
-  gap: 1.1rem;
-  color: var(--faint);
-}
-.hero-rule .ticks {
-  flex: 1;
-  height: 11px;
-  background-image: linear-gradient(
-    to right,
-    var(--line-strong) 0 1px,
-    transparent 1px 100%
-  );
-  background-size: 34px 100%;
-  background-position: bottom;
-  background-repeat: repeat-x;
-}
-
-/* ── section scaffolding ────────────────────────────────────────────────── */
+/* ── sections ───────────────────────────────────────────────────────────── */
 .section {
   position: relative;
-  padding-block: clamp(6rem, 15vh, 12rem);
+  padding-block: clamp(6rem, 16vh, 12rem);
 }
 
-.section-index {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  margin-bottom: clamp(2.5rem, 6vh, 4.5rem);
-  color: var(--faint);
-}
-.section-index i {
-  display: block;
-  width: clamp(2rem, 6vw, 5rem);
-  height: 1px;
-  background: var(--line-strong);
+.section h2 {
+  font-size: var(--text-h2);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  max-width: 16ch;
 }
 
-/* ── 02 the shift ───────────────────────────────────────────────────────── */
-.shift-grid {
+.split {
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   gap: clamp(2rem, 6vw, 6rem);
   align-items: start;
 }
 
-.shift h2 {
-  font-size: var(--text-h2);
-  line-height: var(--leading-heading);
-  letter-spacing: var(--tracking-heading);
-  max-width: 13ch;
-}
-
-.shift-body {
+.split-body {
   display: grid;
   gap: 1.1rem;
   max-width: 42ch;
-  padding-top: 0.55rem;
+  padding-top: 0.5rem;
   font-size: var(--text-lead);
   line-height: var(--leading-lead);
   color: var(--ink-soft);
 }
-.shift-body p:last-child {
-  font-size: var(--text-body);
-  color: var(--muted);
-}
 
-/* the contrast device: a finished slab vs. a route with a wrong turn in it */
-.contrast {
-  margin-top: clamp(3.5rem, 8vh, 6rem);
+/* Three plain statements. No numbering, no headings above them — each one is
+   a complete thought and stands on its own. */
+.statements {
+  list-style: none;
+  margin: clamp(3rem, 7vh, 5rem) 0 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  gap: clamp(1.25rem, 3vw, 2.5rem);
-  align-items: stretch;
+  gap: 0;
+  max-width: 60rem;
 }
-
-.contrast-side {
-  display: flex;
-  flex-direction: column;
-  gap: 1.15rem;
-  padding: clamp(1.4rem, 3vw, 2.1rem);
-  border: 1px solid var(--line);
-  border-radius: var(--r-card);
-  background: var(--paper-lift);
-}
-.contrast-side.is-new {
-  border-color: rgba(15, 107, 69, 0.26);
-  background: linear-gradient(
-    180deg,
-    rgba(114, 212, 154, 0.1),
-    rgba(114, 212, 154, 0.02)
-  );
-}
-.contrast-label {
-  color: var(--muted);
-}
-.contrast-side.is-new .contrast-label {
-  color: var(--brand-ink);
-}
-.contrast-side p {
-  font-size: var(--text-small);
-  color: var(--ink-soft);
-  margin-top: auto;
-}
-
-.contrast-slab {
-  display: grid;
-  gap: 8px;
-  padding-block: 0.5rem;
-}
-.contrast-slab i {
-  display: block;
-  width: var(--w, 100%);
-  height: 8px;
-  border-radius: 1px;
-  background: var(--paper-sink);
-}
-
-.contrast-thread {
-  display: flex;
-  align-items: center;
-  padding-block: 0.75rem;
-}
-.contrast-thread .node {
-  position: relative;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--paper-sink);
-  border: 1px solid var(--line-strong);
-  flex: none;
-}
-.contrast-thread .node + .node {
-  margin-left: 34px;
-}
-.contrast-thread .node + .node::before {
-  content: "";
-  position: absolute;
-  right: 100%;
-  top: 50%;
-  width: 34px;
-  height: 1px;
-  background: var(--line-strong);
-}
-.contrast-thread .node.is-live {
-  background: var(--brand);
-  border-color: var(--brand-ink);
-}
-/* the wrong turn — the point of the whole device */
-.contrast-thread .node.is-wrong {
-  background: var(--paper);
-  border-color: var(--brand-ink);
-  border-style: dashed;
-}
-
-.contrast-pivot {
-  display: grid;
-  place-items: center;
-  color: var(--faint);
-}
-
-/* ── 03 governance ──────────────────────────────────────────────────────── */
-.govern-head {
-  display: grid;
-  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
-  gap: clamp(1.5rem, 5vw, 5rem);
-  align-items: end;
-  margin-bottom: clamp(3rem, 8vh, 5.5rem);
-}
-.govern-head h2 {
-  font-size: var(--text-h2);
-  line-height: var(--leading-heading);
-  letter-spacing: var(--tracking-heading);
-  max-width: 13ch;
-}
-.govern-head p {
+.statements li {
+  padding-block: clamp(1.6rem, 3.5vh, 2.4rem);
+  border-top: 1px solid var(--line);
   font-size: var(--text-lead);
   line-height: var(--leading-lead);
   color: var(--ink-soft);
-  max-width: 36ch;
+  max-width: 52ch;
+}
+.statements li:last-child {
+  border-bottom: 1px solid var(--line);
 }
 
-/* Staggered, not three equal columns. Each item steps further in, so the eye
-   gets an order to follow instead of three things shouting at once. */
-.govern-list {
-  display: grid;
-  gap: clamp(1.5rem, 3vw, 2.25rem);
-}
-.govern-list article {
-  --step: 0;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: clamp(1rem, 3vw, 2.5rem);
-  align-items: baseline;
-  padding: clamp(1.5rem, 3vw, 2.1rem) clamp(1.5rem, 3vw, 2.4rem);
-  margin-left: calc(var(--step) * clamp(0rem, 4vw, 4.5rem));
-  border: 1px solid var(--line);
-  border-radius: var(--r-card);
-  background: var(--paper-lift);
-  transition:
-    border-color 0.24s linear,
-    background-color 0.24s linear,
-    transform 0.5s var(--ease);
-}
-.govern-list article:nth-child(2) {
-  --step: 1;
-}
-.govern-list article:nth-child(3) {
-  --step: 2;
-}
-.govern-list article:hover {
-  border-color: var(--line-strong);
-  background: var(--paper);
-  transform: translateY(-2px);
-}
-
-.card-index {
-  color: var(--brand-ink);
-  padding-top: 0.4rem;
-}
-
-.govern-list h3 {
-  font-size: var(--text-h3);
-  line-height: 1.25;
-  letter-spacing: -0.015em;
-  margin-bottom: 0.5rem;
-}
-.govern-list p {
-  font-size: var(--text-small);
-  color: var(--ink-soft);
-  max-width: 50ch;
-}
-
-/* ── 04 the inverted band ───────────────────────────────────────────────── */
-/* One dark section, used as rhythm. It is the emotional peak of the page and
-   the only place the app's canvas colour appears at full strength. */
-.visible {
-  position: relative;
-  overflow: hidden;
-  background: var(--deep);
-  color: #eef3ee;
-  padding-block: clamp(7rem, 18vh, 13rem);
-}
-
-/* The original halftone artwork, kept but re-lit: screened back and pushed
-   behind a vignette so it reads as atmosphere instead of weather. */
-.visible-field {
-  position: absolute;
-  inset: -6%;
-  z-index: 0;
-  pointer-events: none;
-  background-image: url("/art/atlas-halftone-field.webp");
-  background-size: cover;
-  background-position: center 30%;
-  opacity: 0.3;
-  mix-blend-mode: screen;
-  transform: translate3d(
-    calc((var(--ptr-x) - 0.5) * -16px),
-    calc(var(--scroll) * -34px),
-    0
-  );
-}
-.visible::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: radial-gradient(
-    78% 62% at 46% 48%,
-    transparent 26%,
-    rgba(7, 26, 22, 0.78) 100%
-  );
-}
-
-.visible-inner {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(2rem, 6vw, 6rem);
-  align-items: end;
-}
-.visible .section-index {
-  color: rgba(238, 243, 238, 0.45);
-}
-.visible .section-index i {
-  background: rgba(238, 243, 238, 0.25);
-}
-.visible h2 {
-  font-size: var(--text-h2);
-  line-height: var(--leading-heading);
-  letter-spacing: var(--tracking-heading);
-  max-width: 12ch;
-}
-.visible h2 em {
-  color: var(--brand);
-}
-.visible p {
-  font-size: var(--text-lead);
-  line-height: var(--leading-lead);
-  color: rgba(238, 243, 238, 0.74);
-  max-width: 38ch;
-  padding-bottom: 0.4rem;
-}
-
-/* ── 05 close ───────────────────────────────────────────────────────────── */
+/* ── close ──────────────────────────────────────────────────────────────── */
 .closing {
   position: relative;
   text-align: center;
@@ -793,94 +383,23 @@ h2 em {
 }
 
 .closing-mark {
-  width: 74px;
-  height: 74px;
-  margin: 0 auto clamp(2rem, 4vh, 3rem);
-  color: var(--ink);
-}
-/* The mark told as a sequence: the scale is measured, the paths resolve, the
-   point of orientation lands. Runs once, on entry. */
-.closing-mark .tick,
-.closing-mark .beam,
-.closing-mark .fix {
-  opacity: 0;
-}
-.closing-mark .tick {
-  transform-origin: center top;
-}
-.closing-mark .fix {
-  transform-origin: 260px 132px;
-}
-.closing-mark.is-visible .tick {
-  animation: tick-in 0.5s var(--ease) forwards;
-}
-.closing-mark.is-visible .tick:nth-of-type(1) { animation-delay: 0.05s; }
-.closing-mark.is-visible .tick:nth-of-type(2) { animation-delay: 0.11s; }
-.closing-mark.is-visible .tick:nth-of-type(3) { animation-delay: 0.17s; }
-.closing-mark.is-visible .tick:nth-of-type(4) { animation-delay: 0.23s; }
-.closing-mark.is-visible .tick:nth-of-type(5) { animation-delay: 0.29s; }
-.closing-mark.is-visible .tick:nth-of-type(6) { animation-delay: 0.35s; }
-.closing-mark.is-visible .beam {
-  animation: beam-in 0.9s var(--ease) forwards;
-}
-.closing-mark.is-visible .beam-1 { animation-delay: 0.44s; }
-.closing-mark.is-visible .beam-2 { animation-delay: 0.56s; }
-.closing-mark.is-visible .beam-3 { animation-delay: 0.68s; }
-.closing-mark.is-visible .fix {
-  animation: fix-in 0.7s var(--ease) forwards;
-  animation-delay: 1s;
-}
-@keyframes tick-in {
-  from { opacity: 0; transform: scaleY(0.2); }
-  to   { opacity: 0.5; transform: scaleY(1); }
-}
-@keyframes beam-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: none; }
-}
-@keyframes fix-in {
-  0%   { opacity: 0; transform: scale(0.2); }
-  62%  { opacity: 1; transform: scale(1.3); }
-  100% { opacity: 1; transform: scale(1); }
-}
-html.reduced-motion .closing-mark .tick,
-html.reduced-motion .closing-mark .beam,
-html.reduced-motion .closing-mark .fix {
-  opacity: 1;
-  animation: none;
-}
-html.reduced-motion .closing-mark .tick {
-  opacity: 0.5;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto clamp(1.8rem, 4vh, 2.6rem);
 }
 
 .closing h2 {
   font-size: var(--text-h2);
   line-height: var(--leading-heading);
   letter-spacing: var(--tracking-heading);
-  max-width: 15ch;
+  max-width: 18ch;
   margin-inline: auto;
-}
-
-.closing-note {
-  margin-top: 1.4rem;
-  color: var(--muted);
-  font-size: var(--text-small);
-  max-width: 40ch;
-  margin-inline: auto;
-}
-
-.closing-actions {
-  margin-top: 2.3rem;
-  display: flex;
-  justify-content: center;
-  gap: 0.7rem;
-  flex-wrap: wrap;
 }
 
 /* ── footer ─────────────────────────────────────────────────────────────── */
 .site-footer {
   border-top: 1px solid var(--line);
-  padding-block: 2.4rem 3rem;
+  padding-block: 2.2rem 2.8rem;
 }
 .footer-inner {
   display: flex;
@@ -892,9 +411,6 @@ html.reduced-motion .closing-mark .tick {
 .footer-brand img {
   width: 28px;
   height: 28px;
-}
-.footer-meta {
-  color: var(--faint);
 }
 .footer-contact {
   font-size: var(--text-small);
@@ -924,18 +440,13 @@ html.reduced-motion .closing-mark .tick {
   font-size: var(--text-h2);
   line-height: var(--leading-heading);
   letter-spacing: var(--tracking-heading);
-  max-width: 14ch;
-}
-.not-found .eyebrow {
-  margin-bottom: 0;
+  max-width: 16ch;
 }
 
 /* ── responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 62rem) {
   .hero-inner,
-  .shift-grid,
-  .govern-head,
-  .visible-inner {
+  .split {
     grid-template-columns: minmax(0, 1fr);
   }
   .hero h1 {
@@ -944,42 +455,23 @@ html.reduced-motion .closing-mark .tick {
   .hero-aside {
     max-width: 46ch;
   }
-  .contrast {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .contrast-pivot svg {
-    transform: rotate(90deg);
-  }
-  .govern-list article {
-    margin-left: 0;
+  .hero-field {
+    top: -4rem;
+    height: clamp(28rem, 70vh, 40rem);
+    opacity: 0.42;
+    mask-image: linear-gradient(to bottom, #000 0%, #000 44%, transparent 88%);
   }
 }
 
 @media (max-width: 40rem) {
   :root {
-    --shell: min(100% - 2rem, 78rem);
+    --shell: min(100% - 2rem, 76rem);
   }
   .site-header {
     padding-block: 1.1rem;
   }
-  .header-status {
-    display: none;
-  }
   .hero h1 {
     max-width: none;
-  }
-  .hero-lede {
-    padding-left: 0.9rem;
-  }
-  .govern-list article {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.45rem;
-  }
-  .contrast-thread .node + .node {
-    margin-left: 26px;
-  }
-  .contrast-thread .node + .node::before {
-    width: 26px;
   }
   .footer-inner {
     flex-direction: column;
@@ -996,7 +488,6 @@ html.reduced-motion .closing-mark .tick {
   *::before,
   *::after {
     animation-duration: 0.001ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
   }
   [data-reveal] {
