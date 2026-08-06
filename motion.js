@@ -1,16 +1,18 @@
 /* Atlas — motion
  *
- * One rAF loop normalizes scroll and pointer, smooths them with inertia, and
- * publishes them as custom properties on :root. Everything else reacts in CSS.
+ * One rAF loop normalizes scroll, pointer, and velocity; smooths them with
+ * half-life damping; and publishes them as custom properties on :root.
+ * Everything else reacts in CSS.
  *
- * The reason for the inertia: position alone reads as decoration. Lagging a
- * value behind its input by ~100ms is what makes a page feel like it has
- * weight instead of snapping around like a form control.
+ * The reason for inertia: position alone reads as decoration. Lagging a value
+ * behind its input by ~100ms is what makes a page feel like it has weight
+ * instead of snapping around like a form control.
  *
- *   --scroll      0..1 document progress
- *   --scroll-vel -1..1 signed, smoothed
- *   --ptr-x/y     0..1 pointer, smoothed
- *   --ptr-energy  0..1 decaying "recently moved"
+ *   --scroll       0..1 document progress
+ *   --scroll-vel  -1..1 signed, smoothed
+ *   --ptr-x/y      0..1 pointer, smoothed
+ *   --ptr-energy   0..1 decaying "recently moved"
+ *   --hero-progress 0..1 how far the hero is off-screen (drives its own parallax)
  */
 (() => {
   const root = document.documentElement;
@@ -43,7 +45,7 @@
     root.classList.remove("has-lenis");
   }
 
-  /* ── reveal ───────────────────────────────────────────────────────────── */
+  /* ── reveal orchestration ─────────────────────────────────────────────── */
   // Groups stagger internally; elements in one thought arrive together.
   document.querySelectorAll("[data-reveal-group]").forEach((group) => {
     Array.from(group.children).forEach((child, i) => {
@@ -54,10 +56,12 @@
     });
   });
 
-  const STEP = 80;
+  const STEP = 90;
 
   function revealAll() {
-    document.querySelectorAll("[data-reveal]").forEach((el) => el.classList.add("is-visible"));
+    document
+      .querySelectorAll("[data-reveal]")
+      .forEach((el) => el.classList.add("is-visible"));
   }
 
   if (reduced.matches) {
@@ -68,6 +72,7 @@
     root.style.setProperty("--ptr-x", "0.5");
     root.style.setProperty("--ptr-y", "0.5");
     root.style.setProperty("--ptr-energy", "0");
+    root.style.setProperty("--hero-progress", "1");
   } else {
     const io = new IntersectionObserver(
       (entries, obs) => {
@@ -109,23 +114,32 @@
     setTimeout(sweep, 400);
     setTimeout(() => {
       pending.forEach(release);
-      }, 2600);
+    }, 2600);
 
     /* ── normalized inputs ──────────────────────────────────────────────── */
-    const damp = (cur, tgt, half, dt) => tgt + (cur - tgt) * Math.pow(2, -dt / half);
+    const damp = (cur, tgt, half, dt) =>
+      tgt + (cur - tgt) * Math.pow(2, -dt / half);
     const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
-    let scroll = 0, scrollT = 0;
-    let vel = 0, velT = 0;
-    let px = 0.5, pxT = 0.5;
-    let py = 0.5, pyT = 0.5;
-    let energy = 0, energyT = 0;
+    let scroll = 0,
+      scrollT = 0;
+    let vel = 0,
+      velT = 0;
+    let px = 0.5,
+      pxT = 0.5;
+    let py = 0.5,
+      pyT = 0.5;
+    let energy = 0,
+      energyT = 0;
     let lastY = window.scrollY;
     let last = performance.now();
 
+    const heroEl = document.querySelector(".hero");
+    let heroH = 1;
     const measure = () => {
       const max = document.documentElement.scrollHeight - window.innerHeight;
       scrollT = max > 0 ? clamp01(window.scrollY / max) : 0;
+      if (heroEl) heroH = Math.max(heroEl.offsetHeight, 1);
     };
 
     window.addEventListener("scroll", measure, { passive: true });
@@ -164,6 +178,14 @@
       set("--ptr-x", px.toFixed(4));
       set("--ptr-y", py.toFixed(4));
       set("--ptr-energy", energy.toFixed(4));
+
+      if (heroEl) {
+        // 0 while hero is fully on-screen, →1 as it leaves. Drives its own
+        // parallax and fade so the field doesn't react to distant scrolling.
+        const r = heroEl.getBoundingClientRect();
+        const progress = clamp01(1 - (r.bottom + r.height * 0.15) / (r.height + window.innerHeight * 0.4));
+        set("--hero-progress", progress.toFixed(4));
+      }
     }
     requestAnimationFrame(tick);
   }
