@@ -50,6 +50,9 @@
   const DRIFT = 26; // px/s^2 wander, divided by mass — pools breathe
   const DRAG = 3.6; // s^-1 — the crisp settle of the first ink
   const POOL_K = 15; // s^-2, pull toward the pool's own centroid
+  const HOME_K = 0.8; // s^-2, the tide that carries pools back to their
+  // thrown positions — imperceptible in the moment, inevitable after.
+  // this is what keeps the page full no matter how hard it was played.
   const TENSION = 220; // px/s^2 pull when different pools touch
   const CROWD = 560; // px/s^2 push when ink over-stacks
   const DIFFUSE = 1.15; // 1/s pigment exchange while touching
@@ -72,11 +75,15 @@
     [0.227, 0.353, 0.471], // slate
     [0.42, 0.29, 0.408], // plum
     [0.588, 0.475, 0.227], // ochre
+    [0.561, 0.302, 0.333], // rose
+    [0.29, 0.329, 0.533], // indigo
   ];
 
   /* ── state ──────────────────────────────────────────────────────── */
   let parts = []; // free ink particles
   let poolCount = 0;
+  let homeX = new Float64Array(0), // where each pool was thrown
+    homeY = new Float64Array(0);
   let w = 0,
     h = 0,
     dpr = 1;
@@ -135,11 +142,11 @@
     // company, small drops are scattered everywhere they may go, and a
     // band of playable mediums lines the bottom.
     const classes = [
-      { n: Math.max(1, Math.round(2.6 * scale)), lo: 78, hi: 126, open: 0.3, apart: 330 },
-      { n: Math.max(3, Math.round(8 * scale)), lo: 36, hi: 62, open: 0.1, apart: 170 },
-      { n: Math.max(8, Math.round(17 * scale)), lo: 10, hi: 26, open: 0, apart: 70 },
-      { n: Math.max(3, Math.round(6 * scale)), lo: 4.5, hi: 8, open: -1, apart: 46 },
-      { n: Math.max(3, Math.round(4 * scale)), lo: 30, hi: 46, open: -1, apart: 210, band: true },
+      { n: Math.max(1, Math.round(3.2 * scale)), lo: 78, hi: 126, open: 0.3, apart: 320 },
+      { n: Math.max(4, Math.round(10 * scale)), lo: 36, hi: 62, open: 0.1, apart: 156 },
+      { n: Math.max(10, Math.round(22 * scale)), lo: 10, hi: 26, open: 0, apart: 64 },
+      { n: Math.max(4, Math.round(8 * scale)), lo: 4.5, hi: 8, open: -1, apart: 44 },
+      { n: Math.max(3, Math.round(5 * scale)), lo: 30, hi: 46, open: -1, apart: 190, band: true },
     ];
 
     let i = 0;
@@ -224,6 +231,13 @@
         }
         made++;
       }
+    }
+
+    homeX = new Float64Array(poolCount);
+    homeY = new Float64Array(poolCount);
+    for (let q = 0, pi = 0; q < placed.length && pi < poolCount; q++, pi++) {
+      homeX[pi] = placed[q].x;
+      homeY[pi] = placed[q].y;
     }
   }
 
@@ -316,6 +330,10 @@
       if (p.castT <= 0 && pcn[p.pid] > 0) {
         ax += (pcx[p.pid] / pcn[p.pid] - p.x) * POOL_K;
         ay += (pcy[p.pid] / pcn[p.pid] - p.y) * POOL_K;
+        // and the tide: pools remember where they were thrown, and
+        // drift back once the hand moves on — the page refills itself
+        ax += (homeX[p.pid] - p.x) * HOME_K;
+        ay += (homeY[p.pid] - p.y) * HOME_K;
       }
 
       // neighbors: different pools stick when touching, all ink refuses
@@ -400,7 +418,9 @@
           ax += rx * inv * gN * PUSH;
           ay += ry * inv * gN * PUSH;
 
-          if (gN > 0.5 && t - p.cool > 1.6) {
+          if (gN > 0.5 && t - p.cool > 1.6 && pcn[p.pid] > 2) {
+            // only pools with pieces to spare may lose one — no pool
+            // ever empties its corner of the page
             p.cool = t;
             if (hash(i * 41.7 + t) < 0.36) {
               let best = -1;

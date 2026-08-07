@@ -263,7 +263,7 @@ html.reduced-motion [data-reveal] {
   top: 0;
   bottom: 0;
   right: var(--rail-inset);
-  width: 48px;
+  width: 34px;
   pointer-events: none;
 }
 .rail-ticks {
@@ -284,30 +284,31 @@ html.reduced-motion [data-reveal] {
     28px calc(100% + 2.5px),
     22px calc(100% + 2px);
   background-position:
-    right top,
-    right top,
-    right top;
+    left top,
+    left top,
+    left top;
   background-repeat: no-repeat;
 }
 
-/* The head is the mark's needle on the page side of the border, tip
-   reaching the graduations' free ends — the needle points AT the ticks,
-   tips meeting tips, as in the mark itself. It mirrors the pointer's
-   height (damped by motion.js) and ignores the horizontal — so drifting
-   toward the border always lands the cursor exactly on it. */
+/* The head is the mark's needle, alone in the right margin. The ticks
+   are anchored on their left baseline with free ends facing it, so the
+   meridian's end and the needle's tip meet exactly — tips touching
+   tips, as in the mark itself. It mirrors the pointer's height (damped
+   by motion.js) and ignores the horizontal — so drifting toward the
+   border always lands the cursor exactly on it. */
 .rail-head {
   position: absolute;
-  right: 22px;
+  left: 100%;
   top: clamp(64px, var(--ptr-y, 0.5) * 100%, calc(100% - 64px));
   transform: translateY(-50%);
   line-height: 0;
   pointer-events: auto;
 }
 .rail-head::before {
-  /* generous approach zone reaching over the ticks */
+  /* generous approach zone reaching back over the ticks */
   content: "";
   position: absolute;
-  inset: -20px -64px -20px -12px;
+  inset: -20px -10px -20px -64px;
 }
 .rail-head:hover {
   cursor: none;
@@ -334,7 +335,7 @@ html.reduced-motion [data-reveal] {
    it is the mark, still on its side. */
 .rail-lens {
   position: absolute;
-  left: -31px; /* centered on the head */
+  left: -44px; /* focused just past the tip, head filling the glass */
   top: 50%;
   width: 104px;
   height: 104px;
@@ -395,9 +396,9 @@ html.reduced-motion [data-reveal] {
     56px 280px,
     44px 56px;
   background-position:
-    70px calc(52px - var(--ptr-y, 0.5) * 200vh),
-    82px calc(52px - var(--ptr-y, 0.5) * 200vh),
-    94px calc(52px - var(--ptr-y, 0.5) * 200vh);
+    -32px calc(52px - var(--ptr-y, 0.5) * 200vh),
+    -32px calc(52px - var(--ptr-y, 0.5) * 200vh),
+    -32px calc(52px - var(--ptr-y, 0.5) * 200vh);
   background-repeat: repeat-y;
 }
 .rail-lens svg {
@@ -707,16 +708,13 @@ html.reduced-motion [data-reveal] {
     --edge-r: calc(var(--rail-inset) + 1.5rem + 1.1rem);
   }
   .rail {
-    width: 32px;
+    width: 24px;
   }
   .rail-ticks {
     background-size:
-      14px calc(100% + 2px),
-      22px calc(100% + 2px),
-      32px calc(100% + 2.5px);
-  }
-  .rail-head {
-    right: 16px;
+      24px calc(100% + 2px),
+      20px calc(100% + 2px),
+      15px calc(100% + 2px);
   }
   .rail-apex {
     width: 28px;
