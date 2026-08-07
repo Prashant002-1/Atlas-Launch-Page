@@ -47,12 +47,15 @@
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   /* ── tuning ─────────────────────────────────────────────────────── */
-  const DRIFT = 10; // px/s^2 wander, divided by mass — pools breathe
-  const DRAG = 0.95; // s^-1 viscosity
-  const TENSION = 300; // px/s^2 pull when pools touch
-  const CROWD = 560; // px/s^2 push when pools over-stack
-  const DIFFUSE = 0.4; // 1/s pigment exchange while touching
-  const SEVER = 150; // px/s parting speed of a fresh cut, at most
+  const DRIFT = 26; // px/s^2 wander, divided by mass — pools breathe
+  const DRAG = 3.6; // s^-1 — the crisp settle of the first ink
+  const POOL_K = 15; // s^-2, pull toward the pool's own centroid
+  const TENSION = 220; // px/s^2 pull when different pools touch
+  const CROWD = 560; // px/s^2 push when ink over-stacks
+  const DIFFUSE = 1.15; // 1/s pigment exchange while touching
+  const PUSH = 5200; // px/s^2 — the pointer breaks a pool apart
+  const REACH = 150; // px, pointer influence radius
+  const TAU_ENERGY = 0.9; // s, pointer energy decay
   const DRY = 420; // px/s^2 nudge out of the words' dry zone
   const T = 0.5; // field threshold where ink begins
 
@@ -73,6 +76,7 @@
 
   /* ── state ──────────────────────────────────────────────────────── */
   let parts = []; // free ink particles
+  let poolCount = 0;
   let w = 0,
     h = 0,
     dpr = 1;
@@ -89,7 +93,7 @@
     const rail = document.querySelector(".rail");
     if (rail) {
       const r = rail.getBoundingClientRect();
-      if (r.width > 0) wallX = r.right - 44;
+      if (r.width > 0) wallX = r.right - 72; // clear of ticks and the head
     }
     dry = null;
     const c = canvas.getBoundingClientRect();
@@ -120,6 +124,7 @@
 
   function throwInk() {
     parts = [];
+    poolCount = 0;
     measureZones();
     const limX = Math.min(w, wallX) - 44;
     const scale = Math.min(1, limX / 1400) * Math.min(1, h / 900);
@@ -194,6 +199,7 @@
         const ringN = k > 4 ? k - 1 : k;
         const ringR = k > 4 ? R * 0.5 : k > 1 ? R * 0.32 : 0;
         const a0 = hash(i * 63.5) * 6.28318;
+        const pid = poolCount++;
         for (let p = 0; p < k; p++) {
           const onRing = !(k > 4 && p === 0);
           const a = a0 + (p / Math.max(1, ringN)) * 6.28318;
@@ -210,7 +216,8 @@
             cb: pig[2],
             ph: hash(i * 12.9 + p) * 6.28318,
             w1: 0.05 + hash(i * 1.7 + p) * 0.08,
-            cool: -10, // last time the blade cut this piece
+            pid: pid, // which pool this piece belongs to
+            cool: -10, // last time the pointer broke this piece
             castJ: -1, // where a cast-off piece is headed
             castT: 0,
           });
@@ -222,15 +229,46 @@
 
   /* ── physics ────────────────────────────────────────────────────── */
   let ptrX = -1e4,
-    ptrY = -1e4;
-  let pvx = 0,
-    pvy = 0; // pointer velocity, smoothed
+    ptrY = -1e4,
+    tgtX = -1e4,
+    tgtY = -1e4;
+  let energy = 0;
   let havePtr = false;
 
   const damp = (cur, tgt, half, dt) =>
     tgt + (cur - tgt) * Math.pow(2, -dt / half);
 
   const grid = new Map();
+  let pcx = new Float64Array(0),
+    pcy = new Float64Array(0),
+    pcn = new Float64Array(0);
+
+  // OKLab in, OKLab out — pigment trades hands in a perceptual space so
+  // mixtures stay alive instead of graying out (the practical middle
+  // ground short of full Kubelka-Munk pigment simulation).
+  const OK1 = [0, 0, 0];
+  const OK2 = [0, 0, 0];
+  const RGB1 = [0, 0, 0];
+  function rgb2ok(r, g, b, out) {
+    const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b);
+    const m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b);
+    const s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+    out[0] = 0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s;
+    out[1] = 1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s;
+    out[2] = 0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s;
+  }
+  function ok2rgb(L, a, b, out) {
+    const l_ = L + 0.3963377774 * a + 0.2158037573 * b;
+    const m_ = L - 0.1055613458 * a - 0.0638541728 * b;
+    const s_ = L - 0.0894841775 * a - 1.291485548 * b;
+    const l = l_ * l_ * l_;
+    const m = m_ * m_ * m_;
+    const s = s_ * s_ * s_;
+    out[0] = 4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s;
+    out[1] = -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s;
+    out[2] = -0.0041960863 * l - 0.7034186147 * m + 1.707614701 * s;
+  }
+  const clamp01 = (v) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
   function step(t, dt) {
     // neighbor grid
@@ -244,10 +282,25 @@
       else grid.set(key, [i]);
     }
 
-    const speed = Math.hypot(pvx, pvy);
-    const blading = havePtr && speed > 60;
-    const bvx = speed > 1 ? pvx / speed : 0;
-    const bvy = speed > 1 ? pvy / speed : 0;
+    // each pool's living centroid — the "home" that broken pieces
+    // return to is wherever the rest of their pool is now
+    if (pcx.length < poolCount) {
+      pcx = new Float64Array(poolCount);
+      pcy = new Float64Array(poolCount);
+      pcn = new Float64Array(poolCount);
+    }
+    pcx.fill(0);
+    pcy.fill(0);
+    pcn.fill(0);
+    for (let i = 0; i < parts.length; i++) {
+      const p = parts[i];
+      if (p.castT > 0) continue; // deserters don't drag the pool along
+      pcx[p.pid] += p.x;
+      pcy[p.pid] += p.y;
+      pcn[p.pid]++;
+    }
+
+    const R2 = REACH * REACH;
 
     for (let i = 0; i < parts.length; i++) {
       const p = parts[i];
@@ -257,8 +310,16 @@
       let ax = (Math.cos(p.ph + t * p.w1 * 6.28318) * DRIFT) / p.m;
       let ay = (Math.sin(p.ph * 1.7 + t * p.w1 * 5.1) * DRIFT) / p.m;
 
-      // neighbors: stick when touching, breathe apart when stacked,
-      // and trade pigment across every contact
+      // the pool re-forms: every piece is drawn back to wherever its
+      // pool is now. This is what makes a break heal — the gesture of
+      // the very first ink.
+      if (p.castT <= 0 && pcn[p.pid] > 0) {
+        ax += (pcx[p.pid] / pcn[p.pid] - p.x) * POOL_K;
+        ay += (pcy[p.pid] / pcn[p.pid] - p.y) * POOL_K;
+      }
+
+      // neighbors: different pools stick when touching, all ink refuses
+      // to over-stack, and pigment trades across every contact
       const cx = (p.x / CS) | 0;
       const cy = (p.y / CS) | 0;
       for (let gx = cx - 1; gx <= cx + 1; gx++) {
@@ -284,10 +345,9 @@
               ay -= (uy * f) / p.m;
               parts[j].vx += (ux * f * dt) / q.m;
               parts[j].vy += (uy * f * dt) / q.m;
-            } else if (d > R * 0.5 && d < R * 1.3) {
-              // surface tension pulls touching ink into DEEP overlap —
-              // half-buried centers are what make several particles
-              // read as one smooth body
+            } else if (p.pid !== q.pid && d > R * 0.5 && d < R * 1.3) {
+              // surface tension between different pools: touch, and you
+              // are being pulled into one body
               const f = TENSION * (1 - (d - R * 0.5) / (R * 0.8));
               ax += (ux * f) / p.m;
               ay += (uy * f) / p.m;
@@ -302,75 +362,74 @@
               const dg = q.cg - p.cg;
               const db = q.cb - p.cb;
               if (dr * dr + dg * dg + db * db > 0.006) {
-                const m = Math.min(0.5, DIFFUSE * (1 - d / R) * dt);
-                const wr = q.r * q.r / (p.r * p.r + q.r * q.r);
-                p.cr += dr * m * wr * 2;
-                p.cg += dg * m * wr * 2;
-                p.cb += db * m * wr * 2;
-                q.cr -= dr * m * (1 - wr) * 2;
-                q.cg -= dg * m * (1 - wr) * 2;
-                q.cb -= db * m * (1 - wr) * 2;
+                const mAmt = Math.min(0.4, DIFFUSE * (1 - d / R) * dt);
+                const wr = (q.r * q.r) / (p.r * p.r + q.r * q.r);
+                rgb2ok(p.cr, p.cg, p.cb, OK1);
+                rgb2ok(q.cr, q.cg, q.cb, OK2);
+                for (let c3 = 0; c3 < 3; c3++) {
+                  const dd = OK2[c3] - OK1[c3];
+                  OK1[c3] += dd * mAmt * wr * 2;
+                  OK2[c3] -= dd * mAmt * (1 - wr) * 2;
+                }
+                ok2rgb(OK1[0], OK1[1], OK1[2], RGB1);
+                p.cr = clamp01(RGB1[0]);
+                p.cg = clamp01(RGB1[1]);
+                p.cb = clamp01(RGB1[2]);
+                ok2rgb(OK2[0], OK2[1], OK2[2], RGB1);
+                q.cr = clamp01(RGB1[0]);
+                q.cg = clamp01(RGB1[1]);
+                q.cb = clamp01(RGB1[2]);
               }
             }
           }
         }
       }
 
-      // the blade: the pointer CUTS. Pieces directly under the stroke
-      // part to their side of it — and each piece decides its own fate,
-      // once per cut: most settle back where they were; some are cast
-      // off toward the nearest ink on their side, drift over, and melt
-      // in. Uneven on purpose — a cut is never tidy.
-      if (blading) {
+      // the pointer breaks pools apart, exactly as the first ink did:
+      // a wide, damped shove that splits a body into lobes the pool
+      // spring then gathers home. While strongly hit, a piece may
+      // decide — once — to defect instead: it picks the nearest ink on
+      // the far side of the shove, drifts over, and melts in.
+      if (havePtr && energy > 0.02) {
         const rx = p.x - ptrX;
         const ry = p.y - ptrY;
-        const along = rx * bvx + ry * bvy;
-        if (along > -46 && along < 26) {
-          const side = rx * -bvy + ry * bvx; // signed distance off-path
-          const reach = p.r + 14;
-          if (side > -reach && side < reach) {
-            const s = side >= 0 ? 1 : -1;
-            const g = 1 - Math.abs(side) / reach;
-            // ease the pieces toward a parting speed; never fling
-            const want = Math.min(SEVER, 40 + speed * 0.1) * s * g;
-            const cur = p.vx * -bvy + p.vy * bvx;
-            const add = (want - cur) * Math.min(1, dt * 10);
-            p.vx += -bvy * add;
-            p.vy += bvx * add;
+        const rd2 = rx * rx + ry * ry;
+        if (rd2 < R2 * 9) {
+          const gN = energy * Math.exp(-rd2 / R2);
+          const inv = 1 / Math.sqrt(rd2 + 1);
+          ax += rx * inv * gN * PUSH;
+          ay += ry * inv * gN * PUSH;
 
-            if (t - p.cool > 1.5) {
-              p.cool = t;
-              if (hash(i * 41.7 + t) < 0.42) {
-                // cast off: find the nearest other ink on this side of
-                // the stroke and go join it
-                let best = -1;
-                let bestD = 1e12;
-                for (let j = 0; j < parts.length; j++) {
-                  if (j === i) continue;
-                  const o = parts[j];
-                  const ox = o.x - ptrX;
-                  const oy = o.y - ptrY;
-                  if ((ox * -bvy + oy * bvx) * s < 0) continue; // wrong side
-                  const ddx = o.x - p.x;
-                  const ddy = o.y - p.y;
-                  const dd = ddx * ddx + ddy * ddy;
-                  if (dd < 3600) continue; // that is family, not a destination
-                  if (dd < bestD) {
-                    bestD = dd;
-                    best = j;
-                  }
+          if (gN > 0.5 && t - p.cool > 1.6) {
+            p.cool = t;
+            if (hash(i * 41.7 + t) < 0.36) {
+              let best = -1;
+              let bestD = 1e12;
+              for (let j = 0; j < parts.length; j++) {
+                if (j === i) continue;
+                const o = parts[j];
+                if (o.pid === p.pid) continue; // family is not a destination
+                const ddx = o.x - p.x;
+                const ddy = o.y - p.y;
+                if (ddx * rx + ddy * ry < 0) continue; // not through the pointer
+                const dd = ddx * ddx + ddy * ddy;
+                if (dd < 4900) continue;
+                if (dd < bestD) {
+                  bestD = dd;
+                  best = j;
                 }
-                if (best >= 0 && bestD < 420 * 420) {
-                  p.castJ = best;
-                  p.castT = 2.6;
-                }
+              }
+              if (best >= 0 && bestD < 460 * 460) {
+                p.castJ = best;
+                p.castT = 2.8;
               }
             }
           }
         }
       }
 
-      // a cast-off piece drifts to its chosen pool and melts in
+      // a cast-off piece drifts to its chosen pool, melts in, and from
+      // then on belongs to it
       if (p.castT > 0) {
         p.castT -= dt;
         const q2 = parts[p.castJ];
@@ -378,10 +437,11 @@
           const dx2 = q2.x - p.x;
           const dy2 = q2.y - p.y;
           const dd2c = Math.sqrt(dx2 * dx2 + dy2 * dy2) + 1;
-          if (dd2c < (p.r + q2.r) * 0.7) {
-            p.castT = 0; // arrived; tension owns it now
+          if (dd2c < (p.r + q2.r) * 0.7 || p.castT <= 0) {
+            p.castT = 0;
+            p.pid = q2.pid; // adopted
           } else {
-            const pull = 260 / p.m;
+            const pull = 300 / p.m;
             ax += (dx2 / dd2c) * pull;
             ay += (dy2 / dd2c) * pull;
           }
@@ -703,8 +763,6 @@
   let visible = true;
   let last = performance.now();
   const t0 = last;
-  let lastPtrX = -1e4,
-    lastPtrY = -1e4;
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 1.75);
@@ -731,15 +789,11 @@
     last = now;
     const t = (now - t0) / 1000;
 
-    // pointer velocity, smoothed — the blade's direction and force
-    if (havePtr && lastPtrX > -9e3 && dt > 0) {
-      pvx = damp(pvx, (ptrX - lastPtrX) / dt, 0.09, dt);
-      pvy = damp(pvy, (ptrY - lastPtrY) / dt, 0.09, dt);
-    }
-    lastPtrX = ptrX;
-    lastPtrY = ptrY;
-    pvx *= Math.exp(-dt / 0.5);
-    pvy *= Math.exp(-dt / 0.5);
+    // the pointer trails its true position, and its energy — how much
+    // it has moved lately — is what breaks ink. Rest disturbs nothing.
+    ptrX = damp(ptrX, tgtX, 0.08, dt);
+    ptrY = damp(ptrY, tgtY, 0.08, dt);
+    energy *= Math.exp(-dt / TAU_ENERGY);
 
     step(t, dt);
     if (glOK) renderGL();
@@ -765,9 +819,14 @@
     (e) => {
       const r = canvas.getBoundingClientRect();
       if (r.height <= 0) return;
-      ptrX = e.clientX - r.left;
-      ptrY = e.clientY - r.top;
+      tgtX = e.clientX - r.left;
+      tgtY = e.clientY - r.top;
+      if (!havePtr) {
+        ptrX = tgtX;
+        ptrY = tgtY;
+      }
       havePtr = true;
+      energy = Math.min(1, energy + 0.26);
     },
     { passive: true },
   );

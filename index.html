@@ -74,38 +74,28 @@
       <div class="rail" aria-hidden="true">
         <span class="rail-ticks"></span>
         <div class="rail-head">
-          <!-- the mark's own needle, alone in the right margin, its tip
-               against the tick line -->
+          <!-- the mark's needle on the page side of the border, pointing
+               AT the ticks — tips meeting tips, exactly as in the mark -->
           <svg
             class="rail-apex"
             viewBox="0 0 42 40"
             width="42"
             height="40"
           >
-            <path d="M0 20 L42 0 L42 40 Z" fill="#0a1f19" />
-            <path d="M0 20 L42 8.4 L42 31.6 Z" fill="#f1f4ee" />
-            <path d="M0 20 L42 15.2 L42 24.8 Z" fill="#0a1f19" />
+            <path d="M42 20 L0 0 L0 40 Z" fill="#0a1f19" />
+            <path d="M42 20 L0 8.4 L0 31.6 Z" fill="#f1f4ee" />
+            <path d="M42 20 L0 15.2 L0 24.8 Z" fill="#0a1f19" />
           </svg>
           <!-- on approach, glass closes around the head and magnifies it
-               in place: the same needle, the same ticks — plus the finer
-               graduations only a loupe reveals. Zoomed, it is the mark,
-               exactly as it lies. -->
+               in place: the needle fills the view, the graduations stay
+               on the boundary, and as the head travels the ticks slide
+               through the glass at twice the pace — a true loupe. The
+               tick fringe is drawn by CSS so it can track --ptr-y. -->
           <span class="rail-lens">
             <svg viewBox="0 0 104 104" width="104" height="104">
-              <!-- magnified graduations, right-aligned on the border -->
-              <g fill="none" stroke-linecap="butt">
-                <path d="M38 4 H52" stroke="#c4cbc2" stroke-width="2" />
-                <path d="M22 20 H52" stroke="#acb4ae" stroke-width="4.4" />
-                <path d="M38 36 H52" stroke="#c4cbc2" stroke-width="2" />
-                <path d="M6 52 H52" stroke="#727f79" stroke-width="4.4" />
-                <path d="M38 68 H52" stroke="#c4cbc2" stroke-width="2" />
-                <path d="M22 84 H52" stroke="#acb4ae" stroke-width="4.4" />
-                <path d="M38 100 H52" stroke="#c4cbc2" stroke-width="2" />
-              </g>
-              <!-- the needle, magnified where it rests -->
-              <path d="M52 52 L148 6 L148 98 Z" fill="#0a1f19" />
-              <path d="M52 52 L148 25.3 L148 78.7 Z" fill="#f1f4ee" />
-              <path d="M52 52 L148 41 L148 63 Z" fill="#0a1f19" />
+              <path d="M94 52 L10 12 L10 92 Z" fill="#0a1f19" />
+              <path d="M94 52 L10 25.3 L10 78.7 Z" fill="#f1f4ee" />
+              <path d="M94 52 L10 41 L10 63 Z" fill="#0a1f19" />
             </svg>
           </span>
         </div>

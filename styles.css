@@ -269,17 +269,20 @@ html.reduced-motion [data-reveal] {
 .rail-ticks {
   position: absolute;
   inset: 0;
-  /* Tick colors are opaque paper-mixed inks and the layers stack longest
-     on top, so where a long tick lands on a minor's beat the long one
-     simply covers it — every tick reads as one uniform bar. */
+  /* The mark's own graduation fan, unrolled: inner ticks, longer edge
+     ticks, and the meridian — lengths and weights in the proportions of
+     brand/atlas-mark.svg (14.5 : 18.5 : 22 at widths 4 : 5 : 6). Tick
+     colors are opaque paper-mixed inks and the layers stack longest on
+     top, so where a long tick lands on a minor's beat it simply covers
+     it — every tick reads as one uniform bar. */
   background-image:
-    repeating-linear-gradient(to bottom, #727f79 0 2px, transparent 2px 280px),
-    repeating-linear-gradient(to bottom, #909b95 0 2px, transparent 2px 70px),
+    repeating-linear-gradient(to bottom, #727f79 0 3px, transparent 3px 280px),
+    repeating-linear-gradient(to bottom, #909b95 0 2.5px, transparent 2.5px 70px),
     repeating-linear-gradient(to bottom, #acb4ae 0 2px, transparent 2px 14px);
   background-size:
-    34px calc(100% + 2px),
-    26px calc(100% + 2px),
-    18px calc(100% + 2px);
+    34px calc(100% + 3px),
+    28px calc(100% + 2.5px),
+    22px calc(100% + 2px);
   background-position:
     right top,
     right top,
@@ -287,23 +290,24 @@ html.reduced-motion [data-reveal] {
   background-repeat: no-repeat;
 }
 
-/* The head is the mark's needle, alone in the right margin, tip against
-   the tick line. It mirrors the pointer's height (damped by motion.js)
-   and ignores the horizontal — so drifting toward the border always
-   lands the cursor exactly on it. */
+/* The head is the mark's needle on the page side of the border, tip
+   reaching the graduations' free ends — the needle points AT the ticks,
+   tips meeting tips, as in the mark itself. It mirrors the pointer's
+   height (damped by motion.js) and ignores the horizontal — so drifting
+   toward the border always lands the cursor exactly on it. */
 .rail-head {
   position: absolute;
-  left: 100%;
+  right: 22px;
   top: clamp(64px, var(--ptr-y, 0.5) * 100%, calc(100% - 64px));
   transform: translateY(-50%);
   line-height: 0;
   pointer-events: auto;
 }
 .rail-head::before {
-  /* generous approach zone reaching back over the ticks */
+  /* generous approach zone reaching over the ticks */
   content: "";
   position: absolute;
-  inset: -20px -10px -20px -64px;
+  inset: -20px -64px -20px -12px;
 }
 .rail-head:hover {
   cursor: none;
@@ -323,13 +327,14 @@ html.reduced-motion [data-reveal] {
 }
 
 /* On approach, the cursor becomes a loupe: clear liquid glass closing
-   around the head where it lies, centered on the tip against the tick
-   line. Inside, the same scene magnified — needle, graduations, and the
-   finer sub-ticks only the glass reveals. Zoomed in, it is the mark,
-   still on its side. */
+   around the head where it lies. The needle fills the glass; the
+   graduations stay on the boundary, entering from the border edge; and
+   as the head travels, the magnified ticks slide through the view at
+   twice the pace — real loupe parallax, driven by --ptr-y. Zoomed in,
+   it is the mark, still on its side. */
 .rail-lens {
   position: absolute;
-  left: -52px; /* centered on the tip, on the tick line */
+  left: -31px; /* centered on the head */
   top: 50%;
   width: 104px;
   height: 104px;
@@ -360,6 +365,7 @@ html.reduced-motion [data-reveal] {
   /* specular streak */
   content: "";
   position: absolute;
+  z-index: 3;
   left: 10%;
   top: 6%;
   width: 48%;
@@ -372,8 +378,31 @@ html.reduced-motion [data-reveal] {
   );
   transform: rotate(-22deg);
 }
+/* The magnified graduations: the same three tick voices at 2×, anchored
+   so the border line sits just past the glass's right edge, sliding at
+   twice the head's travel. */
+.rail-lens::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(to bottom, #727f79 0 6px, transparent 6px 560px),
+    repeating-linear-gradient(to bottom, #909b95 0 5px, transparent 5px 140px),
+    repeating-linear-gradient(to bottom, #acb4ae 0 4px, transparent 4px 28px);
+  background-size:
+    68px 1120px,
+    56px 280px,
+    44px 56px;
+  background-position:
+    70px calc(52px - var(--ptr-y, 0.5) * 200vh),
+    82px calc(52px - var(--ptr-y, 0.5) * 200vh),
+    94px calc(52px - var(--ptr-y, 0.5) * 200vh);
+  background-repeat: repeat-y;
+}
 .rail-lens svg {
   position: absolute;
+  z-index: 2;
   inset: 0;
   width: 100%;
   height: 100%;
@@ -685,6 +714,9 @@ html.reduced-motion [data-reveal] {
       14px calc(100% + 2px),
       22px calc(100% + 2px),
       32px calc(100% + 2.5px);
+  }
+  .rail-head {
+    right: 16px;
   }
   .rail-apex {
     width: 28px;
