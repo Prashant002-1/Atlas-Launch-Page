@@ -8,12 +8,41 @@ the authenticated Atlas-LMS application.
 - A dependency-free static site
 - One public page with the launch hero, personal layer, and closing contact
 - The fixed Atlas mark and vendored brand fonts
-- Optimized Atlas halftone artwork
+- The ink field (`field.js`): a WebGL metaball ecology of thrown ink pools
+  that drift, merge, mix pigment, and part under the cursor
+- The instrument edge: full-height ticks with the mark's needle riding the
+  reader's position, opening into a glass tile of the mark on approach
 - A locally vendored Lenis 1.3.25 scroll layer with reduced-motion support
 - Privacy-friendly Vercel Web Analytics for page views and visitors
 - Vercel routing and security headers
 - Launch-ready metadata, sitemap, 404 handling, and accessible navigation
 - No application source, APIs, environment variables, or secrets
+
+## Design language
+
+The page is one sheet composed left of an instrument edge. All content
+hangs from a generous left margin; a full-height column of ticks is the
+right border; the hero stands alone and immersive while the ruled
+structure (left line, section rules, register crosses) carries the body.
+
+Type is Geist — sans for everything, mono for micro-labels. Emphasis
+comes from scale, weight, and placement, never from style changes.
+
+Palette (brand plus documented field extensions):
+
+| Token   | Value     | Use                                            |
+| ------- | --------- | ---------------------------------------------- |
+| paper   | `#f1f4ee` | the sheet                                      |
+| ink     | `#0a1f19` | text, linework at full strength                |
+| pine    | `#14543d` | deep brand green — the dominant ink pigment    |
+| mint    | `#72d49a` | brand light accent — selection highlights      |
+| wash    | `#e6eee6` | glass-green fill for quiet surfaces            |
+| clay    | `#bf5f3b` | warm counterpoint — never for text             |
+
+The ink field mixes pigments from a wider family (pine, sea, moss, clay,
+deep ink) held close in value so every blend still reads as ink on this
+paper. Reactive work is code; the strict CSP (`script-src 'self'`) stays
+intact — no CDNs, no inline scripts.
 
 ## Local preview
 
