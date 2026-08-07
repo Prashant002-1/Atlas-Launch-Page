@@ -64,8 +64,7 @@ This directory is linked locally to the Vercel project
 `atlas-lms-coming-soon`. The intended custom domains are `atlas-lms.com` and
 `www.atlas-lms.com`.
 
-The project is backed by a private GitHub repository for source history and
-future collaboration. It is not connected to Vercel's Git integration yet, so
-production deploys remain explicit Vercel CLI deploys from this directory.
+The private GitHub repository is connected to Vercel. Pushes and merges to
+`main` deploy to production, while other branches receive preview deployments.
 
 Lenis is vendored under its MIT license in `vendor/LENIS-LICENSE`.
