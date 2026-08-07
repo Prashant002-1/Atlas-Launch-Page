@@ -1,6 +1,13 @@
 /* Atlas — the field
  *
- * Inks, thrown on the page.
+ * Inks, thrown on a halftone surface.
+ *
+ * The whole hero is one quiet halftone screen (15° print angle): every
+ * cell holds a small neutral dot. Ink is a STATE of that surface —
+ * where a pool lives, the same dots swell a little and take on its
+ * pigment, heavily muted so the field stays a background and the page
+ * stays about the product. The dots never fuse: identity is kept from
+ * rim to core, and the surface dissolves before every page edge.
  *
  * A handful of ink pools — different pigments, different weights — are
  * thrown onto the hero and left alone. They drift with the viscosity of
@@ -528,7 +535,9 @@
   let uSplatRes = null,
     uSplatGain = null,
     uInkTex = null,
-    uInkT = null;
+    uInkT = null,
+    uInkRes2 = null,
+    uInkPx = null;
   let locPos = -1,
     locLoc = -1,
     locCol = -1,
@@ -598,12 +607,34 @@
         "varying vec2 vUV;",
         "uniform sampler2D uTex;",
         "uniform float uT;",
+        "uniform vec2 uRes2;",
+        "uniform float uPx;",
         "void main(){",
-        "  vec4 s = texture2D(uTex, vUV);",
+        "  float ca = 0.96593; float sa = 0.25882;", // 15° screen angle
+        "  vec2 fp = vUV * uRes2;",
+        "  vec2 q = mat2(ca, sa, -sa, ca) * fp;",
+        "  vec2 cell = (floor(q / uPx) + 0.5) * uPx;",
+        "  vec2 cp = mat2(ca, -sa, sa, ca) * cell;",
+        "  vec4 s = texture2D(uTex, cp / uRes2);",
         "  float f = s.a;",
-        "  float aa = uT * 0.09;",
-        "  float a = smoothstep(uT - aa, uT + aa, f) * 0.96;",
-        "  vec3 col = s.rgb / max(f, 0.0001);",
+        "  float tone = clamp(f / (uT * 1.5), 0.0, 1.0);",
+        // the whole surface is halftone: at rest every cell holds a
+        // small neutral dot; where ink lives, the same dots swell and
+        // take on its pigment — the surface emits the color
+        "  float rd = clamp(uPx * 0.5 * sqrt(tone) * 1.42, uPx * 0.14, uPx * 0.42);",
+        "  float d = length(fp - cp);",
+        "  float a = 1.0 - smoothstep(rd - 1.2, rd + 1.2, d);",
+        "  float ink = smoothstep(0.04, 0.42, tone);",
+        "  vec3 pigment = s.rgb / max(f, 0.0001);",
+        // muted: pigment stays in a quiet tonal family, never loud
+        "  pigment = mix(pigment, vec3(0.675, 0.706, 0.682), 0.62);",
+        "  vec3 col = mix(vec3(0.675, 0.706, 0.682), pigment, ink);",
+        "  a *= mix(0.27, 0.48, ink);",
+        // the surface dissolves before the page's edges — no hard cut
+        "  float dp = uPx / 8.5;",
+        "  a *= smoothstep(uRes2.y, uRes2.y - 130.0 * dp, fp.y);",
+        "  a *= smoothstep(uRes2.x - 40.0 * dp, uRes2.x - 200.0 * dp, fp.x);",
+        "  a *= smoothstep(0.0, 90.0 * dp, fp.y);",
         "  gl_FragColor = vec4(col * a, a);",
         "}",
       ].join("\n"),
@@ -625,6 +656,8 @@
     uSplatGain = gl.getUniformLocation(progSplat, "uGain");
     uInkTex = gl.getUniformLocation(progInk, "uTex");
     uInkT = gl.getUniformLocation(progInk, "uT");
+    uInkRes2 = gl.getUniformLocation(progInk, "uRes2");
+    uInkPx = gl.getUniformLocation(progInk, "uPx");
     locPos = gl.getAttribLocation(progSplat, "aPos");
     locLoc = gl.getAttribLocation(progSplat, "aLocal");
     locCol = gl.getAttribLocation(progSplat, "aCol");
@@ -752,6 +785,8 @@
     gl.bindTexture(gl.TEXTURE_2D, fboTex);
     gl.uniform1i(uInkTex, 0);
     gl.uniform1f(uInkT, T * gain);
+    gl.uniform2f(uInkRes2, canvas.width, canvas.height);
+    gl.uniform1f(uInkPx, 8.5 * dpr);
     gl.bindBuffer(gl.ARRAY_BUFFER, quadBuf);
     gl.enableVertexAttribArray(locClip);
     gl.vertexAttribPointer(locClip, 2, gl.FLOAT, false, 0, 0);

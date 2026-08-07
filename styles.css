@@ -636,6 +636,9 @@ html.reduced-motion [data-reveal] {
   content: "";
   display: block;
   height: 1px;
+  /* the rule stops before the instrument edge — nothing passes the
+     right side of the ticks */
+  margin-right: calc(var(--rail-inset) + 44px);
   background-image: repeating-linear-gradient(
     to right,
     var(--line) 0 4px,
@@ -741,6 +744,9 @@ html.reduced-motion [data-reveal] {
   }
   .rail {
     display: none;
+  }
+  .site-footer::before {
+    margin-right: 0;
   }
   .header-inner {
     padding-block: 1.05rem;
