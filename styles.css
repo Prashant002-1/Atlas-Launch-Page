@@ -269,26 +269,17 @@ html.reduced-motion [data-reveal] {
 .rail-ticks {
   position: absolute;
   inset: 0;
+  /* Tick colors are opaque paper-mixed inks and the layers stack longest
+     on top, so where a long tick lands on a minor's beat the long one
+     simply covers it — every tick reads as one uniform bar. */
   background-image:
-    repeating-linear-gradient(
-      to bottom,
-      rgba(10, 31, 25, 0.3) 0 2px,
-      transparent 2px 14px
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      rgba(10, 31, 25, 0.42) 0 2px,
-      transparent 2px 70px
-    ),
-    repeating-linear-gradient(
-      to bottom,
-      rgba(10, 31, 25, 0.55) 0 2px,
-      transparent 2px 280px
-    );
+    repeating-linear-gradient(to bottom, #727f79 0 2px, transparent 2px 280px),
+    repeating-linear-gradient(to bottom, #909b95 0 2px, transparent 2px 70px),
+    repeating-linear-gradient(to bottom, #acb4ae 0 2px, transparent 2px 14px);
   background-size:
-    18px calc(100% + 2px),
+    34px calc(100% + 2px),
     26px calc(100% + 2px),
-    34px calc(100% + 2px);
+    18px calc(100% + 2px);
   background-position:
     right top,
     right top,
@@ -331,32 +322,36 @@ html.reduced-motion [data-reveal] {
   transform: scale(0.7);
 }
 
-/* On approach the cursor itself becomes the mark's tile: a square of
-   smoked liquid glass, caught on the border, holding the mark — ticks
-   above, needle rising — the original composition, in place. */
+/* On approach, the cursor becomes a loupe: clear liquid glass closing
+   around the head where it lies, centered on the tip against the tick
+   line. Inside, the same scene magnified — needle, graduations, and the
+   finer sub-ticks only the glass reveals. Zoomed in, it is the mark,
+   still on its side. */
 .rail-lens {
   position: absolute;
-  left: -48px; /* centered on the tick line */
+  left: -52px; /* centered on the tip, on the tick line */
   top: 50%;
-  width: 96px;
-  height: 96px;
-  transform: translateY(-50%) scale(0.4);
+  width: 104px;
+  height: 104px;
+  transform: translateY(-50%) scale(0.42);
   opacity: 0;
   pointer-events: none;
-  border-radius: 26px;
+  overflow: hidden;
+  border-radius: 30px;
   background: linear-gradient(
     148deg,
-    rgba(12, 40, 32, 0.88),
-    rgba(6, 31, 26, 0.82)
+    rgba(255, 255, 255, 0.42),
+    rgba(238, 244, 238, 0.16) 46%,
+    rgba(226, 236, 228, 0.34)
   );
-  -webkit-backdrop-filter: blur(5px) saturate(1.15);
-  backdrop-filter: blur(5px) saturate(1.15);
-  border: 1px solid rgba(255, 255, 255, 0.34);
+  -webkit-backdrop-filter: blur(2.5px) saturate(1.12);
+  backdrop-filter: blur(2.5px) saturate(1.12);
+  border: 1px solid rgba(255, 255, 255, 0.75);
   box-shadow:
-    inset 0 1px 9px rgba(255, 255, 255, 0.3),
-    inset 0 -12px 26px rgba(0, 0, 0, 0.28),
-    0 18px 44px rgba(10, 31, 25, 0.3),
-    0 2px 8px rgba(10, 31, 25, 0.16);
+    inset 0 1px 10px rgba(255, 255, 255, 0.6),
+    inset 0 -10px 22px rgba(10, 31, 25, 0.08),
+    0 16px 40px rgba(10, 31, 25, 0.18),
+    0 2px 8px rgba(10, 31, 25, 0.1);
   transition:
     transform 0.38s var(--spring),
     opacity 0.22s linear;
@@ -365,23 +360,23 @@ html.reduced-motion [data-reveal] {
   /* specular streak */
   content: "";
   position: absolute;
-  left: 12%;
-  top: 7%;
-  width: 46%;
+  left: 10%;
+  top: 6%;
+  width: 48%;
   height: 24%;
   border-radius: 50%;
   background: radial-gradient(
     closest-side,
-    rgba(255, 255, 255, 0.34),
+    rgba(255, 255, 255, 0.7),
     rgba(255, 255, 255, 0)
   );
   transform: rotate(-22deg);
 }
 .rail-lens svg {
   position: absolute;
-  inset: 12px;
-  width: calc(100% - 24px);
-  height: calc(100% - 24px);
+  inset: 0;
+  width: 100%;
+  height: 100%;
   max-width: none;
 }
 .rail-head:hover .rail-lens,

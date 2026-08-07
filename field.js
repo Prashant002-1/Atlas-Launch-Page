@@ -57,7 +57,8 @@
   const T = 0.5; // field threshold where ink begins
 
   // Pigments: one family of ink weights, nature hues held close in
-  // value so any mixture still reads as ink on this paper.
+  // value so any mixture still reads as ink on this paper. Pine leads;
+  // the rest visit.
   const PIGMENTS = [
     [0.078, 0.329, 0.239], // pine
     [0.078, 0.329, 0.239], // pine (dominant)
@@ -65,6 +66,9 @@
     [0.322, 0.416, 0.204], // moss
     [0.634, 0.373, 0.222], // clay
     [0.039, 0.122, 0.098], // deep ink
+    [0.227, 0.353, 0.471], // slate
+    [0.42, 0.29, 0.408], // plum
+    [0.588, 0.475, 0.227], // ochre
   ];
 
   /* ── state ──────────────────────────────────────────────────────── */
@@ -123,12 +127,14 @@
 
     // The population, in the spirit of the first single ink mass:
     // a few LARGE slow pools own the open space, mediums keep them
-    // company, small drops are scattered everywhere they may go.
+    // company, small drops are scattered everywhere they may go, and a
+    // band of playable mediums lines the bottom.
     const classes = [
       { n: Math.max(1, Math.round(2.6 * scale)), lo: 78, hi: 126, open: 0.3, apart: 330 },
       { n: Math.max(3, Math.round(8 * scale)), lo: 36, hi: 62, open: 0.1, apart: 170 },
       { n: Math.max(8, Math.round(17 * scale)), lo: 10, hi: 26, open: 0, apart: 70 },
       { n: Math.max(3, Math.round(6 * scale)), lo: 4.5, hi: 8, open: -1, apart: 46 },
+      { n: Math.max(3, Math.round(4 * scale)), lo: 30, hi: 46, open: -1, apart: 210, band: true },
     ];
 
     let i = 0;
@@ -145,9 +151,11 @@
 
         const R = C.lo + h3 * (C.hi - C.lo);
         const x = 40 + R + h1 * (limX - 80 - R * 2);
-        const y = 40 + R + h2 * (h - 80 - R * 2);
+        const y = C.band
+          ? h * 0.86 + h2 * (h * 0.14 - R - 20)
+          : 40 + R + h2 * (h - 80 - R * 2);
 
-        const pad = ci === 3 ? 14 : 30 + R * 0.5;
+        const pad = C.open < 0 ? 14 : 30 + R * 0.5;
         const inDry =
           dry &&
           x > dry.x0 - pad &&
@@ -202,6 +210,9 @@
             cb: pig[2],
             ph: hash(i * 12.9 + p) * 6.28318,
             w1: 0.05 + hash(i * 1.7 + p) * 0.08,
+            cool: -10, // last time the blade cut this piece
+            castJ: -1, // where a cast-off piece is headed
+            castT: 0,
           });
         }
         made++;
@@ -284,26 +295,32 @@
               parts[j].vy -= (uy * f * dt) / q.m;
             }
             if (d < R) {
-              // pigment seeps across the contact
-              const m = Math.min(0.5, DIFFUSE * (1 - d / R) * dt);
-              const wr = q.r * q.r / (p.r * p.r + q.r * q.r);
-              const mr = (q.cr - p.cr) * m;
-              const mg = (q.cg - p.cg) * m;
-              const mb = (q.cb - p.cb) * m;
-              p.cr += mr * wr * 2;
-              p.cg += mg * wr * 2;
-              p.cb += mb * wr * 2;
-              q.cr -= mr * (1 - wr) * 2;
-              q.cg -= mg * (1 - wr) * 2;
-              q.cb -= mb * (1 - wr) * 2;
+              // pigment seeps across the contact — but only to a point:
+              // once two inks are nearly matched they keep the last of
+              // their own character
+              const dr = q.cr - p.cr;
+              const dg = q.cg - p.cg;
+              const db = q.cb - p.cb;
+              if (dr * dr + dg * dg + db * db > 0.006) {
+                const m = Math.min(0.5, DIFFUSE * (1 - d / R) * dt);
+                const wr = q.r * q.r / (p.r * p.r + q.r * q.r);
+                p.cr += dr * m * wr * 2;
+                p.cg += dg * m * wr * 2;
+                p.cb += db * m * wr * 2;
+                q.cr -= dr * m * (1 - wr) * 2;
+                q.cg -= dg * m * (1 - wr) * 2;
+                q.cb -= db * m * (1 - wr) * 2;
+              }
             }
           }
         }
       }
 
-      // the blade: the pointer CUTS. ink directly under the stroke
-      // parts just enough for the neck to sever — a tear, not a shove —
-      // and only while the blade is actually passing through it.
+      // the blade: the pointer CUTS. Pieces directly under the stroke
+      // part to their side of it — and each piece decides its own fate,
+      // once per cut: most settle back where they were; some are cast
+      // off toward the nearest ink on their side, drift over, and melt
+      // in. Uneven on purpose — a cut is never tidy.
       if (blading) {
         const rx = p.x - ptrX;
         const ry = p.y - ptrY;
@@ -320,7 +337,56 @@
             const add = (want - cur) * Math.min(1, dt * 10);
             p.vx += -bvy * add;
             p.vy += bvx * add;
+
+            if (t - p.cool > 1.5) {
+              p.cool = t;
+              if (hash(i * 41.7 + t) < 0.42) {
+                // cast off: find the nearest other ink on this side of
+                // the stroke and go join it
+                let best = -1;
+                let bestD = 1e12;
+                for (let j = 0; j < parts.length; j++) {
+                  if (j === i) continue;
+                  const o = parts[j];
+                  const ox = o.x - ptrX;
+                  const oy = o.y - ptrY;
+                  if ((ox * -bvy + oy * bvx) * s < 0) continue; // wrong side
+                  const ddx = o.x - p.x;
+                  const ddy = o.y - p.y;
+                  const dd = ddx * ddx + ddy * ddy;
+                  if (dd < 3600) continue; // that is family, not a destination
+                  if (dd < bestD) {
+                    bestD = dd;
+                    best = j;
+                  }
+                }
+                if (best >= 0 && bestD < 420 * 420) {
+                  p.castJ = best;
+                  p.castT = 2.6;
+                }
+              }
+            }
           }
+        }
+      }
+
+      // a cast-off piece drifts to its chosen pool and melts in
+      if (p.castT > 0) {
+        p.castT -= dt;
+        const q2 = parts[p.castJ];
+        if (q2) {
+          const dx2 = q2.x - p.x;
+          const dy2 = q2.y - p.y;
+          const dd2c = Math.sqrt(dx2 * dx2 + dy2 * dy2) + 1;
+          if (dd2c < (p.r + q2.r) * 0.7) {
+            p.castT = 0; // arrived; tension owns it now
+          } else {
+            const pull = 260 / p.m;
+            ax += (dx2 / dd2c) * pull;
+            ay += (dy2 / dd2c) * pull;
+          }
+        } else {
+          p.castT = 0;
         }
       }
 
@@ -458,7 +524,6 @@
         "  float aa = uT * 0.09;",
         "  float a = smoothstep(uT - aa, uT + aa, f) * 0.96;",
         "  vec3 col = s.rgb / max(f, 0.0001);",
-        "  col *= 0.78 + 0.22 * smoothstep(uT, uT + 0.7, f);",
         "  gl_FragColor = vec4(col * a, a);",
         "}",
       ].join("\n"),
