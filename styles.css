@@ -12,20 +12,6 @@
   font-display: swap;
   font-style: normal;
 }
-@font-face {
-  font-family: "Spectral";
-  src: url("/fonts/spectral-400.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Spectral";
-  src: url("/fonts/spectral-400-italic.woff2") format("woff2");
-  font-weight: 400;
-  font-display: swap;
-  font-style: italic;
-}
 
 :root {
   color-scheme: light;
@@ -49,7 +35,6 @@
 
   --font-sans: "Geist", "Avenir Next", "Helvetica Neue", sans-serif;
   --font-mono: "Geist Mono", "SFMono-Regular", Consolas, monospace;
-  --font-accent: "Spectral", Georgia, serif;
 
   /* One enormous moment, then a real drop. The ratio does the work. */
   --text-hero: clamp(3rem, 7.4vw + 0.6rem, 8.5rem);
@@ -154,36 +139,23 @@ a {
 /* ── reveal ─────────────────────────────────────────────────────────────── */
 html.js [data-reveal] {
   opacity: 0;
-  transform: translate3d(0, 18px, 0);
+  transform: translate3d(0, 14px, 0);
   transition:
-    opacity 0.9s var(--ease),
-    transform 0.9s var(--ease);
-  /* Fail open: if the observer never fires (embedded, prerendered, dead rAF),
-     a CSS fallback brings every element in on its own. JS canceling this via
-     .is-visible is the normal path; this is the safety net, not the driver. */
-  animation: reveal-failsafe 0.01s var(--ease) 2.8s forwards;
+    opacity 0.8s var(--ease),
+    transform 0.8s var(--ease);
 }
 html.js [data-reveal].is-visible {
   opacity: 1;
   transform: none;
-  animation: none;
-}
-@keyframes reveal-failsafe {
-  to {
-    opacity: 1;
-    transform: none;
-  }
 }
 html.reduced-motion [data-reveal] {
   opacity: 1;
   transform: none;
   transition: none;
-  animation: none;
 }
 
 /* ── controls ───────────────────────────────────────────────────────────── */
 .button {
-  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -196,34 +168,10 @@ html.reduced-motion [data-reveal] {
   font-weight: 500;
   text-decoration: none;
   white-space: nowrap;
-  overflow: hidden;
-  transition:
-    background-color 0.18s linear,
-    transform 0.4s var(--ease);
-}
-.button::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    105deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.14) 48%,
-    transparent 62%
-  );
-  transform: translateX(-120%);
-  transition: transform 0.7s var(--ease);
-  pointer-events: none;
+  transition: background-color 0.16s linear;
 }
 .button:hover {
   background: var(--brand-deep);
-  transform: translate3d(0, -1px, 0);
-}
-.button:hover::after {
-  transform: translateX(120%);
-}
-.button:active {
-  transform: translate3d(0, 0, 0);
 }
 .button-lg {
   padding: 1.05rem 1.9rem;
@@ -240,16 +188,16 @@ html.reduced-motion [data-reveal] {
   font-weight: 500;
   color: var(--ink-soft);
   text-decoration: none;
-  transition: color 0.18s linear;
+  transition: color 0.16s linear;
 }
 .textlink:hover {
   color: var(--ink);
 }
 .textlink svg {
-  transition: transform 0.45s var(--ease);
+  transition: transform 0.4s var(--ease);
 }
 .textlink:hover svg {
-  transform: translateX(4px);
+  transform: translateX(3px);
 }
 
 /* ── header ─────────────────────────────────────────────────────────────── */
@@ -276,10 +224,6 @@ html.reduced-motion [data-reveal] {
 .brand img {
   width: 34px;
   height: 34px;
-  transition: transform 0.6s var(--ease);
-}
-.brand:hover img {
-  transform: rotate(8deg);
 }
 .header-cta {
   font-size: var(--text-small);
@@ -287,37 +231,56 @@ html.reduced-motion [data-reveal] {
   text-decoration: none;
   padding-bottom: 2px;
   border-bottom: 1px solid var(--line-strong);
-  transition:
-    border-color 0.18s linear,
-      color 0.18s linear;
+  transition: border-color 0.16s linear;
 }
 .header-cta:hover {
   border-color: var(--ink);
-  color: var(--brand-deep);
 }
 
 /* ── 1 · hero ───────────────────────────────────────────────────────────── */
+/* Stacked, not split. A headline and a copy block side by side at the same
+   height are two focal points competing; stacking makes the order obvious. */
 .hero {
   position: relative;
   padding: clamp(4.5rem, 8vw, 9rem) 0 clamp(5rem, 8.5vw, 10rem);
-  overflow: clip;
 }
 
-/* The ground is a live survey. Fades as the hero leaves the viewport. */
-.field-canvas {
+.hero-field {
   position: absolute;
-  inset: -6rem 0 auto 0;
-  width: 100%;
-  height: clamp(38rem, 115vh, 72rem);
+  inset: -8rem 0 auto 0;
+  height: clamp(38rem, 105vh, 68rem);
   z-index: 0;
   pointer-events: none;
-  opacity: 1;
+  transform: translate3d(
+    calc((var(--ptr-x, 0.5) - 0.5) * -18px),
+    calc(var(--scroll, 0) * -46px),
+    0
+  );
 }
-.field-canvas.is-static {
-  /* WebGL unavailable or reduced-motion: a quiet static ground instead */
-  background:
-    radial-gradient(ellipse 80% 60% at 62% 38%, rgba(20, 84, 61, 0.06), transparent 70%),
-    var(--paper);
+
+@supports (mask-mode: luminance) or (-webkit-mask-mode: luminance) {
+  .hero-field {
+    background-color: var(--brand-deep);
+    opacity: 0.5;
+    -webkit-mask-image:
+      url("/art/atlas-halftone-field.webp"),
+      linear-gradient(to bottom, #000 0%, #000 54%, transparent 92%),
+      linear-gradient(to right, transparent 2%, rgba(0, 0, 0, 0.22) 30%, #000 70%);
+    mask-image:
+      url("/art/atlas-halftone-field.webp"),
+      linear-gradient(to bottom, #000 0%, #000 54%, transparent 92%),
+      linear-gradient(to right, transparent 2%, rgba(0, 0, 0, 0.22) 30%, #000 70%);
+    -webkit-mask-mode: luminance, alpha, alpha;
+    mask-mode: luminance, alpha, alpha;
+    -webkit-mask-size: cover, 100% 100%, 100% 100%;
+    mask-size: cover, 100% 100%, 100% 100%;
+    -webkit-mask-position: 64% 34%, center, center;
+    mask-position: 64% 34%, center, center;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-composite: source-in;
+    mask-composite: intersect;
+  }
 }
 
 .hero-inner {
@@ -366,24 +329,9 @@ html.reduced-motion [data-reveal] {
 
 /* ── 2 · problem — the one temperature change ───────────────────────────── */
 .problem {
-  position: relative;
   background: var(--deep);
   color: #eaf0ea;
   padding-block: clamp(6rem, 9vw, 11rem);
-  overflow: clip;
-}
-/* grain so the dark band isn't a flat fill */
-.problem::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
-}
-.problem .shell {
-  position: relative;
-  z-index: 1;
 }
 .problem h2 {
   max-width: 18ch;
@@ -398,31 +346,11 @@ html.reduced-motion [data-reveal] {
   border-block: 1px solid rgba(234, 240, 234, 0.16);
 }
 .deadends article {
-  position: relative;
   background: var(--deep);
   padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
   display: grid;
   gap: 0.7rem;
   align-content: start;
-  overflow: hidden;
-  transition: background-color 0.3s linear;
-}
-.deadends article::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    120deg,
-    transparent 35%,
-    rgba(114, 212, 154, 0.05) 50%,
-    transparent 65%
-  );
-  transform: translateX(-110%);
-  transition: transform 0.9s var(--ease);
-  pointer-events: none;
-}
-.deadends article:hover::after {
-  transform: translateX(110%);
 }
 .deadend-num {
   font-family: var(--font-mono);
@@ -473,9 +401,7 @@ html.reduced-motion [data-reveal] {
   background: var(--paper-lift);
   border: 1px solid var(--line);
   border-radius: 10px;
-  box-shadow:
-    0 1px 0 rgba(10, 31, 25, 0.04),
-    0 18px 40px -32px rgba(10, 31, 25, 0.5);
+  box-shadow: 0 1px 0 rgba(10, 31, 25, 0.04), 0 18px 40px -32px rgba(10, 31, 25, 0.5);
 }
 .dial figcaption {
   font-family: var(--font-mono);
@@ -506,11 +432,6 @@ html.reduced-motion [data-reveal] {
   right: auto;
   width: 31%;
   background: var(--brand-deep);
-  transform-origin: left center;
-  transition: transform 1.1s var(--ease) 0.25s;
-}
-html.js .dial:not(.is-visible) .dial-fill {
-  transform: scaleX(0);
 }
 .dial-stop {
   position: relative;
@@ -527,20 +448,6 @@ html.js .dial:not(.is-visible) .dial-fill {
   background: var(--brand-deep);
   border-color: var(--brand-deep);
   box-shadow: 0 0 0 5px rgba(20, 84, 61, 0.12);
-  animation: dial-settle 1.6s var(--ease) 0.9s both;
-}
-@keyframes dial-settle {
-  0% {
-    transform: scale(0.6);
-    box-shadow: 0 0 0 0 rgba(20, 84, 61, 0);
-  }
-  55% {
-    transform: scale(1.18);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 0 0 5px rgba(20, 84, 61, 0.12);
-  }
 }
 
 .dial-scale {
@@ -598,7 +505,7 @@ html.js .dial:not(.is-visible) .dial-fill {
 .trace li:last-child {
   padding-bottom: 0;
 }
-/* the thread running through the turns — draws downward on entry */
+/* the thread running through the turns */
 .trace li::before {
   content: "";
   position: absolute;
@@ -607,21 +514,6 @@ html.js .dial:not(.is-visible) .dial-fill {
   bottom: -0.15rem;
   width: 1px;
   background: var(--line-strong);
-  transform: scaleY(0);
-  transform-origin: top center;
-  transition: transform 0.7s var(--ease);
-}
-html.js .record.is-visible .trace li::before {
-  transform: scaleY(1);
-}
-html.js .record.is-visible .trace li:nth-child(1)::before {
-  transition-delay: 0.1s;
-}
-html.js .record.is-visible .trace li:nth-child(2)::before {
-  transition-delay: 0.35s;
-}
-html.js .record.is-visible .trace li:nth-child(3)::before {
-  transition-delay: 0.6s;
 }
 .trace li:last-child::before {
   display: none;
@@ -779,9 +671,7 @@ html.js .record.is-visible .trace li:nth-child(3)::before {
   text-decoration: none;
   border-bottom: 1px solid var(--line-strong);
   padding-bottom: 2px;
-  transition:
-    color 0.18s linear,
-    border-color 0.18s linear;
+  transition: color 0.16s linear, border-color 0.16s linear;
 }
 .footer-contact:hover {
   color: var(--ink);
@@ -815,8 +705,24 @@ html.js .record.is-visible .trace li:nth-child(3)::before {
   .record-aside {
     max-width: 46ch;
   }
-  .field-canvas {
-    height: clamp(30rem, 80vh, 48rem);
+  .hero-field {
+    top: -4rem;
+    height: clamp(28rem, 70vh, 44rem);
+  }
+  @supports (mask-mode: luminance) or (-webkit-mask-mode: luminance) {
+    .hero-field {
+      opacity: 0.34;
+      -webkit-mask-image:
+        url("/art/atlas-halftone-field.webp"),
+        linear-gradient(to bottom, #000 0%, #000 42%, transparent 88%);
+      mask-image:
+        url("/art/atlas-halftone-field.webp"),
+        linear-gradient(to bottom, #000 0%, #000 42%, transparent 88%);
+      -webkit-mask-mode: luminance, alpha;
+      mask-mode: luminance, alpha;
+      -webkit-mask-size: cover, 100% 100%;
+      mask-size: cover, 100% 100%;
+    }
   }
 }
 
@@ -870,11 +776,5 @@ html.js .record.is-visible .trace li:nth-child(3)::before {
   [data-reveal] {
     opacity: 1;
     transform: none;
-  }
-  .field-canvas {
-    display: none;
-  }
-  .trace li::before {
-    transform: scaleY(1);
   }
 }
