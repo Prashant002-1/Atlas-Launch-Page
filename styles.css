@@ -242,45 +242,23 @@ html.reduced-motion [data-reveal] {
    height are two focal points competing; stacking makes the order obvious. */
 .hero {
   position: relative;
+  display: grid;
+  align-content: center;
+  min-height: min(88vh, 58rem);
   padding: clamp(4.5rem, 8vw, 9rem) 0 clamp(5rem, 8.5vw, 10rem);
 }
 
 .hero-field {
   position: absolute;
-  inset: -8rem 0 auto 0;
-  height: clamp(38rem, 105vh, 68rem);
+  inset: -7rem 0 -2rem 0;
+  width: 100%;
   z-index: 0;
   pointer-events: none;
-  transform: translate3d(
-    calc((var(--ptr-x, 0.5) - 0.5) * -18px),
-    calc(var(--scroll, 0) * -46px),
-    0
-  );
-}
-
-@supports (mask-mode: luminance) or (-webkit-mask-mode: luminance) {
-  .hero-field {
-    background-color: var(--brand-deep);
-    opacity: 0.5;
-    -webkit-mask-image:
-      url("/art/atlas-halftone-field.webp"),
-      linear-gradient(to bottom, #000 0%, #000 54%, transparent 92%),
-      linear-gradient(to right, transparent 2%, rgba(0, 0, 0, 0.22) 30%, #000 70%);
-    mask-image:
-      url("/art/atlas-halftone-field.webp"),
-      linear-gradient(to bottom, #000 0%, #000 54%, transparent 92%),
-      linear-gradient(to right, transparent 2%, rgba(0, 0, 0, 0.22) 30%, #000 70%);
-    -webkit-mask-mode: luminance, alpha, alpha;
-    mask-mode: luminance, alpha, alpha;
-    -webkit-mask-size: cover, 100% 100%, 100% 100%;
-    mask-size: cover, 100% 100%, 100% 100%;
-    -webkit-mask-position: 64% 34%, center, center;
-    mask-position: 64% 34%, center, center;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-composite: source-in;
-    mask-composite: intersect;
-  }
+  /* Symmetric vignette: the lattice dissolves at the same rate on every side,
+     so the field reads as a single centred object rather than a cropped
+     rectangle sitting behind the text. */
+  -webkit-mask-image: radial-gradient(118% 104% at 50% 46%, #000 34%, transparent 86%);
+  mask-image: radial-gradient(118% 104% at 50% 46%, #000 34%, transparent 86%);
 }
 
 .hero-inner {
@@ -319,311 +297,72 @@ html.reduced-motion [data-reveal] {
   padding-block: clamp(5.5rem, 8.5vw, 10rem);
 }
 .section h2,
-.problem h2,
-.origin h2,
 .closing h2 {
   font-size: var(--text-h2);
   line-height: 1.1;
   letter-spacing: -0.025em;
 }
 
-/* ── 2 · problem — the one temperature change ───────────────────────────── */
-.problem {
-  background: var(--deep);
-  color: #eaf0ea;
-  padding-block: clamp(6rem, 9vw, 11rem);
-}
-.problem h2 {
-  max-width: 18ch;
-}
-
-.deadends {
-  margin-top: clamp(3rem, 5vw, 5rem);
+/* ── the three agents ──────────────────────────────────────────────────── */
+.layer-head {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  background: rgba(234, 240, 234, 0.16);
-  border-block: 1px solid rgba(234, 240, 234, 0.16);
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  align-items: end;
 }
-.deadends article {
-  background: var(--deep);
-  padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 3vw, 2.5rem);
-  display: grid;
-  gap: 0.7rem;
-  align-content: start;
+.layer-head h2 {
+  max-width: 16ch;
 }
-.deadend-num {
-  font-family: var(--font-mono);
-  font-size: var(--text-micro);
-  color: rgba(234, 240, 234, 0.38);
-}
-.deadends h3 {
-  font-size: clamp(1.5rem, 2vw + 0.8rem, 2.1rem);
-  letter-spacing: -0.02em;
-  /* struck through: these are the dead ends */
-  text-decoration: line-through;
-  text-decoration-color: rgba(234, 240, 234, 0.3);
-  text-decoration-thickness: 1px;
-}
-.deadends p {
-  color: rgba(234, 240, 234, 0.66);
-  max-width: 34ch;
-}
-.problem-close {
-  margin-top: clamp(2.25rem, 3.5vw, 3.5rem);
-  font-size: var(--text-lead);
-  line-height: 1.5;
-  color: #eaf0ea;
-  max-width: 44ch;
-}
-
-/* ── 3 · the dial — render the control ──────────────────────────────────── */
-.dial-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: clamp(2.5rem, 6vw, 6rem);
-  align-items: center;
-}
-.dial-copy h2 {
-  max-width: 14ch;
-}
-.dial-copy p {
-  margin-top: 1.5rem;
+.layer-head p {
   font-size: var(--text-lead);
   line-height: 1.55;
   color: var(--ink-soft);
-  max-width: 40ch;
+  max-width: 38ch;
 }
 
-.dial {
-  margin: 0;
-  padding: clamp(1.75rem, 3.5vw, 2.75rem);
-  background: var(--paper-lift);
-  border: 1px solid var(--line);
-  border-radius: 10px;
-  box-shadow: 0 1px 0 rgba(10, 31, 25, 0.04), 0 18px 40px -32px rgba(10, 31, 25, 0.5);
-}
-.dial figcaption {
-  font-family: var(--font-mono);
-  font-size: var(--text-micro);
-  color: var(--muted);
-  padding-bottom: clamp(1.75rem, 3vw, 2.75rem);
-}
-
-.dial-track {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  align-items: center;
-  height: 18px;
-}
-.dial-rail,
-.dial-fill {
-  position: absolute;
-  left: 6%;
-  right: 6%;
-  height: 2px;
-  border-radius: 2px;
-}
-.dial-rail {
-  background: var(--paper-sink);
-}
-.dial-fill {
-  right: auto;
-  width: 31%;
-  background: var(--brand-deep);
-}
-.dial-stop {
-  position: relative;
-  justify-self: center;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--paper-lift);
-  border: 1.5px solid var(--paper-sink);
-}
-.dial-stop.is-active {
-  width: 18px;
-  height: 18px;
-  background: var(--brand-deep);
-  border-color: var(--brand-deep);
-  box-shadow: 0 0 0 5px rgba(20, 84, 61, 0.12);
-}
-
-.dial-scale {
+/* Rule-separated columns rather than three boxed cards: the content is three
+   parallel facts, so it should read as one table of them, not three objects
+   competing for the same attention. */
+.agents {
   list-style: none;
-  margin: 0.85rem 0 0;
+  margin: clamp(3rem, 6vw, 5.5rem) 0 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  font-family: var(--font-mono);
-  font-size: var(--text-micro);
-  color: var(--muted);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.5rem, 3.5vw, 3.5rem);
 }
-.dial-scale li {
-  text-align: center;
-}
-.dial-scale li.is-active {
-  color: var(--brand-deep);
-  font-weight: 600;
-}
-
-.dial-note {
-  margin-top: clamp(1.75rem, 3vw, 2.5rem);
+.agents li {
+  display: grid;
+  gap: 0.85rem;
+  align-content: start;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--line);
-  font-size: var(--text-small);
-  color: var(--ink-soft);
-}
-
-/* ── 4 · the record — show the trail ────────────────────────────────────── */
-.record-section {
-  background: var(--paper-sink);
-}
-.record-title {
-  max-width: 20ch;
-  margin-bottom: clamp(2.5rem, 4.5vw, 4.5rem);
-}
-
-.record {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
-  gap: clamp(2.5rem, 6vw, 5rem);
-  align-items: start;
-}
-
-.trace {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-}
-.trace li {
-  position: relative;
-  padding: 0 0 clamp(1.6rem, 2.6vw, 2.3rem) 2.5rem;
-}
-.trace li:last-child {
-  padding-bottom: 0;
-}
-/* the thread running through the turns */
-.trace li::before {
-  content: "";
-  position: absolute;
-  left: 5px;
-  top: 1.15rem;
-  bottom: -0.15rem;
-  width: 1px;
-  background: var(--line-strong);
-}
-.trace li:last-child::before {
-  display: none;
-}
-.trace-mark {
-  position: absolute;
-  left: 0;
-  top: 0.55rem;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: var(--paper);
-  border: 1.5px solid var(--brand-deep);
-}
-.trace li.is-wrong .trace-mark {
-  border-style: dashed;
-  border-color: var(--muted);
-}
-.trace li.is-final .trace-mark {
-  background: var(--brand-deep);
-}
-.trace-turn {
-  font-size: var(--text-lead);
-  line-height: 1.45;
-  color: var(--ink);
-  max-width: 40ch;
-}
-.trace li.is-wrong .trace-turn {
-  color: var(--muted);
-}
-.trace-note {
-  display: block;
-  margin-top: 0.4rem;
-  font-family: var(--font-mono);
-  font-size: var(--text-micro);
-  color: var(--muted);
-}
-
-.record-aside {
-  display: grid;
-  gap: 1.5rem;
-  padding: clamp(1.5rem, 3vw, 2rem);
-  border-left: 2px solid var(--brand-deep);
-  background: var(--paper-lift);
-}
-.record-aside p {
-  font-size: var(--text-small);
-  color: var(--ink-soft);
-}
-.record-punch {
-  font-size: var(--text-lead) !important;
-  line-height: 1.4;
-  color: var(--ink) !important;
-  font-weight: 450;
-  letter-spacing: -0.015em;
-}
-
-/* ── 5 · two vantage points ─────────────────────────────────────────────── */
-.pair-section h2 {
-  max-width: 20ch;
-  margin-bottom: clamp(2.5rem, 4.5vw, 4.5rem);
-}
-.pair {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(1.5rem, 4vw, 4rem);
-}
-.pair article {
-  padding-top: 1.6rem;
   border-top: 2px solid var(--ink);
-  display: grid;
-  gap: 0.8rem;
 }
-.pair article:last-child {
+.agents li:nth-child(2) {
   border-top-color: var(--brand-deep);
 }
-.pair h3 {
+.agents li:nth-child(3) {
+  border-top-color: var(--line-strong);
+}
+.agents h3 {
+  font-size: clamp(1.15rem, 0.9vw + 0.9rem, 1.5rem);
+  line-height: 1.25;
+  letter-spacing: -0.018em;
+}
+.agents p {
+  font-size: var(--text-small);
+  color: var(--ink-soft);
+}
+.agents span {
+  margin-top: 0.35rem;
   font-family: var(--font-mono);
   font-size: var(--text-micro);
-  font-weight: 500;
   color: var(--muted);
 }
-.pair p {
-  font-size: clamp(1.15rem, 1.1vw + 0.9rem, 1.6rem);
-  line-height: 1.4;
-  letter-spacing: -0.015em;
-  color: var(--ink);
-  max-width: 26ch;
-}
 
-/* ── 6 · origin — narrow, quiet, different register ─────────────────────── */
-.origin {
-  padding-block: clamp(6rem, 9vw, 11rem);
-  background: var(--paper-lift);
-  border-block: 1px solid var(--line);
-}
-.origin-inner {
-  width: min(100% - 2.75rem, 44rem);
-  margin-inline: auto;
-  display: grid;
-  gap: 1.6rem;
-}
-.origin h2 {
-  max-width: 24ch;
-  margin-bottom: 0.5rem;
-}
-.origin p {
-  font-size: var(--text-lead);
-  line-height: 1.6;
-  color: var(--ink-soft);
+.footer-line {
+  font-size: var(--text-small);
+  color: var(--muted);
 }
 
 /* ── 7 · close — largest, simplest ──────────────────────────────────────── */
@@ -698,44 +437,20 @@ html.reduced-motion [data-reveal] {
 
 /* ── responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 62rem) {
-  .dial-grid,
-  .record {
+  .layer-head {
     grid-template-columns: minmax(0, 1fr);
   }
-  .record-aside {
-    max-width: 46ch;
-  }
   .hero-field {
-    top: -4rem;
-    height: clamp(28rem, 70vh, 44rem);
+    inset: -4rem 0 -1rem 0;
   }
-  @supports (mask-mode: luminance) or (-webkit-mask-mode: luminance) {
-    .hero-field {
-      opacity: 0.34;
-      -webkit-mask-image:
-        url("/art/atlas-halftone-field.webp"),
-        linear-gradient(to bottom, #000 0%, #000 42%, transparent 88%);
-      mask-image:
-        url("/art/atlas-halftone-field.webp"),
-        linear-gradient(to bottom, #000 0%, #000 42%, transparent 88%);
-      -webkit-mask-mode: luminance, alpha;
-      mask-mode: luminance, alpha;
-      -webkit-mask-size: cover, 100% 100%;
-      mask-size: cover, 100% 100%;
-    }
+  .hero {
+    min-height: min(78vh, 46rem);
   }
 }
 
 @media (max-width: 46rem) {
-  .deadends,
-  .pair {
+  .agents {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .deadends {
-    gap: 1px;
-  }
-  .pair {
-    gap: 2.5rem;
   }
 }
 
@@ -752,9 +467,6 @@ html.reduced-motion [data-reveal] {
   }
   .hero-cta {
     gap: 1.25rem;
-  }
-  .dial-scale {
-    font-size: 0.66rem;
   }
   .footer-inner {
     flex-direction: column;
