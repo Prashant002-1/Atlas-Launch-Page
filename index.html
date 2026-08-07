@@ -8,7 +8,7 @@
       content="Atlas is the agentic LMS where teachers see and shape learning."
     />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#071a16" />
+    <meta name="theme-color" content="#f1f4ee" />
     <link rel="canonical" href="https://atlas-lms.com/" />
 
     <meta property="og:site_name" content="Atlas" />
@@ -19,6 +19,9 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://atlas-lms.com/" />
+    <!-- og:image ships separately: brand/og.png is designed and ready,
+         but binaries can't ride this commit path. Add the file, then:
+         og:image + twitter:image → https://atlas-lms.com/brand/og.png -->
 
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Atlas | Make learning visible" />
@@ -29,9 +32,17 @@
 
     <title>Atlas | Make learning visible</title>
     <link rel="icon" href="/brand/atlas-mark.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/geist-sans-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="stylesheet" href="/vendor/lenis.css" />
     <link rel="stylesheet" href="/styles.css" />
     <script src="/vendor/lenis.min.js" defer></script>
+    <script src="/field.js" defer></script>
     <script src="/motion.js" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
@@ -39,121 +50,185 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <div class="site launch-cut">
-      <header class="site-header site-header-launch" aria-label="Atlas">
-        <a class="brand" href="/" aria-label="Atlas home">
-          <img src="/brand/atlas-mark.svg" alt="" width="44" height="44" />
-          <span>Atlas</span>
-        </a>
-
-        <a
-          class="header-cta"
-          href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
-        >
-          Launch access
-        </a>
+    <div class="site">
+      <header class="site-header" aria-label="Atlas">
+        <div class="shell header-inner">
+          <a class="brand" href="/" aria-label="Atlas home">
+            <img src="/brand/atlas-mark.svg" alt="" width="32" height="32" />
+            <span>Atlas</span>
+          </a>
+          <a
+            class="header-cta"
+            href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
+          >
+            Launch access
+          </a>
+        </div>
       </header>
 
-      <main id="main">
-        <section class="hero launch-hero" aria-labelledby="hero-title">
-          <div class="hero-grid" aria-hidden="true"></div>
-          <div class="hero-print" aria-hidden="true"></div>
+      <!-- The instrument edge: the Atlas mark unrolled down the page. The
+           same degree ticks that sit inside the mark run the full height,
+           and the mark's slender needle rides the damped scroll value with
+           its tip against them. Not navigation — a bearing. On approach
+           the needle opens into a glass loupe showing the mark itself. -->
+      <div class="rail" aria-hidden="true">
+        <span class="rail-ticks"></span>
+        <div class="rail-head">
+          <!-- the mark's needle in the right margin, tip meeting the
+               meridian's free end — tips touching tips, as in the mark -->
+          <svg
+            class="rail-apex"
+            viewBox="0 0 42 40"
+            width="42"
+            height="40"
+          >
+            <path d="M0 20 L42 0 L42 40 Z" fill="#0a1f19" />
+            <path d="M0 20 L42 8.4 L42 31.6 Z" fill="#f1f4ee" />
+            <path d="M0 20 L42 15.2 L42 24.8 Z" fill="#0a1f19" />
+          </svg>
+          <!-- on approach, glass closes around the head and magnifies it
+               in place: the needle fills the view, the graduations stay
+               on the boundary, and as the head travels the ticks slide
+               through the glass at twice the pace — a true loupe. The
+               tick fringe is drawn by CSS so it can track --ptr-y. -->
+          <span class="rail-lens">
+            <svg viewBox="0 0 104 104" width="104" height="104">
+              <path d="M36 52 L120 12 L120 92 Z" fill="#0a1f19" />
+              <path d="M36 52 L120 25.3 L120 78.7 Z" fill="#f1f4ee" />
+              <path d="M36 52 L120 41 L120 63 Z" fill="#0a1f19" />
+            </svg>
+          </span>
+        </div>
+      </div>
 
-          <div class="hero-copy">
-            <p class="eyebrow launch-tagline">
-              Agentic LMS where teachers see and shape learning
-            </p>
-            <h1 id="hero-title">
-              <span>Make learning</span>
-              <span class="headline-accent">visible.</span>
+      <main id="main">
+        <!-- The hero stands alone: no rules, no frame — just the field and
+             the words. The field is a current of fine strands that parts
+             around the pointer and settles back. -->
+        <section class="hero" id="top" aria-labelledby="hero-title">
+          <canvas class="hero-field" data-field aria-hidden="true"></canvas>
+
+          <div class="shell hero-inner">
+            <h1 id="hero-title" data-reveal>
+              Give every student a personal agent.
             </h1>
-            <div class="hero-argument">
-              <p class="hero-intro">
-                Atlas gives every student and teacher a personal agent. It
-                knows the course, remembers what matters, and stays with the
-                work as people reason, revise, and learn.
-              </p>
-              <div class="hero-actions">
-                <a
-                  class="button button-primary"
-                  href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
-                >
-                  Request launch access
-                </a>
-              </div>
+
+            <p class="hero-sub" data-reveal data-reveal-delay="1">
+              Atlas gives every student and teacher a personal agent. It
+              knows the course, remembers what matters, and stays with the
+              work as people reason, revise, and learn.
+            </p>
+
+            <div class="hero-cta" data-reveal data-reveal-delay="2">
+              <a
+                class="button button-lg"
+                href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
+              >
+                Request launch access
+              </a>
             </div>
           </div>
         </section>
 
-        <section
-          id="personal-layer"
-          class="product-route section-shell launch-personal-layer"
-          aria-labelledby="personal-layer-title"
-        >
-          <div class="product-route-heading">
-            <h2 id="personal-layer-title">
-              A personal Atlas on both sides of the course.
-            </h2>
-            <p>
-              Each personal agent works for one person. The shared course
-              agent carries the teacher’s materials and teaching rules to
-              students.
-            </p>
-          </div>
-          <div class="product-route-grid">
-            <article>
-              <span>Student Atlas / Across courses</span>
-              <h3>Work with the full student record.</h3>
-              <p>
-                Reads the student’s courses, due work, grades, feedback, and
-                learning profile.
-              </p>
-              <strong>Works for one student</strong>
-            </article>
-            <article>
-              <span>Teacher Atlas / Inside a course</span>
-              <h3>Plan and operate the course.</h3>
-              <p>
-                Helps with planning, drafting, review, and course work from the
-                current record.
-              </p>
-              <strong>Works for one teacher</strong>
-            </article>
-            <article>
-              <span>Course agent / Shared with students</span>
-              <h3>Carry the course into student work.</h3>
-              <p>
-                Uses selected materials, teaching behavior, and course rules
-                while students work through problems.
-              </p>
-              <strong>Configured by the teacher</strong>
-            </article>
-          </div>
-        </section>
+        <!-- Below the hero, the sheet: ruled structure, left line, register
+             crosses. This is where the composition is drawn. -->
+        <div class="sheet">
+          <div class="frame" aria-hidden="true"></div>
 
-        <section class="closing launch-closing" aria-labelledby="closing-title">
-          <div class="closing-grid" aria-hidden="true"></div>
-          <div class="closing-print" aria-hidden="true"></div>
-          <div class="closing-mark" aria-hidden="true">
-            <img src="/brand/atlas-mark.svg" alt="" width="84" height="84" />
-          </div>
-          <h2 id="closing-title">Give every student a personal Atlas.</h2>
-          <a
-            class="button button-light"
-            href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
+          <div class="rule" aria-hidden="true"><span class="shell"></span></div>
+
+          <section
+            class="section layer"
+            id="agents"
+            aria-labelledby="layer-title"
           >
-            Contact Atlas
-          </a>
-        </section>
+            <div class="shell">
+              <div class="layer-head">
+                <h2 id="layer-title" data-reveal>
+                  A personal Atlas on both sides of the course.
+                </h2>
+                <p data-reveal data-reveal-delay="1">
+                  Each personal agent works for one person. The shared course
+                  agent carries the teacher&rsquo;s materials and teaching
+                  rules to students.
+                </p>
+              </div>
+
+              <ul class="agents" data-reveal-group>
+                <li>
+                  <h3>Work with the full student record.</h3>
+                  <p>
+                    Reads the student&rsquo;s courses, due work, grades,
+                    feedback, and learning profile.
+                  </p>
+                  <span>Works for each student</span>
+                </li>
+                <li>
+                  <h3>Plan and operate the course.</h3>
+                  <p>
+                    Helps with planning, drafting, review, and course work
+                    from the current record.
+                  </p>
+                  <span>Works for each teacher</span>
+                </li>
+                <li>
+                  <h3>Carry the course into student work.</h3>
+                  <p>
+                    Uses selected materials, teaching behavior, and course
+                    rules while students work through problems.
+                  </p>
+                  <span>Configured by the teacher for each course</span>
+                </li>
+              </ul>
+            </div>
+          </section>
+
+          <div class="rule" aria-hidden="true"><span class="shell"></span></div>
+
+          <section class="closing" id="close" aria-labelledby="closing-title">
+            <div class="shell">
+              <img
+                class="closing-mark"
+                src="/brand/atlas-mark.svg"
+                alt=""
+                aria-hidden="true"
+                width="48"
+                height="48"
+                data-reveal
+              />
+              <h2 id="closing-title" data-reveal data-reveal-delay="1">
+                Make learning visible.
+              </h2>
+              <div
+                class="hero-cta closing-cta"
+                data-reveal
+                data-reveal-delay="2"
+              >
+                <a
+                  class="button button-lg"
+                  href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
+                >
+                  Contact Atlas
+                </a>
+              </div>
+            </div>
+          </section>
+        </div>
       </main>
 
-      <footer class="site-footer launch-footer">
-        <a class="brand footer-brand" href="/" aria-label="Atlas home">
-          <img src="/brand/atlas-mark.svg" alt="" width="36" height="36" />
-          <span>Atlas</span>
-        </a>
-        <p>Agentic LMS where teachers see and shape learning.</p>
-        <a class="footer-contact" href="mailto:contact@atlas-lms.com">Contact</a>
+      <footer class="site-footer">
+        <div class="shell footer-inner">
+          <a class="brand footer-brand" href="/" aria-label="Atlas home">
+            <img src="/brand/atlas-mark.svg" alt="" width="26" height="26" />
+            <span>Atlas</span>
+          </a>
+          <p class="footer-line">
+            Agentic LMS where teachers see and shape learning.
+          </p>
+          <a class="footer-contact" href="mailto:contact@atlas-lms.com">
+            contact@atlas-lms.com
+          </a>
+        </div>
       </footer>
     </div>
   </body>
