@@ -49,14 +49,14 @@
   /* ── tuning ─────────────────────────────────────────────────────── */
   const DRIFT = 26; // px/s^2 wander, divided by mass — pools breathe
   const DRAG = 3.6; // s^-1 — the crisp settle of the first ink
-  const POOL_K = 15; // s^-2, pull toward the pool's own centroid
+  const POOL_K = 12.5; // s^-2, pull toward the pool's own centroid
   const HOME_K = 0.8; // s^-2, the tide that carries pools back to their
   // thrown positions — imperceptible in the moment, inevitable after.
   // this is what keeps the page full no matter how hard it was played.
   const TENSION = 220; // px/s^2 pull when different pools touch
   const CROWD = 560; // px/s^2 push when ink over-stacks
   const DIFFUSE = 1.15; // 1/s pigment exchange while touching
-  const PUSH = 5200; // px/s^2 — the pointer breaks a pool apart
+  const PUSH = 6200; // px/s^2 — the pointer breaks a pool apart
   const REACH = 150; // px, pointer influence radius
   const TAU_ENERGY = 0.9; // s, pointer energy decay
   const DRY = 420; // px/s^2 nudge out of the words' dry zone
