@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="See how Atlas works with schools, colleges, and universities to launch the first course."
+      content="Request an Atlas demo, explore a test classroom, and decide whether to launch a real course."
     />
     <meta name="theme-color" content="#f1f4ee" />
     <link rel="canonical" href="https://atlas-lms.com/work-with-us/" />
@@ -20,11 +20,10 @@
     />
     <link rel="stylesheet" href="/vendor/lenis.css" />
     <link rel="stylesheet" href="/styles.css" />
-    <link rel="stylesheet" href="/site-pages.css" />
+    <link rel="stylesheet" href="/site-pages.css?v=20260811c" />
     <script src="/vendor/lenis.min.js" defer></script>
     <script src="/motion.js" defer></script>
-    <script src="/site.js" defer></script>
-    <script src="/workshop.js" defer></script>
+    <script src="/site.js?v=20260811c" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
   </head>
@@ -46,144 +45,152 @@
           >
             Menu
           </button>
-          <nav
-            class="site-nav"
-            id="site-nav"
-            aria-label="Primary"
-            data-site-nav
-          >
+          <nav class="site-nav" id="site-nav" aria-label="Primary" data-site-nav>
             <a href="/how-it-works/">How it works</a>
-            <a href="/work-with-us/">Work with us</a>
-            <a href="/pricing/">Pricing</a>
+            <a href="/work-with-us/" aria-current="page">Work with us</a>
           </nav>
-          <a class="header-cta" href="/access/">Launch access</a>
+          <a class="header-cta" href="/access/">Request access</a>
         </div>
       </header>
 
-      <main id="main" class="page-main workshop-page">
-        <section class="workshop-opening" aria-labelledby="page-title">
-          <div class="shell workshop-opening-inner">
-            <div class="workshop-opening-copy">
-              <p>How we work with you</p>
-              <h1 id="page-title">Bring us one course.</h1>
-            </div>
-            <div class="workshop-brief">
+      <main id="main" class="page-main work-page">
+        <section class="work-opening" aria-labelledby="page-title">
+          <div class="shell work-opening-shell">
+            <div class="work-opening-copy">
+              <p>Work with us</p>
+              <h1 id="page-title">Try the classroom before you plan the rollout.</h1>
               <p>
-                A useful launch begins with a real teaching problem, a teacher
-                who wants to shape the model, and work worth seeing clearly.
+                Start with a demo and a test course. Use Atlas as a teacher,
+                work through an assignment as a student, and decide whether it
+                belongs in your institution.
               </p>
-              <dl>
-                <div><dt>Start</dt><dd>One course</dd></div>
-                <div><dt>Build with</dt><dd>The people teaching it</dd></div>
-                <div><dt>Decide from</dt><dd>The first course record</dd></div>
-              </dl>
+              <a class="button button-lg" href="/access/">Request a demo</a>
             </div>
-          </div>
-        </section>
-
-        <section class="launch-workshop" aria-labelledby="workshop-title" data-workshop>
-          <div class="shell launch-workshop-shell">
-            <header class="launch-workshop-head">
-              <h2 id="workshop-title">The launch is a working session.</h2>
-              <p>Open each stage to see what we do together and what should be true before moving on.</p>
-            </header>
-
-            <div class="workshop-desk">
-              <div class="workshop-agenda">
-                <details open data-workshop-stage data-output="A course, a teacher, a student group, and one learning journey worth making visible.">
-                  <summary>Choose the first course</summary>
-                  <div>
-                    <p>You show us where AI has made the finished answer harder to trust or where students need better support while doing the work.</p>
-                    <ul>
-                      <li>A teacher or course team ready to author the agent terms</li>
-                      <li>A clear assignment or learning journey</li>
-                      <li>A defined first group of students</li>
-                    </ul>
-                  </div>
-                </details>
-                <details data-workshop-stage data-output="A readable course-agent record that states how direct, challenging, grounded, and transparent the agent should be.">
-                  <summary>Author the teaching terms</summary>
-                  <div>
-                    <p>We work with the teacher to describe the voice, approach, challenge level, use of direct answers, and student disclosure.</p>
-                    <ul>
-                      <li>Course materials and sources</li>
-                      <li>Open study and assessed-work boundaries</li>
-                      <li>Teacher review before students enter</li>
-                    </ul>
-                  </div>
-                </details>
-                <details data-workshop-stage data-output="A prepared course whose materials, people, agent terms, and first assessed experience have been checked together.">
-                  <summary>Prepare the real course</summary>
-                  <div>
-                    <p>We bring the selected course structure and materials into Atlas and walk the teacher and student paths before launch.</p>
-                    <ul>
-                      <li>Course setup and selected materials</li>
-                      <li>Teacher review of the course-agent record</li>
-                      <li>A clear student introduction</li>
-                    </ul>
-                  </div>
-                </details>
-                <details data-workshop-stage data-output="A first assessed record containing the questions, hints, revisions, final work, and teacher review.">
-                  <summary>Run the first work</summary>
-                  <div>
-                    <p>Students use their personal Atlas inside the course terms. Teachers see the assessed journey and interpret the evidence.</p>
-                    <ul>
-                      <li>One continuous student session</li>
-                      <li>Teacher transcript and rubric review</li>
-                      <li>Direct feedback from the course</li>
-                    </ul>
-                  </div>
-                </details>
-                <details data-workshop-stage data-output="A grounded decision to continue, adjust the teaching terms, or expand from one course into a broader rollout.">
-                  <summary>Review before expanding</summary>
-                  <div>
-                    <p>We examine what became newly visible, where students needed support, and what the first course says about the next rollout.</p>
-                    <ul>
-                      <li>Changes to agent terms or workflow</li>
-                      <li>Teacher and student experience</li>
-                      <li>A specific next scope</li>
-                    </ul>
-                  </div>
-                </details>
+            <figure class="classroom-pass">
+              <div class="classroom-pass-head">
+                <span>Test classroom</span>
+                <span>Demo University · ECON-241</span>
               </div>
-
-              <aside class="workshop-output" aria-live="polite">
-                <span>Leave this stage with</span>
-                <p data-workshop-output>A course, a teacher, a student group, and one learning journey worth making visible.</p>
-                <a class="text-link" href="/access/?interest=course-pilot">Bring us your first course</a>
-              </aside>
-            </div>
-          </div>
-        </section>
-
-        <section class="course-bench" aria-labelledby="setup-title">
-          <div class="shell course-bench-shell">
-            <div class="course-bench-copy">
-              <p>Use the course you already teach.</p>
-              <h2 id="setup-title">We begin with the actual subject, materials, assignments, and teaching choices.</h2>
-            </div>
-            <figure>
-              <img src="/assets/product-captures/teacher-course-setup-light.png" alt="Atlas teacher course setup" />
-              <figcaption>Real Atlas course setup, shown in light mode.</figcaption>
+              <img
+                src="/assets/product-captures/teacher-overview.png"
+                alt="Atlas test classroom showing an Intermediate Microeconomics course with assignments and an Atlas briefing"
+                width="1280"
+                height="720"
+              />
+              <figcaption>
+                A complete fictional course, with fictional students and
+                realistic work, so you can explore without bringing live data.
+              </figcaption>
             </figure>
           </div>
         </section>
 
-        <section class="working-agreement" aria-labelledby="agreement-title">
-          <div class="shell working-agreement-shell">
-            <h2 id="agreement-title">You keep authorship of the course.</h2>
-            <div class="agreement-copy">
-              <p><strong>You bring</strong> the course, teaching judgment, and the question worth answering.</p>
-              <p><strong>Atlas brings</strong> the harness that carries those terms into student work and keeps the record together.</p>
-              <p><strong>We decide together</strong> what the first course taught us and whether the next scope is justified.</p>
+        <section class="launch-path" aria-labelledby="launch-path-title">
+          <div class="shell launch-path-shell">
+            <header>
+              <p>What happens next</p>
+              <h2 id="launch-path-title">A guided test, then a real decision.</h2>
+            </header>
+
+            <ol class="launch-path-list">
+              <li>
+                <span>First contact</span>
+                <div>
+                  <h3>Tell us who you are and what you want to inspect.</h3>
+                  <p>
+                    The short form gives us enough context to prepare the right
+                    demo. A use case helps, but it is optional.
+                  </p>
+                </div>
+                <strong>Short request</strong>
+              </li>
+              <li>
+                <span>Test environment</span>
+                <div>
+                  <h3>Explore a complete fictional classroom.</h3>
+                  <p>
+                    We give you teacher and student access to a course with
+                    materials, assignments, conversations, submissions, and
+                    grades. We can walk through it with your teachers or let
+                    your team explore on its own.
+                  </p>
+                </div>
+                <strong>No live student data</strong>
+              </li>
+              <li>
+                <span>Fit review</span>
+                <div>
+                  <h3>Decide whether Atlas fits your course and institution.</h3>
+                  <p>
+                    If you want to proceed, we bring in the right academic,
+                    administrative, compliance, and technical stakeholders.
+                    We review requirements, integrations, and the first scope
+                    together.
+                  </p>
+                </div>
+                <strong>Your team decides</strong>
+              </li>
+              <li>
+                <span>Real launch</span>
+                <div>
+                  <h3>Prepare the first course.</h3>
+                  <p>
+                    We help bring over the course structure and materials,
+                    including work from an existing LMS when that is useful.
+                    The teacher reviews the agent&rsquo;s behavior and the student
+                    experience before anyone begins.
+                  </p>
+                </div>
+                <strong>One course first</strong>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="guided-room" aria-labelledby="guided-room-title">
+          <div class="shell guided-room-shell">
+            <div class="guided-room-window">
+              <img
+                src="/assets/product-captures/mei-session.png"
+                alt="A fictional student working through an assignment in the Atlas test classroom"
+                width="1280"
+                height="720"
+              />
+            </div>
+            <div class="guided-room-copy">
+              <p>What you can test</p>
+              <h2 id="guided-room-title">Use it. Question it. Bring the people who will judge it.</h2>
+              <ul>
+                <li>Configure a course agent in plain language</li>
+                <li>Try a governed assignment as a student</li>
+                <li>Review the transcript, final work, and rubric</li>
+                <li>Inspect the teacher and student experience</li>
+                <li>Discuss integrations and institutional requirements</li>
+              </ul>
             </div>
           </div>
         </section>
 
-        <section class="workshop-close" aria-labelledby="close-title">
-          <div class="shell">
-            <h2 id="close-title">Tell us where you would start.</h2>
-            <a class="button button-lg" href="/access/">Describe your use case</a>
+        <section class="pricing-note" aria-labelledby="pricing-note-title">
+          <div class="shell pricing-note-shell">
+            <h2 id="pricing-note-title">Pricing comes after we understand the scope.</h2>
+            <p>
+              Atlas is onboarding and evaluating its first customers. Standard
+              pricing will be published later. The first conversation is about
+              the course, the institution, and whether the product is useful.
+            </p>
+            <a class="text-link" href="/access/">Start that conversation</a>
+          </div>
+        </section>
+
+        <section class="page-close work-close" aria-labelledby="close-title">
+          <div class="shell page-close-inner">
+            <p>You do not need a rollout plan to request a demo.</p>
+            <h2 id="close-title">Bring your questions. We will bring the classroom.</h2>
+            <div>
+              <a class="button button-lg" href="/access/">Request access</a>
+              <a class="text-link" href="/how-it-works/">See the product journey</a>
+            </div>
           </div>
         </section>
       </main>
@@ -194,9 +201,7 @@
             <img src="/brand/atlas-mark.svg" alt="" width="26" height="26" />
             <span>Atlas</span>
           </a>
-          <p class="footer-line">
-            Agentic LMS where teachers see and shape learning.
-          </p>
+          <p class="footer-line">Set the terms for AI. See how students learn.</p>
           <a class="footer-contact" href="/access/">Request launch access</a>
         </div>
       </footer>

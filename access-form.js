@@ -30,33 +30,8 @@
   const requestedInterest =
     interestMap[new URLSearchParams(window.location.search).get("interest")];
   if (requestedInterest) {
-    const matchingInterest = Array.from(
-      form.querySelectorAll('input[name="interests"]'),
-    ).find((input) => input.value === requestedInterest);
-    if (matchingInterest) matchingInterest.checked = true;
-  }
-
-  const bearingLinks = Array.from(
-    document.querySelectorAll("[data-form-bearing-link]"),
-  );
-  const formSteps = Array.from(form.querySelectorAll("[data-form-step]"));
-  if (bearingLinks.length && formSteps.length && "IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (!visible) return;
-        bearingLinks.forEach((link) => {
-          const current = link.dataset.formBearingLink === visible.target.id;
-          link.classList.toggle("is-current", current);
-          if (current) link.setAttribute("aria-current", "step");
-          else link.removeAttribute("aria-current");
-        });
-      },
-      { rootMargin: "-20% 0px -55%", threshold: [0.1, 0.45, 0.8] },
-    );
-    formSteps.forEach((step) => observer.observe(step));
+    const interestControl = form.querySelector('[name="interests"]');
+    if (interestControl) interestControl.value = requestedInterest;
   }
 
   function setStatus(message, state) {
@@ -70,8 +45,8 @@
 
     const data = new FormData(form);
     const interests = data.getAll("interests");
-    if (interests.length === 0) {
-      setStatus("Choose at least one area of interest.", "error");
+    if (interests.length === 0 || interests.every((interest) => !interest)) {
+      setStatus("Choose what you are interested in.", "error");
       form.querySelector('[name="interests"]').focus();
       return;
     }

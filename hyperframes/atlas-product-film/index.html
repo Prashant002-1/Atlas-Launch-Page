@@ -25,10 +25,8 @@
         --ink-soft: #2f4a41;
         --muted: #5f7168;
         --pine: #14543d;
-        --mint: #72d49a;
-        --clay: #bf5f3b;
-        --line: rgba(10, 31, 25, 0.14);
-        --line-strong: rgba(10, 31, 25, 0.28);
+        --line: rgba(10, 31, 25, 0.16);
+        --line-strong: rgba(10, 31, 25, 0.32);
       }
 
       * {
@@ -48,17 +46,6 @@
         -webkit-font-smoothing: antialiased;
       }
 
-      body::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        opacity: 0.18;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.84' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.18'/%3E%3C/svg%3E");
-        mix-blend-mode: multiply;
-        z-index: 50;
-      }
-
       #root {
         position: relative;
         width: 1920px;
@@ -67,303 +54,286 @@
         background: var(--paper);
       }
 
-      .clip,
       .scene {
         position: absolute;
         inset: 0;
         overflow: hidden;
-      }
-
-      .scene {
         background: var(--paper);
       }
 
-      .scene::before,
-      .scene::after {
-        content: "";
+      #scene-problem {
+        z-index: 1;
+      }
+
+      #scene-terms {
+        z-index: 2;
+      }
+
+      #scene-work {
+        z-index: 3;
+      }
+
+      #scene-review {
+        z-index: 4;
+      }
+
+      #scene-end {
+        z-index: 5;
+      }
+
+      .brand {
         position: absolute;
-        pointer-events: none;
-      }
-
-      .scene::before {
-        inset: 36px;
-        border: 1px solid var(--line);
-      }
-
-      .scene::after {
-        top: 36px;
-        bottom: 36px;
-        right: 74px;
-        width: 42px;
-        opacity: 0.7;
-        background: repeating-linear-gradient(
-          to bottom,
-          rgba(10, 31, 25, 0.52) 0 2px,
-          transparent 2px 16px
-        );
-      }
-
-      .registration {
-        position: absolute;
-        left: 66px;
-        top: 59px;
+        z-index: 20;
+        top: 52px;
+        left: 64px;
         display: flex;
         align-items: center;
         gap: 14px;
-        z-index: 8;
       }
 
-      .registration img {
+      .brand img {
         width: 38px;
         height: 38px;
       }
 
-      .registration span,
-      .scene-label,
-      .frame-label,
-      .end-url {
+      .brand span {
+        font-size: 25px;
+        font-weight: 520;
+        letter-spacing: -0.02em;
+      }
+
+      .counter {
+        position: absolute;
+        z-index: 20;
+        top: 62px;
+        right: 64px;
+        color: var(--muted);
         font-family: "Geist Mono", monospace;
-        font-size: 17px;
+        font-size: 16px;
         letter-spacing: 0.08em;
         text-transform: uppercase;
       }
 
-      .registration span {
-        font-family: "Geist", sans-serif;
-        font-size: 25px;
-        font-weight: 520;
-        letter-spacing: -0.02em;
-        text-transform: none;
-      }
-
-      .scene-label {
+      .film-rule {
         position: absolute;
-        top: 68px;
-        right: 149px;
-        z-index: 8;
-        color: var(--muted);
-      }
-
-      .headline {
-        margin: 0;
-        font-size: 108px;
-        line-height: 0.94;
-        font-weight: 470;
-        letter-spacing: -0.062em;
-        max-width: 1310px;
-        text-wrap: balance;
-      }
-
-      .subhead {
-        margin: 28px 0 0;
-        max-width: 880px;
-        color: var(--ink-soft);
-        font-size: 31px;
-        line-height: 1.32;
-        letter-spacing: -0.025em;
-      }
-
-      .copy-block {
-        position: absolute;
-        left: 104px;
-        top: 148px;
-        z-index: 7;
-      }
-
-      .measure-line {
-        position: absolute;
-        left: 104px;
-        right: 148px;
-        bottom: 67px;
+        z-index: 20;
+        top: 112px;
+        right: 64px;
+        left: 64px;
         height: 1px;
-        background: var(--line-strong);
+        background: var(--line);
       }
 
-      .measure-line::before,
-      .measure-line::after {
-        content: "";
-        position: absolute;
-        bottom: -7px;
-        width: 1px;
-        height: 15px;
-        background: var(--ink);
-      }
-
-      .measure-line::before {
-        left: 0;
-      }
-
-      .measure-line::after {
-        right: 0;
-      }
-
-      .product-frame {
+      .frame {
         position: absolute;
         overflow: hidden;
+        border: 1px solid var(--line-strong);
         background: #fff;
-        border: 1px solid rgba(10, 31, 25, 0.26);
-        box-shadow:
-          0 34px 90px rgba(10, 31, 25, 0.12),
-          0 4px 18px rgba(10, 31, 25, 0.08);
+        box-shadow: 0 30px 72px rgba(10, 31, 25, 0.1);
       }
 
-      .product-frame img {
+      .frame img {
         display: block;
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
 
-      .frame-label {
-        position: absolute;
-        z-index: 4;
-        left: 0;
-        top: -39px;
+      .eyeline {
+        margin: 0 0 24px;
         color: var(--muted);
+        font-family: "Geist Mono", monospace;
+        font-size: 17px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
 
-      .pin {
+      .headline {
+        margin: 0;
+        font-size: 102px;
+        font-weight: 470;
+        letter-spacing: -0.058em;
+        line-height: 0.96;
+      }
+
+      .subhead {
+        max-width: 790px;
+        margin: 30px 0 0;
+        color: var(--ink-soft);
+        font-size: 30px;
+        letter-spacing: -0.024em;
+        line-height: 1.34;
+      }
+
+      .scene-problem .copy {
         position: absolute;
         z-index: 10;
-        width: 16px;
-        height: 16px;
-        border: 2px solid var(--ink);
-        border-radius: 50%;
-        background: var(--paper-lift);
-      }
-
-      .pin::after {
-        content: "";
-        position: absolute;
-        left: 14px;
-        top: 6px;
-        width: 134px;
-        height: 1px;
-        background: var(--ink);
-        transform: rotate(-22deg);
-        transform-origin: left center;
-      }
-
-      .scene-problem .copy-block {
-        top: 168px;
+        top: 178px;
+        left: 92px;
+        width: 770px;
       }
 
       .scene-problem .headline {
-        max-width: 1290px;
+        max-width: 720px;
       }
 
-      .scene-problem .product-frame {
-        left: 104px;
-        top: 562px;
-        width: 1250px;
-        height: 703px;
+      .answer-frame {
+        top: 236px;
+        right: 74px;
+        width: 940px;
+        height: 529px;
       }
 
-      .scene-problem .pin {
-        left: 1378px;
-        top: 594px;
+      .reasoning-frame {
+        z-index: 4;
+        top: 236px;
+        right: 74px;
+        width: 940px;
+        height: 529px;
       }
 
-      .scene-config .copy-block,
-      .scene-session .copy-block,
-      .scene-evidence .copy-block,
-      .scene-patterns .copy-block {
-        top: 151px;
-      }
-
-      .scene-config .headline,
-      .scene-session .headline,
-      .scene-evidence .headline,
-      .scene-patterns .headline {
-        font-size: 90px;
-        max-width: 760px;
-      }
-
-      .scene-config .subhead,
-      .scene-session .subhead,
-      .scene-evidence .subhead,
-      .scene-patterns .subhead {
-        max-width: 680px;
-        font-size: 28px;
-      }
-
-      .scene-config .product-stage,
-      .scene-session .product-stage,
-      .scene-evidence .product-stage,
-      .scene-patterns .product-stage {
+      .reasoning-frame::before {
+        content: "";
         position: absolute;
-        left: 820px;
-        top: 258px;
-        width: 938px;
-        height: auto;
-        aspect-ratio: 16 / 9;
+        z-index: 4;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 8px;
+        background: var(--pine);
       }
 
-      .scene-config .product-frame,
-      .scene-session .product-frame,
-      .scene-evidence .product-frame,
-      .scene-patterns .product-frame {
+      .problem-note {
+        position: absolute;
+        z-index: 10;
+        bottom: 92px;
+        left: 92px;
+        display: grid;
+        grid-template-columns: 170px 1fr;
+        gap: 34px;
+        width: 790px;
+        padding-top: 22px;
+        border-top: 1px solid var(--line-strong);
+      }
+
+      .problem-note strong {
+        font-family: "Geist Mono", monospace;
+        font-size: 16px;
+        font-weight: 450;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .problem-note span {
+        color: var(--ink-soft);
+        font-size: 24px;
+        line-height: 1.36;
+      }
+
+      .wipe-line {
+        position: absolute;
+        z-index: 30;
+        top: 112px;
+        bottom: 0;
+        left: 0;
+        width: 2px;
+        background: var(--pine);
+        opacity: 0;
+      }
+
+      .scene-terms .copy,
+      .scene-work .copy,
+      .scene-review .copy {
+        position: absolute;
+        z-index: 10;
+        top: 156px;
+        left: 92px;
+        width: 700px;
+        padding: 34px 42px 40px;
+        border: 1px solid var(--line-strong);
+        background: rgba(247, 249, 244, 0.97);
+      }
+
+      .scene-terms .headline,
+      .scene-work .headline,
+      .scene-review .headline {
+        font-size: 72px;
+      }
+
+      .scene-terms .subhead,
+      .scene-work .subhead,
+      .scene-review .subhead {
+        font-size: 25px;
+      }
+
+      .terms-frame,
+      .work-frame,
+      .review-frame {
+        top: 148px;
+        right: 62px;
+        left: 390px;
+        height: 842px;
+      }
+
+      .scene-terms .copy {
+        top: 218px;
+      }
+
+      .scene-work .copy {
+        top: 550px;
+      }
+
+      .scene-work .work-frame {
+        right: 120px;
+        left: 120px;
+      }
+
+      .scene-review .copy {
+        top: 610px;
+      }
+
+      .review-frame {
+        right: 120px;
+        left: 120px;
+      }
+
+      .review-frame.is-secondary,
+      .review-frame.is-tertiary {
+        z-index: 4;
+      }
+
+      .review-index {
+        position: absolute;
+        z-index: 12;
+        top: 160px;
+        right: 92px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        color: var(--muted);
+        font-family: "Geist Mono", monospace;
+        font-size: 16px;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .review-labels {
+        position: relative;
+        width: 110px;
+        height: 20px;
+        text-align: right;
+      }
+
+      .review-labels span {
+        position: absolute;
         inset: 0;
       }
 
-      .scene-config .product-frame img,
-      .scene-session .product-frame img,
-      .scene-evidence .product-frame img,
-      .scene-patterns .product-frame img {
-        object-fit: cover;
-      }
-
-      .scene-config .proof-note,
-      .scene-session .proof-note,
-      .scene-evidence .proof-note,
-      .scene-patterns .proof-note {
-        position: absolute;
-        left: 104px;
-        bottom: 118px;
-        width: 620px;
-        padding-top: 20px;
-        border-top: 1px solid var(--line-strong);
-        color: var(--ink-soft);
-        font-family: "Geist Mono", monospace;
-        font-size: 18px;
-        line-height: 1.52;
-      }
-
-      .scene-session .product-stage,
-      .scene-evidence .product-stage {
-        left: 724px;
-        top: 232px;
-        width: 1034px;
-      }
-
-      .scene-session .headline,
-      .scene-evidence .headline {
-        max-width: 585px;
-      }
-
-      .scene-session .subhead,
-      .scene-evidence .subhead {
-        max-width: 550px;
-      }
-
-      .scene-session .proof-note,
-      .scene-evidence .proof-note {
-        width: 520px;
-      }
-
-      .scene-patterns .product-stage {
-        left: 680px;
-        top: 220px;
-        width: 1078px;
-      }
-
-      .scene-patterns .headline {
-        max-width: 540px;
-      }
-
-      .scene-patterns .subhead,
-      .scene-patterns .proof-note {
-        max-width: 500px;
+      .review-index i {
+        display: block;
+        width: 94px;
+        height: 1px;
+        background: var(--line-strong);
       }
 
       .scene-end {
@@ -371,58 +341,36 @@
         place-items: center;
       }
 
+      #review-final {
+        background: var(--paper-lift) url("assets/mei-final-work.png") center / cover no-repeat;
+      }
+
+      #review-transcript {
+        background: var(--paper-lift) url("assets/mei-transcript.png") center / cover no-repeat;
+      }
+
       .end-lockup {
-        position: relative;
-        z-index: 8;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        display: grid;
+        justify-items: center;
         text-align: center;
       }
 
-      .end-lockup img {
-        width: 92px;
-        height: 92px;
-        margin-bottom: 38px;
-      }
-
       .end-lockup h2 {
+        max-width: 1120px;
         margin: 0;
-        max-width: 1160px;
         font-size: 112px;
-        line-height: 0.95;
-        letter-spacing: -0.06em;
         font-weight: 470;
+        letter-spacing: -0.062em;
+        line-height: 0.95;
       }
 
-      .end-url {
-        margin-top: 42px;
+      .end-lockup p {
+        margin: 38px 0 0;
         color: var(--muted);
-      }
-
-      .bearing {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        width: 900px;
-        height: 900px;
-        transform: translate(-50%, -50%);
-        border: 1px solid var(--line);
-        border-radius: 50%;
-        z-index: 2;
-      }
-
-      .bearing::before,
-      .bearing::after {
-        content: "";
-        position: absolute;
-        inset: 110px;
-        border: 1px solid var(--line);
-        border-radius: 50%;
-      }
-
-      .bearing::after {
-        inset: 225px;
+        font-family: "Geist Mono", monospace;
+        font-size: 18px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
       }
     </style>
   </head>
@@ -430,200 +378,127 @@
     <div
       id="root"
       data-composition-id="main"
-      data-start="0"
-      data-duration="41"
       data-width="1920"
       data-height="1080"
+      data-start="0"
+      data-duration="28"
     >
+      <div class="brand">
+        <img src="assets/atlas-mark.svg" alt="" />
+        <span>Atlas</span>
+      </div>
+
       <section
         id="scene-problem"
-        class="clip scene scene-problem"
-        data-start="0"
-        data-duration="5.4"
-        data-track-index="1"
+        class="scene scene-problem"
+        data-layout-allow-overlap
+        data-layout-allow-occlusion
       >
-        <div class="registration">
-          <img src="assets/atlas-mark.svg" alt="" />
-          <span>Atlas</span>
+        <span class="counter" data-layout-allow-overlap>The missing part</span>
+        <span class="film-rule"></span>
+        <div class="copy">
+          <p class="eyeline">The problem</p>
+          <h1 class="headline">A finished answer is not enough.</h1>
         </div>
-        <div class="scene-label">The missing evidence</div>
-        <div class="copy-block">
-          <h1 class="headline">A finished answer cannot tell you how the student got there.</h1>
+        <div class="frame answer-frame">
+          <img src="assets/mei-final-work.png" alt="Mei Chen's final pricing work" />
         </div>
-        <div class="product-frame">
-          <span class="frame-label" data-layout-allow-overflow>A finished answer</span>
-          <img
-            src="assets/teacher-session-final-work-light.png"
-            alt="Atlas teacher view of a student's final work and revisions"
-          />
+        <div class="frame reasoning-frame">
+          <img src="assets/mei-transcript.png" alt="The reasoning behind Mei Chen's final work" />
         </div>
-        <span class="pin"></span>
-        <span class="measure-line"></span>
+        <div class="problem-note">
+          <strong>What is missing</strong>
+          <span>The questions, choices, and revisions that produced the answer.</span>
+        </div>
+        <span class="wipe-line" id="problem-wipe"></span>
       </section>
 
       <section
-        id="scene-config"
-        class="clip scene scene-config"
-        data-start="4.8"
-        data-duration="7.8"
-        data-track-index="2"
+        id="scene-terms"
+        class="scene scene-terms"
+        data-layout-allow-overlap
+        data-layout-allow-occlusion
       >
-        <div class="registration">
-          <img src="assets/atlas-mark.svg" alt="" />
-          <span>Atlas</span>
+        <span class="counter" data-layout-allow-overlap>Teacher sets the terms</span>
+        <span class="film-rule"></span>
+        <div class="frame terms-frame">
+          <img src="assets/course-agent.png" alt="Course agent settings for ECON-241" />
         </div>
-        <div class="scene-label">Teacher sets the terms</div>
-        <div class="copy-block">
-          <h2 class="headline">Set the terms.</h2>
-          <p class="subhead">Describe how the agent should teach, challenge, and respond.</p>
+        <div class="copy">
+          <p class="eyeline">Teacher</p>
+          <h2 class="headline">Set how the agent teaches.</h2>
+          <p class="subhead">Voice, challenge, sources, direct answers, and where it must stop.</p>
         </div>
-        <p class="proof-note">Natural language becomes a versioned course-agent record the teacher can inspect and change.</p>
-        <div class="product-stage">
-          <div id="config-chat" class="product-frame">
-            <span class="frame-label" data-layout-allow-overflow>Describe the course agent</span>
-            <img
-              src="assets/teacher-course-config-detail-light.png"
-              alt="Teacher configuring an Atlas course agent in natural language"
-            />
-          </div>
-          <div id="config-record" class="product-frame">
-            <span class="frame-label" data-layout-allow-overflow>Inspect the resolved record</span>
-            <img
-              src="assets/teacher-course-agent-record-light.png"
-              alt="Atlas course-agent record showing teaching behavior and boundaries"
-            />
-          </div>
-        </div>
-        <span class="measure-line"></span>
+        <span class="wipe-line" id="terms-wipe"></span>
       </section>
 
       <section
-        id="scene-session"
-        class="clip scene scene-session"
-        data-start="12"
-        data-duration="10.6"
-        data-track-index="3"
+        id="scene-work"
+        class="scene scene-work"
+        data-layout-allow-overlap
+        data-layout-allow-occlusion
       >
-        <div class="registration">
-          <img src="assets/atlas-mark.svg" alt="" />
-          <span>Atlas</span>
+        <span class="counter" data-layout-allow-overlap>Student works inside them</span>
+        <span class="film-rule"></span>
+        <div class="frame work-frame">
+          <img src="assets/mei-session.png" alt="Mei Chen working with the ECON-241 course agent" />
         </div>
-        <div class="scene-label">Student works inside them</div>
-        <div class="copy-block">
+        <div class="copy">
+          <p class="eyeline">Student</p>
           <h2 class="headline">The student does the work.</h2>
-          <p class="subhead">Questions, hints, revisions, and the assignment stay in one governed session.</p>
+          <p class="subhead">The agent questions and challenges without choosing the answer.</p>
         </div>
-        <p class="proof-note">The agent can use the course and the student's record without taking the important move away from the student.</p>
-        <div class="product-stage">
-          <div id="student-session" class="product-frame">
-            <span class="frame-label" data-layout-allow-overflow>Work through the assignment</span>
-            <img
-              src="assets/student-work-session-light.png"
-              alt="Student working through an assessed assignment with Atlas"
-            />
-          </div>
-          <div id="student-note" class="product-frame">
-            <span class="frame-label" data-layout-allow-overflow>Use what matters now</span>
-            <img
-              src="assets/student-work-session-side-note-light.png"
-              alt="Atlas showing a course-record note during student work"
-            />
-          </div>
-        </div>
-        <span class="measure-line"></span>
+        <span class="wipe-line" id="work-wipe"></span>
       </section>
 
       <section
-        id="scene-evidence"
-        class="clip scene scene-evidence"
-        data-start="22"
-        data-duration="9.5"
-        data-track-index="4"
+        id="scene-review"
+        class="scene scene-review"
+        data-layout-allow-overlap
+        data-layout-allow-occlusion
       >
-        <div class="registration">
-          <img src="assets/atlas-mark.svg" alt="" />
-          <span>Atlas</span>
+        <span class="counter" data-layout-allow-overlap>Teacher sees the learning</span>
+        <span class="film-rule"></span>
+        <div class="review-index">
+          <span class="review-labels" data-layout-allow-overlap>
+            <span id="review-label-transcript">Transcript</span>
+            <span id="review-label-final">Final work</span>
+            <span id="review-label-rubric">Rubric</span>
+          </span>
+          <i></i>
         </div>
-        <div class="scene-label">Teacher sees the learning</div>
-        <div class="copy-block">
-          <h2 class="headline">The journey becomes evidence.</h2>
-          <p class="subhead">Review the reasoning, the revisions, and the result together.</p>
+        <div
+          class="frame review-frame"
+          id="review-transcript"
+          role="img"
+          aria-label="Teacher review of Mei Chen's transcript"
+        ></div>
+        <div
+          class="frame review-frame is-secondary"
+          id="review-final"
+          role="img"
+          aria-label="Teacher review of Mei Chen's final work"
+        ></div>
+        <div class="frame review-frame is-tertiary" id="review-grade">
+          <img src="assets/mei-grade.png" alt="Teacher rubric grade for Mei Chen" />
         </div>
-        <p class="proof-note">The teacher sees the transcript, the student's final work, and the rubric review in one record.</p>
-        <div class="product-stage">
-          <div id="evidence-transcript" class="product-frame">
-            <span class="frame-label" data-layout-allow-overlap data-layout-allow-overflow>Transcript evidence</span>
-            <img
-              src="assets/teacher-session-transcript-light.png"
-              alt="Teacher reviewing an assessed Atlas session transcript"
-            />
-          </div>
-          <div id="evidence-revisions" class="product-frame">
-            <span class="frame-label" data-layout-allow-overlap data-layout-allow-overflow>Final work and revisions</span>
-            <img
-              src="assets/teacher-session-final-work-light.png"
-              alt="Teacher reviewing a student's final work and revisions"
-            />
-          </div>
-          <div id="evidence-review" class="product-frame">
-            <span class="frame-label" data-layout-allow-overlap data-layout-allow-overflow>Rubric review</span>
-            <img
-              src="assets/teacher-session-review-light.png"
-              alt="Atlas assignment rubric review"
-            />
-          </div>
+        <div class="copy">
+          <p class="eyeline">Teacher</p>
+          <h2 class="headline">See how the answer was made.</h2>
+          <p class="subhead">Transcript, final work, and rubric stay together.</p>
         </div>
-        <span class="measure-line"></span>
-      </section>
-
-      <section
-        id="scene-patterns"
-        class="clip scene scene-patterns"
-        data-start="30.9"
-        data-duration="7.7"
-        data-track-index="5"
-      >
-        <div class="registration">
-          <img src="assets/atlas-mark.svg" alt="" />
-          <span>Atlas</span>
-        </div>
-        <div class="scene-label">Course gets better</div>
-        <div class="copy-block">
-          <h2 class="headline">Then improve what comes next.</h2>
-          <p class="subhead">Patterns become practice for the class and direction for each student.</p>
-        </div>
-        <p class="proof-note">The record moves forward: from one session to class patterns, and from class patterns back to the individual.</p>
-        <div class="product-stage">
-          <div id="patterns-class" class="product-frame">
-            <span class="frame-label" data-layout-allow-overflow>See class patterns</span>
-            <img
-              src="assets/teacher-class-results-light.png"
-              alt="Atlas class results showing criterion patterns"
-            />
-          </div>
-          <div id="patterns-student" class="product-frame">
-            <span class="frame-label" data-layout-allow-overflow>Remember the individual</span>
-            <img
-              src="assets/student-profile-light.png"
-              alt="Atlas student learning profile showing strengths and gaps"
-            />
-          </div>
-        </div>
-        <span class="measure-line"></span>
+        <span class="wipe-line" id="review-wipe"></span>
       </section>
 
       <section
         id="scene-end"
-        class="clip scene scene-end"
-        data-start="38"
-        data-duration="3"
-        data-track-index="6"
+        class="scene scene-end"
+        data-layout-allow-overlap
+        data-layout-allow-occlusion
       >
-        <div class="bearing"></div>
         <div class="end-lockup">
-          <img src="assets/atlas-mark.svg" alt="" />
-          <h2>Set the terms.<br />See the learning.</h2>
-          <p class="end-url">atlas-lms.com</p>
+          <h2>Stop guessing.<br />See the learning.</h2>
+          <p>atlas-lms.com</p>
         </div>
       </section>
     </div>
@@ -632,83 +507,63 @@
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true });
 
-      gsap.set(".scene", { opacity: 0 });
-      gsap.set("#scene-problem", { opacity: 1, y: 0 });
-      gsap.set("#scene-config", { opacity: 1, y: 1080 });
-      gsap.set("#scene-session", { opacity: 1, x: 1920 });
-      gsap.set("#scene-evidence", { opacity: 0, filter: "blur(18px)", scale: 0.985 });
-      gsap.set("#scene-patterns", { opacity: 1, x: 1920 });
-      gsap.set("#scene-end", { opacity: 0 });
+      gsap.set('[data-composition-id="main"] .scene', { opacity: 0 });
+      gsap.set("#scene-problem", { opacity: 1 });
+      gsap.set("#scene-terms", { opacity: 1, clipPath: "inset(0 0 0 100%)" });
+      gsap.set("#scene-work", { opacity: 1, clipPath: "inset(0 0 0 100%)" });
+      gsap.set("#scene-review", { opacity: 1, clipPath: "inset(0 0 0 100%)" });
+      gsap.set("#scene-end", { opacity: 1, clipPath: "inset(0 0 0 100%)" });
 
-      gsap.set("#scene-problem .headline", { opacity: 0, y: 42 });
-      gsap.set("#scene-problem .product-frame", { opacity: 0, y: 88 });
-      gsap.set("#scene-problem .pin", { opacity: 0, scale: 0.4 });
+      gsap.set("#scene-problem .copy, #scene-problem .problem-note", { opacity: 0 });
+      gsap.set("#scene-problem .answer-frame", { opacity: 0, clipPath: "inset(100% 0 0 0)" });
+      gsap.set("#scene-problem .reasoning-frame", { clipPath: "inset(0 100% 0 0)" });
+      gsap.set("#problem-wipe", { x: 987 });
 
-      gsap.set("#config-chat", { opacity: 0, x: 48 });
-      gsap.set("#config-record", { opacity: 1, x: 1010 });
-      gsap.set("#student-session", { opacity: 0, x: 52 });
-      gsap.set("#student-note", { opacity: 0, filter: "blur(18px)", scale: 0.985 });
-      gsap.set("#evidence-transcript", { opacity: 0, x: 52 });
-      gsap.set("#evidence-revisions", { opacity: 1, x: 1100 });
-      gsap.set("#evidence-review", { opacity: 1, x: 1100 });
-      gsap.set("#patterns-class", { opacity: 0, x: 52 });
-      gsap.set("#patterns-student", { opacity: 1, x: 1140 });
-      gsap.set("#scene-end .end-lockup", { opacity: 0, y: 30 });
-      gsap.set("#scene-end .bearing", { opacity: 0, scale: 0.82 });
+      gsap.set("#scene-terms .copy, #scene-work .copy, #scene-review .copy", { opacity: 0 });
+      gsap.set("#scene-terms .terms-frame, #scene-work .work-frame", { clipPath: "inset(0 100% 0 0)" });
+      gsap.set("#terms-wipe, #work-wipe, #review-wipe", { x: 0 });
 
-      tl.to("#scene-problem .headline", { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 0.18);
-      tl.to("#scene-problem .product-frame", { opacity: 1, y: 0, duration: 1.0, ease: "power3.out" }, 0.62);
-      tl.to("#scene-problem .product-frame img", { y: -52, duration: 3.5, ease: "none" }, 1.15);
-      tl.to("#scene-problem .pin", { opacity: 1, scale: 1, duration: 0.45, ease: "back.out(1.5)" }, 1.28);
+      gsap.set("#review-transcript", { clipPath: "inset(0 0 0 0)" });
+      gsap.set("#review-final, #review-grade", { clipPath: "inset(0 100% 0 0)" });
+      gsap.set("#review-label-final, #review-label-rubric", { opacity: 0 });
+      gsap.set("#scene-end .end-lockup", { opacity: 0 });
 
-      tl.to("#scene-problem", { y: -1080, duration: 0.6, ease: "power3.inOut" }, 4.8);
-      tl.to("#scene-config", { y: 0, duration: 0.6, ease: "power3.inOut" }, 4.8);
-      tl.fromTo("#scene-config .copy-block", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 5.18);
-      tl.fromTo("#scene-config .proof-note", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 5.42);
-      tl.to("#config-chat", { opacity: 1, x: 0, duration: 0.75, ease: "power3.out" }, 5.28);
-      tl.to("#config-chat img", { scale: 1.045, x: -18, y: -16, duration: 3.0, ease: "power1.inOut" }, 5.7);
-      tl.to("#config-chat", { x: -1920, duration: 0.62, ease: "power3.inOut" }, 8.65);
-      tl.to("#config-record", { x: 0, duration: 0.62, ease: "power3.inOut" }, 8.65);
-      tl.fromTo("#config-record img", { scale: 1.025 }, { scale: 1, duration: 2.6, ease: "power1.out" }, 9.1);
+      tl.to("#scene-problem .copy", { opacity: 1, duration: 0.7, ease: "power1.out" }, 0.2);
+      tl.to("#scene-problem .answer-frame", { opacity: 1, clipPath: "inset(0 0 0 0)", duration: 1.0, ease: "power3.inOut" }, 0.65);
+      tl.to("#scene-problem .problem-note", { opacity: 1, duration: 0.7, ease: "power1.out" }, 1.15);
+      tl.to("#problem-wipe", { opacity: 1, duration: 0.15 }, 2.35);
+      tl.to("#problem-wipe", { x: 1845, duration: 1.35, ease: "power2.inOut" }, 2.35);
+      tl.to("#scene-problem .reasoning-frame", { clipPath: "inset(0 0 0 0)", duration: 1.35, ease: "power2.inOut" }, 2.35);
+      tl.to("#problem-wipe", { opacity: 0, duration: 0.18 }, 3.72);
 
-      tl.to("#scene-config", { x: -1920, duration: 0.6, ease: "power3.inOut" }, 12);
-      tl.to("#scene-session", { x: 0, duration: 0.6, ease: "power3.inOut" }, 12);
-      tl.fromTo("#scene-session .copy-block", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 12.38);
-      tl.fromTo("#scene-session .proof-note", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 12.65);
-      tl.to("#student-session", { opacity: 1, x: 0, duration: 0.75, ease: "power3.out" }, 12.42);
-      tl.to("#student-session img", { scale: 1.05, x: -24, duration: 4.2, ease: "power1.inOut" }, 13.15);
-      tl.to("#student-session", { filter: "blur(18px)", opacity: 0, scale: 1.025, duration: 0.72, ease: "power1.inOut" }, 17.5);
-      tl.to("#student-note", { opacity: 1, filter: "blur(0px)", scale: 1, duration: 0.72, ease: "power1.inOut" }, 17.55);
-      tl.fromTo("#student-note img", { scale: 1.035 }, { scale: 1, duration: 3.5, ease: "power1.out" }, 18.05);
+      tl.to("#scene-terms", { clipPath: "inset(0 0 0 0)", duration: 0.9, ease: "power3.inOut" }, 5.75);
+      tl.to("#scene-terms .terms-frame", { clipPath: "inset(0 0 0 0)", duration: 1.15, ease: "power3.inOut" }, 6.15);
+      tl.to("#scene-terms .copy", { opacity: 1, duration: 0.7, ease: "power1.out" }, 6.65);
+      tl.to("#terms-wipe", { opacity: 1, x: 1880, duration: 1.1, ease: "power2.inOut" }, 9.75);
+      tl.to("#terms-wipe", { opacity: 0, duration: 0.15 }, 10.85);
 
-      tl.to("#scene-session", { filter: "blur(18px)", opacity: 0, scale: 1.018, duration: 0.75, ease: "power1.inOut" }, 21.85);
-      tl.to("#scene-evidence", { filter: "blur(0px)", opacity: 1, scale: 1, duration: 0.75, ease: "power1.inOut" }, 21.9);
-      tl.fromTo("#scene-evidence .copy-block", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 22.3);
-      tl.fromTo("#scene-evidence .proof-note", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 22.5);
-      tl.to("#evidence-transcript", { opacity: 1, x: 0, duration: 0.75, ease: "power3.out" }, 22.25);
-      tl.to("#evidence-transcript img", { scale: 1.035, x: -18, duration: 3.2, ease: "power1.inOut" }, 22.75);
-      tl.to("#evidence-transcript", { x: -1920, duration: 0.58, ease: "power3.inOut" }, 25.6);
-      tl.to("#evidence-revisions", { x: 0, duration: 0.58, ease: "power3.inOut" }, 25.6);
-      tl.to("#evidence-revisions", { x: -1920, duration: 0.58, ease: "power3.inOut" }, 28.2);
-      tl.to("#evidence-review", { x: 0, duration: 0.58, ease: "power3.inOut" }, 28.2);
-      tl.fromTo("#evidence-review img", { scale: 1.025 }, { scale: 1, duration: 2.3, ease: "power1.out" }, 28.6);
+      tl.to("#scene-work", { clipPath: "inset(0 0 0 0)", duration: 0.9, ease: "power3.inOut" }, 11.95);
+      tl.to("#scene-work .work-frame", { clipPath: "inset(0 0 0 0)", duration: 1.15, ease: "power3.inOut" }, 12.35);
+      tl.to("#scene-work .copy", { opacity: 1, duration: 0.7, ease: "power1.out" }, 12.85);
+      tl.to("#work-wipe", { opacity: 1, x: 1880, duration: 1.1, ease: "power2.inOut" }, 16.05);
+      tl.to("#work-wipe", { opacity: 0, duration: 0.15 }, 17.17);
 
-      tl.to("#scene-evidence", { x: -1920, opacity: 1, filter: "blur(0px)", duration: 0.6, ease: "power3.inOut" }, 30.9);
-      tl.to("#scene-patterns", { x: 0, duration: 0.6, ease: "power3.inOut" }, 30.9);
-      tl.fromTo("#scene-patterns .copy-block", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 31.3);
-      tl.fromTo("#scene-patterns .proof-note", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" }, 31.52);
-      tl.to("#patterns-class", { opacity: 1, x: 0, duration: 0.75, ease: "power3.out" }, 31.35);
-      tl.to("#patterns-class img", { scale: 1.035, y: -14, duration: 3.1, ease: "power1.inOut" }, 31.85);
-      tl.to("#patterns-class", { x: -1920, duration: 0.6, ease: "power3.inOut" }, 34.8);
-      tl.to("#patterns-student", { x: 0, duration: 0.6, ease: "power3.inOut" }, 34.8);
-      tl.fromTo("#patterns-student img", { scale: 1.025 }, { scale: 1, duration: 2.6, ease: "power1.out" }, 35.2);
+      tl.to("#scene-review", { clipPath: "inset(0 0 0 0)", duration: 0.9, ease: "power3.inOut" }, 17.95);
+      tl.to("#scene-review .copy", { opacity: 1, duration: 0.7, ease: "power1.out" }, 18.55);
+      tl.to("#review-final", { clipPath: "inset(0 0 0 0)", duration: 0.85, ease: "power3.inOut" }, 20.25);
+      tl.to("#review-label-transcript", { opacity: 0, duration: 0.2, ease: "power1.out" }, 20.25);
+      tl.to("#review-label-final", { opacity: 1, duration: 0.2, ease: "power1.out" }, 20.45);
+      tl.to("#review-grade", { clipPath: "inset(0 0 0 0)", duration: 0.85, ease: "power3.inOut" }, 22.25);
+      tl.to("#review-label-final", { opacity: 0, duration: 0.2, ease: "power1.out" }, 22.25);
+      tl.to("#review-label-rubric", { opacity: 1, duration: 0.2, ease: "power1.out" }, 22.45);
+      tl.to("#review-wipe", { opacity: 1, x: 1880, duration: 1.0, ease: "power2.inOut" }, 23.55);
+      tl.to("#review-wipe", { opacity: 0, duration: 0.15 }, 24.55);
 
-      tl.to("#scene-patterns", { opacity: 0, duration: 0.4, ease: "power2.in" }, 37.9);
-      tl.to("#scene-end", { opacity: 1, duration: 0.4, ease: "power2.out" }, 38.08);
-      tl.to("#scene-end .bearing", { opacity: 1, scale: 1, duration: 1.0, ease: "power3.out" }, 38.12);
-      tl.to("#scene-end .end-lockup", { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" }, 38.35);
+      tl.to("#scene-end", { clipPath: "inset(0 0 0 0)", duration: 0.75, ease: "power3.inOut" }, 24.8);
+      tl.to("#scene-end .end-lockup", { opacity: 1, duration: 0.85, ease: "power1.out" }, 25.25);
 
-      window.__timelines["main"] = tl;
+      window.__timelines.main = tl;
+      window.__hyperframesReady = true;
     </script>
   </body>
 </html>

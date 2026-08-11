@@ -63,9 +63,9 @@ components:
 
 **Creative North Star: "The Living Course Map"**
 
-Atlas is one precise visual identity expressed through different page grammars. The homepage is a cinematic argument. How it works is a navigable course map. Work with us is a collaborative launch workspace. Pricing is a scope instrument. Access is an intentional application. Geist, warm paper, deep ink, real product imagery, and instrument-like precision hold these worlds together.
+Atlas is one precise visual identity expressed through different page grammars. The homepage is a direct argument with a cinematic product proof. How it works is a scroll-led product stage. Work with us is built around an overlapping test-classroom pass and a concrete launch path. Access is a compact request form with optional context kept out of the main path. Geist, warm paper, deep ink, real product imagery, and instrument-like precision hold these worlds together.
 
-The living dot field belongs only to the homepage hero. Other pages may borrow the idea of orientation, routes, records, and bearings, but must do so with different composition and interaction systems. The site rejects generic SaaS templates, repeated editorial ruled grids, cyber imagery, fake UI, and decoration without meaning.
+The living dot field belongs only to the homepage hero. Other pages may borrow the idea of orientation and bearings, but must do so with different composition and interaction systems. The site rejects generic SaaS templates, repeated editorial ruled grids, cyber imagery, fake UI, and decoration without meaning.
 
 **Key Characteristics:**
 

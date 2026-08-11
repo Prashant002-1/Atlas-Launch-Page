@@ -6,15 +6,16 @@ Vercel.
 
 ## Site structure
 
-- `/` keeps the existing living-field hero intact, then introduces the product
-  story, the real product film, the Atlas agent model, and routes into the rest
-  of the site.
-- `/how-it-works/` follows the teacher and student journey from course-agent
-  configuration to assessed work, teacher review, and class patterns.
-- `/work-with-us/` explains the first-course onboarding and launch process.
-- `/pricing/` explains the current course, institution, and individual access
-  paths without inventing fixed pricing before the launch model is stable.
-- `/access/` contains the real launch-access and demo-request form.
+- `/` keeps the existing living-field hero intact, states the problem directly,
+  shows the real product film, and explains the student, course, and teacher
+  agents without repeating the full product journey.
+- `/how-it-works/` is a scroll-led assignment journey from teacher-authored
+  terms through student work, teacher review, and grading.
+- `/work-with-us/` explains the actual path from a short request to a fictional
+  test classroom, fit review, integration planning, and a first real course.
+- `/access/` contains the launch-access and demo-request form.
+- `/pricing/` is a legacy redirect to `/access/`. Atlas is evaluating its first
+  customers and will publish standard pricing later.
 - `/api/launch-access` validates form submissions and delivers them through
   Resend from a Vercel Function.
 
@@ -24,11 +25,11 @@ The static site contains no authenticated application source.
 
 The homepage hero is the existing Atlas living field and instrument edge. The
 expanded product narrative begins after the hero. Shared identity comes from
-warm paper, deep ink, Geist type, sharp controls, and real light-mode Atlas
-product surfaces. Each route uses a different system for its job: the homepage
-is a cinematic argument, How it works is a navigable course map, Work with us
-is a launch workshop, Pricing is a scope instrument, and Access is a structured
-application.
+warm paper, deep ink, Geist type, sharp controls, and real Atlas product
+surfaces. Each route uses a different system for its job: the homepage is a
+direct argument with a cinematic product proof, How it works is a scroll-led
+product stage, Work with us centers a fictional test-classroom pass, and Access
+is a compact request form.
 
 `PRODUCT.md` records the brand strategy and anti-references. `DESIGN.md` records
 the visual tokens and route-specific composition rules. In particular, the
@@ -60,10 +61,11 @@ ATLAS_ACCESS_FROM=
 function returns a clear temporary-unavailable response if the delivery
 provider is not configured. It does not silently accept and lose a lead.
 
-The form includes identity, role, institution or individual context, first
-course and learner scope, areas of interest, use case, current approach,
-timeline, and consent. Institution is required for organizational requests and
-optional for individuals.
+The form asks for identity, role, institution or individual context, area of
+interest, and consent. Institution is required for organizational requests and
+optional for individuals. Use case and current approach stay inside an optional
+context disclosure so a visitor can send the short request without completing
+an intake questionnaire.
 
 ## Local preview
 

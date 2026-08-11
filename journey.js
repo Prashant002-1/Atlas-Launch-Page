@@ -1,48 +1,51 @@
 (() => {
   "use strict";
 
-  const map = document.querySelector("[data-course-map]");
-  if (!map) return;
+  const story = document.querySelector("[data-scroll-story]");
+  if (!story) return;
 
-  const tabs = Array.from(map.querySelectorAll("[data-map-tab]"));
-  const panels = Array.from(map.querySelectorAll("[data-map-panel]"));
+  const steps = Array.from(story.querySelectorAll("[data-story-step]"));
+  const visuals = Array.from(story.querySelectorAll("[data-story-visual]"));
+  const count = story.querySelector("[data-story-count]");
+  const progress = story.querySelector("[data-story-progress]");
+  if (!steps.length || !visuals.length) return;
 
-  const update = (name, focus = false) => {
-    tabs.forEach((tab) => {
-      const active = tab.dataset.mapTab === name;
-      tab.classList.toggle("is-active", active);
-      tab.setAttribute("aria-selected", String(active));
-      tab.tabIndex = active ? 0 : -1;
-      if (active && focus) tab.focus();
+  const activate = (key) => {
+    const index = Math.max(
+      0,
+      steps.findIndex((step) => step.dataset.storyStep === key),
+    );
+
+    steps.forEach((step, stepIndex) => {
+      step.classList.toggle("is-active", stepIndex === index);
     });
 
-    panels.forEach((panel) => {
-      const active = panel.dataset.mapPanel === name;
-      panel.hidden = !active;
-      panel.classList.toggle("is-active", active);
+    visuals.forEach((visual) => {
+      visual.classList.toggle("is-active", visual.dataset.storyVisual === key);
     });
-  };
 
-  const select = (name, focus = false) => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (!document.startViewTransition || reduced) {
-      update(name, focus);
-      return;
+    if (count) count.textContent = `${index + 1} / ${steps.length}`;
+    if (progress) {
+      progress.style.setProperty("--story-progress", (index + 1) / steps.length);
     }
-    document.startViewTransition(() => update(name, focus));
   };
 
-  tabs.forEach((tab, index) => {
-    tab.addEventListener("click", () => select(tab.dataset.mapTab));
-    tab.addEventListener("keydown", (event) => {
-      if (!["ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
-      event.preventDefault();
-      let next = index;
-      if (event.key === "Home") next = 0;
-      else if (event.key === "End") next = tabs.length - 1;
-      else if (["ArrowDown", "ArrowRight"].includes(event.key)) next = (index + 1) % tabs.length;
-      else next = (index - 1 + tabs.length) % tabs.length;
-      select(tabs[next].dataset.mapTab, true);
-    });
-  });
+  activate(steps[0].dataset.storyStep);
+
+  if (!("IntersectionObserver" in window)) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const current = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (current) activate(current.target.dataset.storyStep);
+    },
+    {
+      rootMargin: "-38% 0px -38% 0px",
+      threshold: [0, 0.15, 0.45, 0.75],
+    },
+  );
+
+  steps.forEach((step) => observer.observe(step));
 })();

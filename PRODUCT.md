@@ -12,9 +12,11 @@ Visitors need to understand the teaching model, see the real product, judge whet
 
 ## Product Purpose
 
-Atlas is a teacher-controlled agentic learning management system. Teachers set the terms for a course agent in natural language. Students work with a personal agent inside those terms. Questions, hints, revisions, submissions, and review stay connected so teachers can see the learning journey and decide what happens next.
+AI is already inside student work. A polished answer can no longer show who understood the material, what changed during the work, or whether the student did the thinking. Teachers are left judging the output and guessing what happened before it arrived.
 
-The public site exists to replace vague AI claims with a clear product argument, real product evidence, and an honest path to a first course or demonstration.
+Atlas puts that agent work inside the course. Teachers set how the agent can teach, challenge, and respond. Students ask questions, reason, and revise inside those terms. Atlas keeps that work with the answer so teachers can judge the learning instead of trying to detect where AI was used.
+
+The public site exists to state that problem plainly, prove the product response with real Atlas surfaces, and give institutions an honest path to a test classroom and first course.
 
 ## Brand Personality
 

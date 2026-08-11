@@ -24,7 +24,7 @@ function responseRecorder() {
 
 test("rejects incomplete submissions", async () => {
   const res = responseRecorder();
-  await handler({ method: "POST", body: { name: "Aman" } }, res);
+  await handler({ method: "POST", body: { name: "Jordan" } }, res);
   assert.equal(res.code, 400);
   assert.equal(res.body.error, "Complete the required fields.");
 });
@@ -35,12 +35,11 @@ test("requires an institution for organizational requests", async () => {
     {
       method: "POST",
       body: {
-        name: "Aman Dutta",
-        email: "aman@example.edu",
+        name: "Jordan Lee",
+        email: "jordan@example.edu",
         role: "Teacher or professor",
         organizationType: "Course team",
         interests: ["First-course launch"],
-        useCase: "A first economics course.",
         consent: "yes",
       },
     },
@@ -67,12 +66,11 @@ test("rejects cross-site and non-consenting submissions", async () => {
     {
       method: "POST",
       body: {
-        name: "Aman Dutta",
-        email: "aman@example.edu",
+        name: "Jordan Lee",
+        email: "jordan@example.edu",
         role: "Student",
         organizationType: "Individual",
         interests: ["Product demo"],
-        useCase: "I want to understand the student experience.",
         consent: "no",
       },
     },
@@ -82,7 +80,53 @@ test("rejects cross-site and non-consenting submissions", async () => {
   assert.equal(noConsent.body.error, "Consent is required to send this request.");
 });
 
-test("delivers a complete individual request through the configured provider", async () => {
+test("does not accept a request when delivery is not configured", async () => {
+  const originalEnv = {
+    key: process.env.RESEND_API_KEY,
+    recipient: process.env.ATLAS_ACCESS_RECIPIENT,
+    sender: process.env.ATLAS_ACCESS_FROM,
+  };
+
+  delete process.env.RESEND_API_KEY;
+  delete process.env.ATLAS_ACCESS_RECIPIENT;
+  delete process.env.ATLAS_ACCESS_FROM;
+
+  try {
+    const res = responseRecorder();
+    await handler(
+      {
+        method: "POST",
+        body: {
+          name: "Jordan Lee",
+          email: "jordan@example.edu",
+          role: "Student",
+          organizationType: "Individual",
+          interests: ["Product demo"],
+          consent: "yes",
+        },
+      },
+      res,
+    );
+
+    assert.equal(res.code, 503);
+    assert.equal(
+      res.body.error,
+      "The request form is not configured yet. Please try again shortly.",
+    );
+  } finally {
+    if (originalEnv.key === undefined) delete process.env.RESEND_API_KEY;
+    else process.env.RESEND_API_KEY = originalEnv.key;
+    if (originalEnv.recipient === undefined) {
+      delete process.env.ATLAS_ACCESS_RECIPIENT;
+    } else {
+      process.env.ATLAS_ACCESS_RECIPIENT = originalEnv.recipient;
+    }
+    if (originalEnv.sender === undefined) delete process.env.ATLAS_ACCESS_FROM;
+    else process.env.ATLAS_ACCESS_FROM = originalEnv.sender;
+  }
+});
+
+test("delivers an individual request without optional context", async () => {
   const originalFetch = globalThis.fetch;
   const originalEnv = {
     key: process.env.RESEND_API_KEY,
@@ -106,12 +150,11 @@ test("delivers a complete individual request through the configured provider", a
       {
         method: "POST",
         body: {
-          name: "Aman\nDutta",
-          email: "aman@example.edu",
+          name: "Jordan\nLee",
+          email: "jordan@example.edu",
           role: "Student",
           organizationType: "Individual",
           interests: ["Product demo", "Individual access"],
-          useCase: "I want to understand the student experience.",
           consent: "yes",
         },
       },
@@ -123,9 +166,10 @@ test("delivers a complete individual request through the configured provider", a
     assert.equal(providerRequest.url, "https://api.resend.com/emails");
 
     const providerBody = JSON.parse(providerRequest.options.body);
-    assert.equal(providerBody.reply_to, "aman@example.edu");
-    assert.equal(providerBody.subject, "Atlas launch access: Aman Dutta");
+    assert.equal(providerBody.reply_to, "jordan@example.edu");
+    assert.equal(providerBody.subject, "Atlas launch access: Jordan Lee");
     assert.match(providerBody.text, /Product demo, Individual access/);
+    assert.match(providerBody.text, /Use case:\nNot provided/);
   } finally {
     globalThis.fetch = originalFetch;
     process.env.RESEND_API_KEY = originalEnv.key;

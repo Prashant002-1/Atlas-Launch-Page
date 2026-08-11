@@ -12,6 +12,11 @@
       "source": "/about",
       "destination": "/",
       "permanent": false
+    },
+    {
+      "source": "/pricing",
+      "destination": "/access",
+      "permanent": true
     }
   ],
   "headers": [
