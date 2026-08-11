@@ -19,15 +19,30 @@
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://atlas-lms.com/" />
-    <!-- og:image ships separately: brand/og.png is designed and ready,
-         but binaries can't ride this commit path. Add the file, then:
-         og:image + twitter:image → https://atlas-lms.com/brand/og.png -->
+    <meta
+      property="og:image"
+      content="https://atlas-lms.com/assets/atlas-product-film-poster.jpg"
+    />
+    <meta property="og:image:width" content="1440" />
+    <meta property="og:image:height" content="810" />
+    <meta
+      property="og:image:alt"
+      content="Atlas showing the learning process behind a student submission"
+    />
 
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Atlas | Make learning visible" />
     <meta
       name="twitter:description"
       content="The agentic LMS where teachers see and shape learning."
+    />
+    <meta
+      name="twitter:image"
+      content="https://atlas-lms.com/assets/atlas-product-film-poster.jpg"
+    />
+    <meta
+      name="twitter:image:alt"
+      content="Atlas showing the learning process behind a student submission"
     />
 
     <title>Atlas | Make learning visible</title>
@@ -41,10 +56,12 @@
     />
     <link rel="stylesheet" href="/vendor/lenis.css" />
     <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/site-pages.css" />
     <script src="/vendor/lenis.min.js" defer></script>
     <script src="/field.js" defer></script>
     <script src="/definition.js" defer></script>
     <script src="/motion.js" defer></script>
+    <script src="/site.js" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
   </head>
@@ -58,12 +75,26 @@
             <img src="/brand/atlas-mark.svg" alt="" width="32" height="32" />
             <span>Atlas</span>
           </a>
-          <a
-            class="header-cta"
-            href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
+          <button
+            class="nav-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="site-nav"
+            data-nav-toggle
           >
-            Launch access
-          </a>
+            Menu
+          </button>
+          <nav
+            class="site-nav"
+            id="site-nav"
+            aria-label="Primary"
+            data-site-nav
+          >
+            <a href="/how-it-works/">How it works</a>
+            <a href="/work-with-us/">Work with us</a>
+            <a href="/pricing/">Pricing</a>
+          </nav>
+          <a class="header-cta" href="/access/"> Launch access </a>
         </div>
       </header>
 
@@ -77,12 +108,7 @@
         <div class="rail-head">
           <!-- the mark's needle in the right margin, tip meeting the
                meridian's free end — tips touching tips, as in the mark -->
-          <svg
-            class="rail-apex"
-            viewBox="0 0 42 40"
-            width="42"
-            height="40"
-          >
+          <svg class="rail-apex" viewBox="0 0 42 40" width="42" height="40">
             <path d="M0 20 L42 0 L42 40 Z" fill="#0a1f19" />
             <path d="M0 20 L42 8.4 L42 31.6 Z" fill="#f1f4ee" />
             <path d="M0 20 L42 15.2 L42 24.8 Z" fill="#0a1f19" />
@@ -123,7 +149,9 @@
                   aria-expanded="false"
                   aria-controls="atlas-definition-card"
                   aria-label="Atlas, show definition"
-                >Atlas<sup>1</sup></button>
+                >
+                  Atlas<sup>1</sup>
+                </button>
                 <span
                   class="atlas-definition-card"
                   id="atlas-definition-card"
@@ -147,20 +175,141 @@
             </p>
 
             <div class="hero-cta" data-reveal data-reveal-delay="2">
-              <a
-                class="button button-lg"
-                href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
-              >
+              <a class="button button-lg" href="/access/">
                 Request launch access
               </a>
             </div>
           </div>
         </section>
 
-        <!-- Below the hero, the sheet: ruled structure, left line, register
-             crosses. This is where the composition is drawn. -->
+        <!-- The current living-field hero ends here. The product narrative
+             below uses a separate editorial system and real Atlas surfaces. -->
         <div class="sheet">
           <div class="frame" aria-hidden="true"></div>
+
+          <div class="rule" aria-hidden="true"><span class="shell"></span></div>
+
+          <section class="section home-thesis" aria-labelledby="thesis-title">
+            <div class="shell">
+              <div class="home-thesis-grid">
+                <div>
+                  <span class="eyebrow" data-reveal>Why Atlas exists</span>
+                  <h2 id="thesis-title" data-reveal data-reveal-delay="1">
+                    AI is already in the assignment. The real choice is who
+                    sets its terms.
+                  </h2>
+                </div>
+                <p class="home-thesis-copy" data-reveal data-reveal-delay="2">
+                  When AI sits outside the course, students use whatever is
+                  available and teachers are left judging the finished answer.
+                  Atlas brings the agent into the course. Teachers decide how
+                  it teaches and where it stops. Students stay in control as
+                  they question, reason, revise, and finish the work. The
+                  process becomes visible, so educators can respond to learning
+                  instead of policing output.
+                </p>
+              </div>
+              <p class="thesis-line" data-reveal>
+                Stop chasing AI after the fact. Put educators back in control.
+              </p>
+            </div>
+          </section>
+
+          <div class="rule" aria-hidden="true"><span class="shell"></span></div>
+
+          <section class="section film-section" aria-labelledby="film-title">
+            <div class="shell">
+              <div class="film-intro">
+                <div>
+                  <span class="eyebrow" data-reveal>The Atlas model</span>
+                  <h2 id="film-title" data-reveal data-reveal-delay="1">
+                    Set the terms. See the learning.
+                  </h2>
+                </div>
+                <p class="film-intro-copy" data-reveal data-reveal-delay="2">
+                  The teacher configures the course agent in plain language.
+                  Students work with it inside the assignment. Atlas keeps the
+                  questions, hints, revisions, and result together.
+                </p>
+              </div>
+
+              <figure class="film-frame" data-reveal>
+                <video
+                  data-product-film
+                  src="/assets/atlas-product-film.mp4"
+                  poster="/assets/atlas-product-film-poster.jpg"
+                  preload="metadata"
+                  autoplay
+                  muted
+                  loop
+                  playsinline
+                  controls
+                  aria-label="Atlas product film showing the teacher and student workflow"
+                ></video>
+                <figcaption class="film-caption">
+                  <span>Real Atlas product surfaces, shown in light mode.</span>
+                  <span>41 seconds</span>
+                </figcaption>
+              </figure>
+            </div>
+          </section>
+
+          <div class="rule" aria-hidden="true"><span class="shell"></span></div>
+
+          <section
+            class="section journey-section"
+            aria-labelledby="journey-title"
+          >
+            <div class="shell">
+              <div class="journey-head">
+                <div>
+                  <span class="eyebrow" data-reveal>One continuous record</span>
+                  <h2 id="journey-title" data-reveal data-reveal-delay="1">
+                    From course terms to the next teaching move.
+                  </h2>
+                </div>
+                <p data-reveal data-reveal-delay="2">
+                  Atlas does not treat the chat, the submission, and the grade
+                  as separate events. They remain one learning journey.
+                </p>
+              </div>
+
+              <ul class="journey-list" data-reveal-group>
+                <li>
+                  <strong>Set course behavior</strong>
+                  <p>
+                    Describe the agent&rsquo;s voice, teaching approach, use of
+                    direct answers, challenge level, and required sources.
+                  </p>
+                  <span>Teacher controlled</span>
+                </li>
+                <li>
+                  <strong>Work through problems</strong>
+                  <p>
+                    The student asks questions, tests an idea, gets a hint, and
+                    revises without handing the important move to the agent.
+                  </p>
+                  <span>Student owned</span>
+                </li>
+                <li>
+                  <strong>Review the evidence</strong>
+                  <p>
+                    The teacher can inspect the transcript, final work,
+                    revisions, and rubric review in one course record.
+                  </p>
+                  <span>Teacher visible</span>
+                </li>
+                <li>
+                  <strong>Carry learning forward</strong>
+                  <p>
+                    Class patterns can shape the next practice set while each
+                    student&rsquo;s strengths and gaps stay personal.
+                  </p>
+                  <span>Record informed</span>
+                </li>
+              </ul>
+            </div>
+          </section>
 
           <div class="rule" aria-hidden="true"><span class="shell"></span></div>
 
@@ -176,8 +325,8 @@
                 </h2>
                 <p data-reveal data-reveal-delay="1">
                   Each personal agent works for one person. The shared course
-                  agent carries the teacher&rsquo;s materials and teaching
-                  rules to students.
+                  agent carries the teacher&rsquo;s materials and teaching rules
+                  to students.
                 </p>
               </div>
 
@@ -193,20 +342,57 @@
                 <li>
                   <h3>Plan and operate the course.</h3>
                   <p>
-                    Helps with planning, drafting, review, and course work
-                    from the current record.
+                    Helps with planning, drafting, review, and course work from
+                    the current record.
                   </p>
                   <span>Works for each teacher</span>
                 </li>
                 <li>
                   <h3>Carry the course into student work.</h3>
                   <p>
-                    Uses selected materials, teaching behavior, and course
-                    rules while students work through problems.
+                    Uses selected materials, teaching behavior, and course rules
+                    while students work through problems.
                   </p>
                   <span>Configured by the teacher for each course</span>
                 </li>
               </ul>
+            </div>
+          </section>
+
+          <div class="rule" aria-hidden="true"><span class="shell"></span></div>
+
+          <section class="section deep-links" aria-labelledby="deeper-title">
+            <div class="shell">
+              <span class="eyebrow" data-reveal>Explore Atlas</span>
+              <h2 id="deeper-title" data-reveal data-reveal-delay="1">
+                Go deeper than the launch page.
+              </h2>
+              <div class="deep-link-grid" data-reveal-group>
+                <a class="deep-link" href="/how-it-works/">
+                  <span class="section-note">Product journey</span>
+                  <h3>See how Atlas works.</h3>
+                  <p>
+                    Follow the teacher, student, and course record from setup to
+                    review.
+                  </p>
+                </a>
+                <a class="deep-link" href="/work-with-us/">
+                  <span class="section-note">Launch process</span>
+                  <h3>Work with us.</h3>
+                  <p>
+                    See how we choose a first course, prepare the rollout, and
+                    learn together.
+                  </p>
+                </a>
+                <a class="deep-link" href="/pricing/">
+                  <span class="section-note">Access</span>
+                  <h3>Understand the paths in.</h3>
+                  <p>
+                    Launch partnerships, institutional rollouts, and individual
+                    interest.
+                  </p>
+                </a>
+              </div>
             </div>
           </section>
 
@@ -231,11 +417,8 @@
                 data-reveal
                 data-reveal-delay="2"
               >
-                <a
-                  class="button button-lg"
-                  href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
-                >
-                  Contact Atlas
+                <a class="button button-lg" href="/access/">
+                  Request launch access
                 </a>
               </div>
             </div>

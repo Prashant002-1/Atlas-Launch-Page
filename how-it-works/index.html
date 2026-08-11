@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="See how Atlas turns teacher-set agent terms and student work into visible learning evidence."
+    />
+    <meta name="theme-color" content="#f1f4ee" />
+    <link rel="canonical" href="https://atlas-lms.com/how-it-works/" />
+    <title>How Atlas works | Atlas</title>
+    <link rel="icon" href="/brand/atlas-mark.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/geist-sans-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/vendor/lenis.css" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/site-pages.css" />
+    <script src="/vendor/lenis.min.js" defer></script>
+    <script src="/motion.js" defer></script>
+    <script src="/site.js" defer></script>
+    <script src="/journey.js" defer></script>
+    <script src="/analytics.js" defer></script>
+    <script src="/_vercel/insights/script.js" defer></script>
+  </head>
+  <body class="interior">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site">
+      <header class="site-header" aria-label="Atlas">
+        <div class="shell header-inner">
+          <a class="brand" href="/" aria-label="Atlas home">
+            <img src="/brand/atlas-mark.svg" alt="" width="32" height="32" />
+            <span>Atlas</span>
+          </a>
+          <button
+            class="nav-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="site-nav"
+            data-nav-toggle
+          >
+            Menu
+          </button>
+          <nav
+            class="site-nav"
+            id="site-nav"
+            aria-label="Primary"
+            data-site-nav
+          >
+            <a href="/how-it-works/">How it works</a>
+            <a href="/work-with-us/">Work with us</a>
+            <a href="/pricing/">Pricing</a>
+          </nav>
+          <a class="header-cta" href="/access/">Launch access</a>
+        </div>
+      </header>
+
+      <main id="main" class="page-main course-map-page">
+        <section class="map-opening" aria-labelledby="page-title">
+          <div class="shell map-opening-inner">
+            <p class="map-opening-note" data-reveal>
+              A course is not a straight line. Atlas keeps the route readable.
+            </p>
+            <h1 id="page-title" data-reveal data-reveal-delay="1">
+              The work becomes visible.
+            </h1>
+            <p class="map-opening-lead" data-reveal data-reveal-delay="2">
+              The teacher authors the course terms. The student owns the moves.
+              Atlas keeps both connected to what the teacher sees next.
+            </p>
+          </div>
+        </section>
+
+        <section class="course-map" aria-labelledby="course-map-title" data-course-map>
+          <div class="shell course-map-shell">
+            <header class="course-map-header">
+              <h2 id="course-map-title">Move through one course record.</h2>
+              <p>Choose a stop to inspect the real Atlas surface.</p>
+            </header>
+
+            <div class="course-map-workspace">
+              <div class="course-map-stations" role="tablist" aria-label="Course journey">
+                <button class="course-station is-active" type="button" role="tab" id="station-author" aria-controls="map-author" aria-selected="true" tabindex="0" data-map-tab="author">
+                  <span>Author</span>
+                  <strong>Tell the course agent how to teach.</strong>
+                </button>
+                <button class="course-station" type="button" role="tab" id="station-publish" aria-controls="map-publish" aria-selected="false" tabindex="-1" data-map-tab="publish">
+                  <span>Publish</span>
+                  <strong>Turn conversation into explicit terms.</strong>
+                </button>
+                <button class="course-station" type="button" role="tab" id="station-work" aria-controls="map-work" aria-selected="false" tabindex="-1" data-map-tab="work">
+                  <span>Work</span>
+                  <strong>Keep the important move with the student.</strong>
+                </button>
+                <button class="course-station" type="button" role="tab" id="station-review" aria-controls="map-review" aria-selected="false" tabindex="-1" data-map-tab="review">
+                  <span>Review</span>
+                  <strong>Read the reasoning with the result.</strong>
+                </button>
+                <button class="course-station" type="button" role="tab" id="station-respond" aria-controls="map-respond" aria-selected="false" tabindex="-1" data-map-tab="respond">
+                  <span>Respond</span>
+                  <strong>Turn class patterns into the next move.</strong>
+                </button>
+              </div>
+
+              <div class="course-map-viewport">
+                <article class="map-panel is-active" role="tabpanel" id="map-author" aria-labelledby="station-author" data-map-panel="author">
+                  <div class="map-panel-copy">
+                    <h3>Configure the agent by talking to it.</h3>
+                    <p>Name its voice, teaching approach, challenge level, use of direct answers, and course sources in plain language.</p>
+                    <ul>
+                      <li>No prompt template to learn</li>
+                      <li>Specific to this course</li>
+                      <li>Readable by the teacher</li>
+                    </ul>
+                  </div>
+                  <figure>
+                    <img src="/assets/product-captures/teacher-course-config-detail-light.png" alt="Teacher configuring the Atlas course agent in natural language" />
+                    <figcaption>Teacher course configuration</figcaption>
+                  </figure>
+                </article>
+                <article class="map-panel" role="tabpanel" id="map-publish" aria-labelledby="station-publish" data-map-panel="publish" hidden>
+                  <div class="map-panel-copy">
+                    <h3>Make the teaching terms explicit.</h3>
+                    <p>The resolved course-agent record keeps the name, approach, student disclosure, and boundaries available for inspection.</p>
+                    <ul>
+                      <li>Teacher controlled</li>
+                      <li>Student facing disclosure</li>
+                      <li>Course sources and boundaries</li>
+                    </ul>
+                  </div>
+                  <figure>
+                    <img src="/assets/product-captures/teacher-course-agent-record-light.png" alt="Course agent record showing teaching behavior and boundaries" />
+                    <figcaption>Course agent record</figcaption>
+                  </figure>
+                </article>
+                <article class="map-panel" role="tabpanel" id="map-work" aria-labelledby="station-work" data-map-panel="work" hidden>
+                  <div class="map-panel-copy">
+                    <h3>Use the agent inside the assignment.</h3>
+                    <p>The student can ask, test, revise, and use a course-grounded hint without handing away the important move.</p>
+                    <ul>
+                      <li>Assignment remains in view</li>
+                      <li>Course-aware guidance</li>
+                      <li>Student-owned revision</li>
+                    </ul>
+                  </div>
+                  <figure>
+                    <img src="/assets/product-captures/student-work-session-side-note-light.png" alt="Student work session with a course-record note from Atlas" />
+                    <figcaption>Assessed student session</figcaption>
+                  </figure>
+                </article>
+                <article class="map-panel" role="tabpanel" id="map-review" aria-labelledby="station-review" data-map-panel="review" hidden>
+                  <div class="map-panel-copy">
+                    <h3>The session becomes part of the submission.</h3>
+                    <p>Questions, hints, revisions, final work, and rubric review remain together. The teacher interprets the record and decides what follows.</p>
+                    <ul>
+                      <li>Assessed transcript</li>
+                      <li>Revision history</li>
+                      <li>Teacher review and override</li>
+                    </ul>
+                  </div>
+                  <figure>
+                    <img src="/assets/product-captures/teacher-session-transcript-light.png" alt="Teacher reviewing an assessed Atlas session transcript" />
+                    <figcaption>Teacher session review</figcaption>
+                  </figure>
+                </article>
+                <article class="map-panel" role="tabpanel" id="map-respond" aria-labelledby="station-respond" data-map-panel="respond" hidden>
+                  <div class="map-panel-copy">
+                    <h3>Teach from the pattern, not a guess.</h3>
+                    <p>Class criteria show where learning holds and where it breaks. That pattern can shape the next practice while each student record stays personal.</p>
+                    <ul>
+                      <li>Criterion patterns</li>
+                      <li>Practice-set proposals</li>
+                      <li>Personal strengths and gaps</li>
+                    </ul>
+                  </div>
+                  <figure>
+                    <img src="/assets/product-captures/teacher-class-results-light.png" alt="Class results in Atlas showing criterion patterns" />
+                    <figcaption>Class learning patterns</figcaption>
+                  </figure>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="record-claim" aria-labelledby="session-claim">
+          <div class="shell record-claim-inner">
+            <p>The answer is one point.</p>
+            <h2 id="session-claim">The route is the evidence.</h2>
+            <p>
+              Atlas keeps the question that unlocked the work, the
+              misconception that slowed it down, the hint the student used,
+              and the revision they chose to make.
+            </p>
+          </div>
+        </section>
+
+        <section class="course-map-close" aria-labelledby="close-title">
+          <div class="shell">
+            <p>Bring the route you want to make visible.</p>
+            <h2 id="close-title">See Atlas in your course.</h2>
+            <div class="course-map-actions">
+              <a class="button button-lg" href="/access/">Request a demo</a>
+              <a class="text-link" href="/work-with-us/">How we work with you</a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="shell footer-inner">
+          <a class="brand footer-brand" href="/" aria-label="Atlas home">
+            <img src="/brand/atlas-mark.svg" alt="" width="26" height="26" />
+            <span>Atlas</span>
+          </a>
+          <p class="footer-line">
+            Agentic LMS where teachers see and shape learning.
+          </p>
+          <a class="footer-contact" href="/access/">Request launch access</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

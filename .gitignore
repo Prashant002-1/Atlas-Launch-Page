@@ -1,7 +1,11 @@
 .DS_Store
+node_modules/
 .vercel
 .env*
+!.env.example
 preview*.html
 qa-v*.html
 tools/
 tools-*.js
+hyperframes/*/renders/
+hyperframes/*/qa/

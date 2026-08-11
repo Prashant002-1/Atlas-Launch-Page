@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Request Atlas launch access, a product demonstration, or a first-course conversation."
+    />
+    <meta name="theme-color" content="#f1f4ee" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://atlas-lms.com/access/" />
+    <title>Request launch access | Atlas</title>
+    <link rel="icon" href="/brand/atlas-mark.svg" type="image/svg+xml" />
+    <link
+      rel="preload"
+      href="/fonts/geist-sans-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/vendor/lenis.css" />
+    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/site-pages.css" />
+    <script src="/vendor/lenis.min.js" defer></script>
+    <script src="/motion.js" defer></script>
+    <script src="/site.js" defer></script>
+    <script src="/access-form.js" defer></script>
+    <script src="/analytics.js" defer></script>
+    <script src="/_vercel/insights/script.js" defer></script>
+  </head>
+  <body class="interior">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <div class="site">
+      <header class="site-header" aria-label="Atlas">
+        <div class="shell header-inner">
+          <a class="brand" href="/" aria-label="Atlas home">
+            <img src="/brand/atlas-mark.svg" alt="" width="32" height="32" />
+            <span>Atlas</span>
+          </a>
+          <button
+            class="nav-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="site-nav"
+            data-nav-toggle
+          >
+            Menu
+          </button>
+          <nav
+            class="site-nav"
+            id="site-nav"
+            aria-label="Primary"
+            data-site-nav
+          >
+            <a href="/how-it-works/">How it works</a>
+            <a href="/work-with-us/">Work with us</a>
+            <a href="/pricing/">Pricing</a>
+          </nav>
+          <a class="header-cta" href="/access/">Launch access</a>
+        </div>
+      </header>
+
+      <main id="main" class="page-main access-page">
+        <section class="access-section" aria-labelledby="access-title">
+          <div class="shell access-layout">
+            <div class="access-intro">
+              <p class="access-eyeline" data-reveal>Launch access</p>
+              <h1 id="access-title" data-reveal data-reveal-delay="1">
+                Tell us what you want to make visible.
+              </h1>
+              <p data-reveal data-reveal-delay="2">
+                Request a product demonstration, propose a first course, or
+                register individual interest. The detail helps us understand who
+                Atlas needs to work for and what a useful next conversation
+                would be.
+              </p>
+
+              <nav class="application-bearing" aria-label="Application sections" data-form-bearing>
+                <a class="is-current" href="#about-you" data-form-bearing-link="about-you"><span>About</span><small>Who you are</small></a>
+                <a href="#your-context" data-form-bearing-link="your-context"><span>Context</span><small>Where Atlas would begin</small></a>
+                <a href="#your-intent" data-form-bearing-link="your-intent"><span>Intent</span><small>What you want to change</small></a>
+              </nav>
+            </div>
+
+            <form class="access-form" data-access-form aria-busy="false">
+              <header class="application-head">
+                <p>One useful request is better than a polished pitch.</p>
+                <p>Required fields are marked with an asterisk.</p>
+              </header>
+              <div class="honeypot" aria-hidden="true">
+                <label for="website">Website</label>
+                <input
+                  id="website"
+                  name="website"
+                  type="text"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </div>
+
+              <section class="form-section" id="about-you" data-form-step aria-labelledby="about-you-title">
+                <h2 id="about-you-title">About you</h2>
+                <p>Tell us who should be part of the next conversation.</p>
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="name">Name *</label>
+                    <input
+                      id="name"
+                      name="name"
+                      type="text"
+                      autocomplete="name"
+                      maxlength="160"
+                      required
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="email">Work email *</label>
+                    <input
+                      id="email"
+                      name="email"
+                      type="email"
+                      autocomplete="email"
+                      maxlength="254"
+                      required
+                    />
+                  </div>
+                  <div class="field">
+                    <label for="role">Your role *</label>
+                    <select id="role" name="role" required>
+                      <option value="">Choose one</option>
+                      <option>Teacher or professor</option>
+                      <option>Academic leader</option>
+                      <option>School or district leader</option>
+                      <option>IT or operations</option>
+                      <option>Student</option>
+                      <option>Researcher</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="title">Title</label>
+                    <input
+                      id="title"
+                      name="title"
+                      type="text"
+                      autocomplete="organization-title"
+                      maxlength="160"
+                    />
+                  </div>
+                </div>
+              </section>
+
+              <section class="form-section" id="your-context" data-form-step aria-labelledby="context-title">
+                <h2 id="context-title">Your context</h2>
+                <div class="form-grid">
+                  <div class="field">
+                    <label for="organizationType"
+                      >How are you approaching Atlas? *</label
+                    >
+                    <select
+                      id="organizationType"
+                      name="organizationType"
+                      required
+                      data-organization-type
+                    >
+                      <option value="">Choose one</option>
+                      <option>Institution</option>
+                      <option>Department or program</option>
+                      <option>Course team</option>
+                      <option>Individual</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="institution"
+                      >Institution or organization
+                      <span data-institution-required>*</span></label
+                    >
+                    <input
+                      id="institution"
+                      name="institution"
+                      type="text"
+                      autocomplete="organization"
+                      maxlength="200"
+                      data-institution
+                    />
+                    <span class="field-hint"
+                      >Not required for individual interest.</span
+                    >
+                  </div>
+                  <div class="field">
+                    <label for="courseCount">Courses in the first scope</label>
+                    <select id="courseCount" name="courseCount">
+                      <option value="">Not sure yet</option>
+                      <option>One course</option>
+                      <option>Two to five courses</option>
+                      <option>Six to twenty courses</option>
+                      <option>More than twenty courses</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="learnerCount"
+                      >Learners in the first scope</label
+                    >
+                    <select id="learnerCount" name="learnerCount">
+                      <option value="">Not sure yet</option>
+                      <option>Fewer than 30</option>
+                      <option>30 to 100</option>
+                      <option>101 to 500</option>
+                      <option>More than 500</option>
+                    </select>
+                  </div>
+                </div>
+              </section>
+
+              <section class="form-section" id="your-intent" data-form-step aria-labelledby="interest-title">
+                <h2 id="interest-title">What are you interested in?</h2>
+                <p>Choose every option that applies.</p>
+                <div
+                  class="choice-grid"
+                  role="group"
+                  aria-label="Areas of interest"
+                >
+                  <label class="choice">
+                    <input
+                      type="checkbox"
+                      name="interests"
+                      value="Product demo"
+                    />
+                    <span>Product demo</span>
+                  </label>
+                  <label class="choice">
+                    <input
+                      type="checkbox"
+                      name="interests"
+                      value="First-course launch"
+                    />
+                    <span>First-course launch</span>
+                  </label>
+                  <label class="choice">
+                    <input
+                      type="checkbox"
+                      name="interests"
+                      value="Institutional rollout"
+                    />
+                    <span>Institutional rollout</span>
+                  </label>
+                  <label class="choice">
+                    <input
+                      type="checkbox"
+                      name="interests"
+                      value="Individual access"
+                    />
+                    <span>Individual access</span>
+                  </label>
+                  <label class="choice">
+                    <input
+                      type="checkbox"
+                      name="interests"
+                      value="Research or conversation"
+                    />
+                    <span>Research or conversation</span>
+                  </label>
+                  <label class="choice">
+                    <input
+                      type="checkbox"
+                      name="interests"
+                      value="Product updates"
+                    />
+                    <span>Product updates</span>
+                  </label>
+                </div>
+              </section>
+
+              <section class="form-section" aria-labelledby="use-case-title">
+                <h2 id="use-case-title">
+                  What do you want Atlas to help with?
+                </h2>
+                <div class="form-grid">
+                  <div class="field field-full">
+                    <label for="useCase">Use case *</label>
+                    <textarea
+                      id="useCase"
+                      name="useCase"
+                      maxlength="4000"
+                      required
+                      placeholder="Describe the course, the people involved, and what is difficult to see or support today."
+                    ></textarea>
+                  </div>
+                  <div class="field field-full">
+                    <label for="currentApproach"
+                      >How do you handle this today?</label
+                    >
+                    <textarea
+                      id="currentApproach"
+                      name="currentApproach"
+                      maxlength="2500"
+                      placeholder="Current tools, assessment approach, or workarounds."
+                    ></textarea>
+                  </div>
+                  <div class="field">
+                    <label for="timeline">When would you want to begin?</label>
+                    <select id="timeline" name="timeline">
+                      <option value="">No fixed timeline</option>
+                      <option>Within one month</option>
+                      <option>Within three months</option>
+                      <option>Within six months</option>
+                      <option>Later or exploring</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="source">How did you hear about Atlas?</label>
+                    <input
+                      id="source"
+                      name="source"
+                      type="text"
+                      maxlength="180"
+                    />
+                  </div>
+                </div>
+              </section>
+
+              <label class="consent">
+                <input type="checkbox" name="consent" value="yes" required />
+                <span
+                  >I agree that Atlas may use this information to respond to
+                  this request. *</span
+                >
+              </label>
+
+              <div class="form-actions">
+                <button class="button button-lg" type="submit">
+                  Send request
+                </button>
+                <p
+                  class="form-status"
+                  role="status"
+                  aria-live="polite"
+                  data-form-status
+                ></p>
+              </div>
+            </form>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="shell footer-inner">
+          <a class="brand footer-brand" href="/" aria-label="Atlas home">
+            <img src="/brand/atlas-mark.svg" alt="" width="26" height="26" />
+            <span>Atlas</span>
+          </a>
+          <p class="footer-line">
+            Agentic LMS where teachers see and shape learning.
+          </p>
+          <a class="footer-contact" href="/how-it-works/"
+            >See how Atlas works</a
+          >
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
