@@ -43,6 +43,7 @@
     <link rel="stylesheet" href="/styles.css" />
     <script src="/vendor/lenis.min.js" defer></script>
     <script src="/field.js" defer></script>
+    <script src="/definition.js" defer></script>
     <script src="/motion.js" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
@@ -107,6 +108,7 @@
              around the pointer and settles back. -->
         <section class="hero" id="top" aria-labelledby="hero-title">
           <canvas class="hero-field" data-field aria-hidden="true"></canvas>
+          <canvas class="hero-map" data-map aria-hidden="true"></canvas>
 
           <div class="shell hero-inner">
             <h1 id="hero-title" data-reveal>
@@ -114,9 +116,34 @@
             </h1>
 
             <p class="hero-sub" data-reveal data-reveal-delay="1">
-              Atlas gives every student and teacher a personal agent. It
-              knows the course, remembers what matters, and stays with the
-              work as people reason, revise, and learn.
+              <span class="atlas-definition" data-definition>
+                <button
+                  class="atlas-term"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="atlas-definition-card"
+                  aria-label="Atlas, show definition"
+                >Atlas<sup>1</sup></button>
+                <span
+                  class="atlas-definition-card"
+                  id="atlas-definition-card"
+                  role="definition"
+                  aria-hidden="true"
+                >
+                  <span class="definition-head">
+                    <strong>atlas</strong>
+                    <span>/ˈatləs/</span>
+                    <em>noun</em>
+                  </span>
+                  <span class="definition-literal">a collection of maps.</span>
+                  <span class="definition-atlas">
+                    Find your way through each course with your agent.
+                  </span>
+                </span>
+              </span>
+              gives every student and teacher a personal agent. It knows the
+              course, remembers what matters, and stays with the work as people
+              reason, revise, and learn.
             </p>
 
             <div class="hero-cta" data-reveal data-reveal-delay="2">

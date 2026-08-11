@@ -8,13 +8,18 @@ the authenticated Atlas-LMS application.
 - A dependency-free static site
 - One public page with the launch hero, personal layer, and closing contact
 - The fixed Atlas mark and vendored brand fonts
+- An inline Atlas definition in the hero body. Hover, keyboard focus, or
+  touch opens the same compact dictionary card without changing the logo
 - The field (`field.js`): the hero is one quiet halftone surface (15°
   print screen); ink pools are a state of that surface — dots swell and
   take muted pigment where a pool lives. Pools are thrown, break under
   the pointer, re-form around their living centroid, defect unevenly to
   neighbors, mix pigment in OKLab, and ride a homing tide back to their
-  thrown composition. Loudness dials live in the pass-B shader: pigment
-  mute (0.62), ink peak alpha (0.48), resting grid alpha (0.27)
+  thrown composition. The pools are course-knowledge regions: a quiet
+  dashed route follows their live centroids, and topographic rings mark
+  the largest regions so the field reads as a course map. Loudness dials
+  live in the pass-B shader: pigment mute (0.62), ink peak alpha (0.48),
+  resting grid alpha (0.27)
 - The instrument edge: full-height ticks with the mark's needle riding the
   reader's position, opening into a glass tile of the mark on approach
 - A locally vendored Lenis 1.3.25 scroll layer with reduced-motion support

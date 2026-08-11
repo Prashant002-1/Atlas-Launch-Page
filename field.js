@@ -50,6 +50,8 @@
 
   const canvas = document.querySelector("[data-field]");
   if (!canvas) return;
+  const mapCanvas = document.querySelector("[data-map]");
+  const mapCtx = mapCanvas ? mapCanvas.getContext("2d") : null;
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -90,7 +92,10 @@
   let parts = []; // free ink particles
   let poolCount = 0;
   let homeX = new Float64Array(0), // where each pool was thrown
-    homeY = new Float64Array(0);
+    homeY = new Float64Array(0),
+    poolR = new Float64Array(0);
+  let routeIds = [];
+  let contourIds = [];
   let w = 0,
     h = 0,
     dpr = 1;
@@ -242,10 +247,176 @@
 
     homeX = new Float64Array(poolCount);
     homeY = new Float64Array(poolCount);
+    poolR = new Float64Array(poolCount);
     for (let q = 0, pi = 0; q < placed.length && pi < poolCount; q++, pi++) {
       homeX[pi] = placed[q].x;
       homeY[pi] = placed[q].y;
+      poolR[pi] = placed[q].R;
     }
+    buildMapRoutes();
+  }
+
+  /* ── course map ────────────────────────────────────────────────── */
+  function sampleEvenly(nodes, limit) {
+    if (nodes.length <= limit) return nodes;
+    const selected = [];
+    for (let i = 0; i < limit; i++) {
+      const at = Math.round((i * (nodes.length - 1)) / (limit - 1));
+      selected.push(nodes[at]);
+    }
+    return selected;
+  }
+
+  function buildMapRoutes() {
+    const nodes = [];
+    for (let pid = 0; pid < poolCount; pid++) {
+      nodes.push({ pid, x: homeX[pid], y: homeY[pid], r: poolR[pid] });
+    }
+
+    const topLimit = dry ? Math.max(112, dry.y0 - 34) : h * 0.3;
+    const bottomLimit = dry ? Math.min(h - 70, dry.y1 + 54) : h * 0.72;
+    const rightLimit = dry ? dry.x1 + 64 : w * 0.58;
+
+    const top = sampleEvenly(
+      nodes
+        .filter((node) => node.y < topLimit && node.x > w * 0.28)
+        .sort((a, b) => a.x - b.x),
+      4,
+    );
+    const right = sampleEvenly(
+      nodes
+        .filter(
+          (node) =>
+            node.x > rightLimit &&
+            node.y >= topLimit - 30 &&
+            node.y < bottomLimit + 30,
+        )
+        .sort((a, b) => a.y - b.y),
+      4,
+    );
+    const bottom = sampleEvenly(
+      nodes
+        .filter((node) => node.y >= bottomLimit && node.x > w * 0.12)
+        .sort((a, b) => b.x - a.x),
+      6,
+    );
+
+    const used = new Set();
+    routeIds = [];
+    [...top, ...right, ...bottom].forEach((node) => {
+      if (used.has(node.pid)) return;
+      used.add(node.pid);
+      routeIds.push(node.pid);
+    });
+
+    if (routeIds.length < 4) {
+      routeIds = nodes
+        .filter((node) => {
+          if (!dry) return true;
+          return (
+            node.y < dry.y0 - 24 ||
+            node.y > dry.y1 + 24 ||
+            node.x > dry.x1 + 42
+          );
+        })
+        .sort((a, b) => {
+          const ac = Math.atan2(a.y - h * 0.5, a.x - w * 0.5);
+          const bc = Math.atan2(b.y - h * 0.5, b.x - w * 0.5);
+          return ac - bc;
+        })
+        .slice(0, 10)
+        .map((node) => node.pid);
+    }
+
+    contourIds = routeIds
+      .slice()
+      .sort((a, b) => poolR[b] - poolR[a])
+      .filter((pid) => poolR[pid] >= 34)
+      .slice(0, 4);
+  }
+
+  function poolPoint(pid) {
+    if (pid < pcn.length && pcn[pid] > 0) {
+      return {
+        x: pcx[pid] / pcn[pid],
+        y: pcy[pid] / pcn[pid],
+      };
+    }
+    return { x: homeX[pid], y: homeY[pid] };
+  }
+
+  function drawContour(pid, point) {
+    const base = poolR[pid];
+    if (!base) return;
+
+    for (let ring = 0; ring < 4; ring++) {
+      const radius = base * (1.02 + ring * 0.13);
+      mapCtx.beginPath();
+      for (let step = 0; step <= 48; step++) {
+        const a = (step / 48) * 6.283185307179586;
+        const wobble =
+          1 +
+          Math.sin(a * 3 + pid * 0.73 + ring * 0.51) * 0.035 +
+          Math.sin(a * 5 - pid * 0.31) * 0.018;
+        const x = point.x + Math.cos(a) * radius * wobble;
+        const y =
+          point.y +
+          Math.sin(a) * radius * (0.92 + ring * 0.008) * wobble;
+        if (step === 0) mapCtx.moveTo(x, y);
+        else mapCtx.lineTo(x, y);
+      }
+      mapCtx.closePath();
+      mapCtx.stroke();
+    }
+  }
+
+  function drawMap() {
+    if (!mapCtx || routeIds.length < 2) return;
+    mapCtx.clearRect(0, 0, w, h);
+    mapCtx.save();
+    mapCtx.lineCap = "round";
+    mapCtx.lineJoin = "round";
+
+    mapCtx.setLineDash([]);
+    mapCtx.lineWidth = 0.85;
+    mapCtx.strokeStyle = "rgba(47, 74, 65, 0.13)";
+    contourIds.forEach((pid) => drawContour(pid, poolPoint(pid)));
+
+    const points = routeIds.map(poolPoint);
+    mapCtx.beginPath();
+    mapCtx.moveTo(points[0].x, points[0].y);
+    for (let i = 0; i < points.length - 1; i++) {
+      const p0 = points[Math.max(0, i - 1)];
+      const p1 = points[i];
+      const p2 = points[i + 1];
+      const p3 = points[Math.min(points.length - 1, i + 2)];
+      mapCtx.bezierCurveTo(
+        p1.x + (p2.x - p0.x) / 6,
+        p1.y + (p2.y - p0.y) / 6,
+        p2.x - (p3.x - p1.x) / 6,
+        p2.y - (p3.y - p1.y) / 6,
+        p2.x,
+        p2.y,
+      );
+    }
+    mapCtx.setLineDash([6, 7]);
+    mapCtx.lineWidth = 1.05;
+    mapCtx.strokeStyle = "rgba(47, 74, 65, 0.42)";
+    mapCtx.stroke();
+
+    mapCtx.setLineDash([]);
+    points.forEach((point, index) => {
+      if (index % 2 !== 0 && index !== points.length - 1) return;
+      mapCtx.beginPath();
+      mapCtx.arc(point.x, point.y, 3.3, 0, 6.283185307179586);
+      mapCtx.fillStyle = "rgba(241, 244, 238, 0.94)";
+      mapCtx.fill();
+      mapCtx.lineWidth = 1;
+      mapCtx.strokeStyle = "rgba(47, 74, 65, 0.5)";
+      mapCtx.stroke();
+    });
+
+    mapCtx.restore();
   }
 
   /* ── physics ────────────────────────────────────────────────────── */
@@ -829,6 +1000,11 @@
       h = ch;
       canvas.width = Math.floor(w * (glOK ? dpr : 1));
       canvas.height = Math.floor(h * (glOK ? dpr : 1));
+      if (mapCanvas && mapCtx) {
+        mapCanvas.width = Math.floor(w * dpr);
+        mapCanvas.height = Math.floor(h * dpr);
+        mapCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
       if (glOK) sizeGL();
       throwInk();
     }
@@ -853,12 +1029,14 @@
     step(t, dt);
     if (glOK) renderGL();
     else if (ctx2d) render2D();
+    drawMap();
   }
 
   function stillFrame() {
     if (!resize()) return;
     if (glOK) renderGL();
     else if (ctx2d) render2D();
+    drawMap();
   }
 
   function stopLoop() {
