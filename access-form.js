@@ -23,15 +23,34 @@
   }
 
   const interestMap = {
-    "course-pilot": "First-course launch",
-    institution: "Institutional rollout",
-    individual: "Individual access",
+    "ai-assignments": "AI Assignments",
+    "bring-course": "Bring Your Course",
+    "full-lms": "Full LMS",
+    "product-demo": "Product demo",
+    "course-pilot": "Bring Your Course",
+    institution: "Full LMS",
+    individual: "AI Assignments",
   };
-  const requestedInterest =
-    interestMap[new URLSearchParams(window.location.search).get("interest")];
+  const requestedKey = new URLSearchParams(window.location.search).get("interest");
+  const requestedInterest = interestMap[requestedKey];
   if (requestedInterest) {
     const interestControl = form.querySelector('[name="interests"]');
     if (interestControl) interestControl.value = requestedInterest;
+
+    const path = form.querySelector("[data-access-path]");
+    const pathLabel = form.querySelector("[data-access-path-label]");
+    const pathCopy = form.querySelector("[data-access-path-copy]");
+    const pathCopyByInterest = {
+      "ai-assignments": "Start with one governed agent session inside a course you already teach.",
+      "bring-course": "Bring the materials, structure, and teaching approach of a real course.",
+      "full-lms": "Evaluate institution setup, course operations, records, and the agent layer together.",
+      "product-demo": "We will prepare the product surface that best answers your question.",
+    };
+    if (path && pathLabel && pathCopy) {
+      pathLabel.textContent = requestedInterest;
+      pathCopy.textContent = pathCopyByInterest[requestedKey] || "We will prepare the right first scope.";
+      path.hidden = false;
+    }
   }
 
   function setStatus(message, state) {

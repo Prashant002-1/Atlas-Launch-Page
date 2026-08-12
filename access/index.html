@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Request an Atlas product demo or access to a test classroom."
+      content="Request access to Atlas AI Assignments, bring a course, or evaluate the full learning system."
     />
     <meta name="theme-color" content="#f1f4ee" />
     <meta name="robots" content="index, follow" />
@@ -24,8 +24,8 @@
     <link rel="stylesheet" href="/site-pages.css?v=20260811c" />
     <script src="/vendor/lenis.min.js" defer></script>
     <script src="/motion.js" defer></script>
-    <script src="/site.js?v=20260811c" defer></script>
-    <script src="/access-form.js?v=20260811c" defer></script>
+    <script src="/site.js?v=20260812d" defer></script>
+    <script src="/access-form.js?v=20260812a" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
   </head>
@@ -59,10 +59,10 @@
         <section class="access-opening" aria-labelledby="access-title">
           <div class="shell access-opening-shell">
             <p class="access-opening-kicker">Launch access</p>
-            <h1 id="access-title">Request a demo or a test classroom.</h1>
+            <h1 id="access-title">Choose the first scope.</h1>
             <p>
-              Tell us who you are and what you want to explore. We will reply
-              directly with the right next step.
+              Tell us who you are, what you want to test, and the learning
+              context behind it. We will prepare the right next step.
             </p>
           </div>
         </section>
@@ -85,6 +85,11 @@
                 <h2>Your request</h2>
                 <p>Required fields are marked with an asterisk.</p>
               </header>
+
+              <div class="access-path" data-access-path hidden>
+                <span data-access-path-label></span>
+                <p data-access-path-copy></p>
+              </div>
 
               <div class="access-row access-row-three">
                 <div class="field">
@@ -158,40 +163,49 @@
                   <label for="interests">What are you interested in? *</label>
                   <select id="interests" name="interests" required>
                     <option value="">Choose one</option>
+                    <option>AI Assignments</option>
+                    <option>Bring Your Course</option>
+                    <option>Full LMS</option>
                     <option>Product demo</option>
-                    <option>First-course launch</option>
-                    <option>Institutional rollout</option>
-                    <option>Individual access</option>
                     <option>Research or conversation</option>
                     <option>Product updates</option>
                   </select>
                 </div>
               </div>
 
+              <div class="access-row access-row-two access-row-writing access-context-row">
+                <div class="field">
+                  <label for="courseContext">Course or institutional context *</label>
+                  <textarea
+                    id="courseContext"
+                    name="courseContext"
+                    maxlength="3000"
+                    placeholder="Subject, learner group, course, program, or institution."
+                    required
+                  ></textarea>
+                </div>
+                <div class="field">
+                  <label for="useCase">What do you want to test? *</label>
+                  <textarea
+                    id="useCase"
+                    name="useCase"
+                    maxlength="4000"
+                    placeholder="The assignment, course workflow, or institutional question Atlas should answer."
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
               <details class="access-optional">
-                <summary>Add context for the demo <span>Optional</span></summary>
-                <p>
-                  Skip this if you would rather explain it when we speak.
-                </p>
-                <div class="access-row access-row-two access-row-writing">
-                  <div class="field">
-                    <label for="useCase">What would you like to explore?</label>
-                    <textarea
-                      id="useCase"
-                      name="useCase"
-                      maxlength="4000"
-                      placeholder="A course, a problem, or a question you want the demo to answer."
-                    ></textarea>
-                  </div>
-                  <div class="field">
-                    <label for="currentApproach">How do you handle it today?</label>
-                    <textarea
-                      id="currentApproach"
-                      name="currentApproach"
-                      maxlength="2500"
-                      placeholder="Current tools or approach."
-                    ></textarea>
-                  </div>
+                <summary>Add how you handle this today <span>Optional</span></summary>
+                <div class="field access-current-field">
+                  <label for="currentApproach">Current tools or approach</label>
+                  <textarea
+                    id="currentApproach"
+                    name="currentApproach"
+                    maxlength="2500"
+                    placeholder="Your LMS, assignment workflow, or current approach to AI."
+                  ></textarea>
                 </div>
               </details>
 
@@ -221,15 +235,15 @@
               <div>
                 <strong>What happens after you send this</strong>
                 <p>
-                  We review the request, reply directly, and prepare a product
-                  demo or test classroom that matches your role.
+                  We review the scope, reply directly, and prepare the product
+                  surface that matches your role and question.
                 </p>
               </div>
               <div>
                 <strong>Pricing</strong>
                 <p>
-                  Atlas is onboarding and evaluating its first customers.
-                  Standard pricing will be published later.
+                  Pricing follows the first scope. We define it with you before
+                  any real launch.
                 </p>
               </div>
             </aside>

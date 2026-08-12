@@ -38,17 +38,37 @@
   if (!film) return;
 
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let visible = false;
+
   const syncFilm = () => {
     if (reduced.matches) {
       film.pause();
       film.removeAttribute("autoplay");
+      film.currentTime = 0;
       return;
     }
 
-    film.setAttribute("autoplay", "");
+    if (!visible || film.ended) {
+      film.pause();
+      return;
+    }
+
     const play = film.play();
     if (play && typeof play.catch === "function") play.catch(() => {});
   };
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting && entry.intersectionRatio >= 0.35;
+        syncFilm();
+      },
+      { threshold: [0, 0.35, 0.7] },
+    );
+    observer.observe(film);
+  } else {
+    visible = true;
+  }
 
   syncFilm();
   reduced.addEventListener("change", syncFilm);

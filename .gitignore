@@ -9,3 +9,5 @@ tools/
 tools-*.js
 hyperframes/*/renders/
 hyperframes/*/qa/
+hyperframes/*/.thumbnails/
+hyperframes/*/.hyperframes/

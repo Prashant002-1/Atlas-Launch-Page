@@ -2,31 +2,29 @@
 
 ## Intent
 
-This film appears after the living-field hero. Its job is to make the central
-problem and the product response visible in less than half a minute: a finished
-answer no longer proves who learned, so Atlas keeps the teacher's terms, the
-student's work, and the teacher's review together.
+This silent film turns the public argument into one visible sequence. A finished
+answer hides the work that produced it. Atlas moves control to the beginning,
+keeps the student&rsquo;s reasoning in the course, and returns the connected record
+to the teacher after submission.
 
-The film uses only real Atlas product captures. Titles frame what is already on
-screen. They never rename product concepts, invent controls, or describe the
-implementation.
+The film uses real Atlas interface fragments, captured in light mode and framed
+as product evidence. It never shows browser chrome, a demo identity, or a full
+application screenshot.
 
 ## Format
 
 - Canvas: 1920 by 1080, 16:9
-- Duration: 28 seconds
-- Sound: silent by design for muted website autoplay
-- Motion: deterministic GSAP timeline only
-- Website use: muted autoplay without player controls, with a static poster and
-  reduced-motion fallback
+- Duration: 23.5 seconds
+- Sound: silent for muted website autoplay
+- Motion: one deterministic GSAP timeline
+- Website treatment: autoplay once, then hold on the final frame
 
 ## Visual system
 
-The product interface is the image. Warm paper, measured rules, and one dark
-green annotation card give the captures a clear editorial frame without turning
-them into a slide deck. Transitions use a narrow vertical ink line that reveals
-the next state. There are no camera zooms, device mockups, floating browser
-chrome, or decorative replicas of the product.
+The frame behaves like a teaching instrument laid over a course map. Contour
+lines provide quiet continuity. Fine rules, state labels, and cropped product
+surfaces carry the argument. Depth comes from overlap and scale, with one dark
+closing field reserved for the thesis.
 
 ### Palette
 
@@ -37,63 +35,53 @@ chrome, or decorative replicas of the product.
 - Ink soft: `#2f4a41`
 - Muted ink: `#5f7168`
 - Pine: `#14543d`
-- Rules: ink at 16 to 32 percent opacity
 
 ### Typography
 
 - Display and body: Geist Sans
-- Labels: Geist Mono
+- State labels: Geist Mono
 - Sentence case throughout
-- Short display lines only, with supporting copy limited to one sentence
+- One claim and one supporting sentence per scene
 
-### Product windows
+## Narrative
 
-- Preserve each capture at its native 16:9 proportion
-- Use one-pixel ink rules and restrained paper shadows
-- Crop only to fit the frame; never recolor, relabel, or reconstruct the UI
-- Keep all names and product states consistent with the clean Mei Chen demo
+### 1. The missing part, 0 to 4.7 seconds
 
-## Narrative and timeline
+`A finished answer hides the work.` A rubric decision appears first. A narrow
+pine seam crosses the product surface and uncovers the transcript behind it.
 
-### 1. Finished answer, 0 to 5.75 seconds
+### 2. Before the work, 4.7 to 9.3 seconds
 
-`A finished answer is not enough.` The final-work surface appears, then a narrow
-ink-line wipe reveals the transcript that produced it. A small note names what
-is otherwise missing: the questions, choices, and revisions.
+`Set the terms first.` The course-agent controls show the teacher defining how
+the agent teaches, what it may use, and where it must stop.
 
-### 2. Teacher sets the terms, 5.75 to 11.95 seconds
+### 3. Inside the assignment, 9.3 to 14.56 seconds
 
-`Set how the agent teaches.` The real course-agent surface enters behind a
-restrained annotation card. The supporting line names the choices a teacher can
-set without turning them into implementation language.
+`The agent asks. The student decides.` The student&rsquo;s reasoning session remains
+the dominant surface while a measured boundary connects question to revision.
 
-### 3. Student does the work, 11.95 to 17.95 seconds
+### 4. After submission, 14 to 19.3 seconds
 
-`The student does the work.` The real assessed session fills the frame. The
-agent questions and challenges without choosing the student's answer.
+`Open the evidence.` Transcript evidence appears first. The teacher&rsquo;s rubric
+decision then opens over it, preserving the relationship between record and
+judgment.
 
-### 4. Teacher sees the learning, 17.95 to 24.8 seconds
+### 5. Closing thesis, 19.3 to 23.5 seconds
 
-`See how the answer was made.` The same frame moves from transcript to final
-work to rubric. A small label changes with the visible surface.
+`Stop policing the output. Set the terms for the work.` The final frame names
+the three adoption scopes: AI Assignments, Bring Your Course, and Full LMS.
 
-### 5. End frame, 24.8 to 28 seconds
+## Motion rules
 
-`Stop guessing. See the learning.` Atlas remains present in the upper-left
-lockup. There is no exit animation.
-
-## Transition rules
-
-- Primary transition: right-to-left clip-path reveal, 0.75 to 0.9 seconds
-- Internal evidence transition: vertical ink-line wipe, 0.85 to 1.35 seconds
-- Motion uses `power1`, `power2`, and `power3` easing according to visual weight
-- Screenshots never zoom, pan, tilt, or simulate a presentation camera
-- Every scene enters through a reveal; the transition itself replaces the prior
-  scene
+- Primary scene change: decisive horizontal push, 0.52 to 0.6 seconds
+- Product reveal: a moving seam with a fixed-size surface opening behind it
+- Evidence transition: top-down product overlap, not a camera move
+- One diagonal split appears between student work and teacher review
+- No idle loops, simulated cameras, random values, or asynchronous timing
 
 ## Accessibility and fidelity
 
-- Adjacent page copy carries the same argument, so the film is supplementary
-- Reduced-motion visitors receive the poster without autoplay
-- All film text clears WCAG AA contrast checks
-- All product captures come from the current local Atlas product in light mode
+- Nearby page copy carries the complete argument, so the film is supplementary
+- Reduced-motion visitors receive the poster instead of autoplay
+- HyperFrames contrast checks cover all film text
+- Product imagery comes from current Atlas surfaces and preserves real labels

@@ -1,8 +1,8 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" data-resolution="landscape">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=1920, height=1080" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1920, height=1080">
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <style>
       @font-face {
@@ -17,18 +17,6 @@
         font-weight: 100 900;
       }
 
-      :root {
-        --paper: #f1f4ee;
-        --paper-lift: #f7f9f4;
-        --paper-sink: #e5ebe2;
-        --ink: #0a1f19;
-        --ink-soft: #2f4a41;
-        --muted: #5f7168;
-        --pine: #14543d;
-        --line: rgba(10, 31, 25, 0.16);
-        --line-strong: rgba(10, 31, 25, 0.32);
-      }
-
       * {
         box-sizing: border-box;
       }
@@ -39,8 +27,8 @@
         height: 1080px;
         margin: 0;
         overflow: hidden;
-        background: var(--paper);
-        color: var(--ink);
+        background: #f1f4ee;
+        color: #0a1f19;
         font-family: "Geist", sans-serif;
         font-synthesis: none;
         -webkit-font-smoothing: antialiased;
@@ -51,516 +39,675 @@
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        background: var(--paper);
+        background: #f1f4ee;
       }
 
       .scene {
         position: absolute;
         inset: 0;
         overflow: hidden;
-        background: var(--paper);
+        background-color: #f1f4ee;
+      }
+
+      .scene::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: url("assets/course-terrain.png") center / cover no-repeat;
+        opacity: 0.22;
       }
 
       #scene-problem {
         z-index: 1;
       }
 
+      #scene-terms,
+      #scene-work,
+      #scene-review,
+      #scene-end {
+        opacity: 0;
+      }
+
       #scene-terms {
         z-index: 2;
+        background-color: #e5ebe2;
       }
 
       #scene-work {
         z-index: 3;
+        background-color: #f7f9f4;
       }
 
       #scene-review {
         z-index: 4;
+        background-color: #f1f4ee;
       }
 
       #scene-end {
         z-index: 5;
+        background-color: #0a1f19;
+        color: #f7f9f4;
       }
 
-      .brand {
+      #scene-end::before {
+        opacity: 0.08;
+        filter: invert(1);
+      }
+
+      .film-brand {
         position: absolute;
-        z-index: 20;
-        top: 52px;
+        z-index: 40;
+        top: 48px;
         left: 64px;
         display: flex;
         align-items: center;
         gap: 14px;
       }
 
-      .brand img {
-        width: 38px;
-        height: 38px;
+      .film-brand img {
+        width: 40px;
+        height: 40px;
       }
 
-      .brand span {
+      .film-brand span {
         font-size: 25px;
-        font-weight: 520;
-        letter-spacing: -0.02em;
+        font-weight: 560;
+        letter-spacing: -0.025em;
       }
 
-      .counter {
+      .film-rail {
         position: absolute;
-        z-index: 20;
-        top: 62px;
-        right: 64px;
-        color: var(--muted);
-        font-family: "Geist Mono", monospace;
-        font-size: 16px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .film-rule {
-        position: absolute;
-        z-index: 20;
+        z-index: 35;
         top: 112px;
         right: 64px;
         left: 64px;
         height: 1px;
-        background: var(--line);
+        background: rgba(10, 31, 25, 0.2);
       }
 
-      .frame {
+      #scene-end ~ .film-rail {
+        background: rgba(247, 249, 244, 0.2);
+      }
+
+      .scene-index {
         position: absolute;
-        overflow: hidden;
-        border: 1px solid var(--line-strong);
-        background: #fff;
-        box-shadow: 0 30px 72px rgba(10, 31, 25, 0.1);
+        z-index: 20;
+        top: 59px;
+        right: 64px;
+        color: #5f7168;
+        font-family: "Geist Mono", monospace;
+        font-size: 16px;
+        letter-spacing: 0.075em;
+        text-transform: uppercase;
       }
 
-      .frame img {
+      .scene-copy {
+        position: absolute;
+        z-index: 12;
+      }
+
+      .kicker,
+      .surface-label,
+      .metric span,
+      .end-scope span {
+        margin: 0;
+        color: #5f7168;
+        font-family: "Geist Mono", monospace;
+        font-size: 17px;
+        letter-spacing: 0.075em;
+        text-transform: uppercase;
+      }
+
+      .scene-title {
+        margin: 23px 0 0;
+        font-size: 104px;
+        font-weight: 430;
+        letter-spacing: -0.06em;
+        line-height: 0.91;
+      }
+
+      .scene-deck {
+        max-width: 720px;
+        margin: 30px 0 0;
+        color: #2f4a41;
+        font-size: 30px;
+        font-weight: 320;
+        letter-spacing: -0.022em;
+        line-height: 1.35;
+      }
+
+      .product-frame {
+        position: absolute;
+        z-index: 8;
+        margin: 0;
+        overflow: hidden;
+        border: 1px solid rgba(10, 31, 25, 0.28);
+        background: #f7f9f4;
+        box-shadow: 0 34px 90px rgba(10, 31, 25, 0.13);
+      }
+
+      .product-frame::after {
+        content: "";
+        position: absolute;
+        inset: 15px;
+        border: 1px solid rgba(10, 31, 25, 0.1);
+      }
+
+      .product-frame img {
         display: block;
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
 
-      .eyeline {
-        margin: 0 0 24px;
-        color: var(--muted);
-        font-family: "Geist Mono", monospace;
-        font-size: 17px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .headline {
-        margin: 0;
-        font-size: 102px;
-        font-weight: 470;
-        letter-spacing: -0.058em;
-        line-height: 0.96;
-      }
-
-      .subhead {
-        max-width: 790px;
-        margin: 30px 0 0;
-        color: var(--ink-soft);
-        font-size: 30px;
-        letter-spacing: -0.024em;
-        line-height: 1.34;
-      }
-
-      .scene-problem .copy {
+      .surface-label {
         position: absolute;
-        z-index: 10;
-        top: 178px;
-        left: 92px;
-        width: 770px;
+        z-index: 3;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        padding: 16px 20px;
+        background: rgba(247, 249, 244, 0.96);
+        font-size: 15px;
       }
 
-      .scene-problem .headline {
-        max-width: 720px;
+      .scene-problem .scene-copy {
+        top: 205px;
+        left: 88px;
+        width: 840px;
+      }
+
+      .scene-problem .scene-title {
+        max-width: 820px;
+        font-size: 116px;
       }
 
       .answer-frame {
-        top: 236px;
-        right: 74px;
-        width: 940px;
-        height: 529px;
+        top: 270px;
+        right: 94px;
+        width: 850px;
+        height: 492px;
+        background: #f7f9f4 url("assets/teacher-decision-detail.png") center / cover no-repeat;
       }
 
-      .reasoning-frame {
-        z-index: 4;
-        top: 236px;
-        right: 74px;
-        width: 940px;
-        height: 529px;
+      .record-reveal {
+        z-index: 11;
+        top: 184px;
+        left: 962px;
+        width: 880px;
+        height: 720px;
+        background: #f7f9f4 url("assets/teacher-evidence-detail.png") center top / cover no-repeat;
       }
 
-      .reasoning-frame::before {
-        content: "";
+      .record-seam {
         position: absolute;
-        z-index: 4;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        width: 8px;
-        background: var(--pine);
+        z-index: 15;
+        top: 184px;
+        bottom: 176px;
+        left: 964px;
+        width: 2px;
+        background: #14543d;
+        opacity: 0;
       }
 
       .problem-note {
         position: absolute;
-        z-index: 10;
-        bottom: 92px;
-        left: 92px;
+        z-index: 12;
+        bottom: 88px;
+        left: 88px;
         display: grid;
-        grid-template-columns: 170px 1fr;
-        gap: 34px;
-        width: 790px;
-        padding-top: 22px;
-        border-top: 1px solid var(--line-strong);
+        grid-template-columns: 210px 1fr;
+        gap: 32px;
+        width: 820px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(10, 31, 25, 0.3);
       }
 
       .problem-note strong {
         font-family: "Geist Mono", monospace;
         font-size: 16px;
-        font-weight: 450;
+        font-weight: 520;
         letter-spacing: 0.06em;
         text-transform: uppercase;
       }
 
       .problem-note span {
-        color: var(--ink-soft);
-        font-size: 24px;
-        line-height: 1.36;
-      }
-
-      .wipe-line {
-        position: absolute;
-        z-index: 30;
-        top: 112px;
-        bottom: 0;
-        left: 0;
-        width: 2px;
-        background: var(--pine);
-        opacity: 0;
-      }
-
-      .scene-terms .copy,
-      .scene-work .copy,
-      .scene-review .copy {
-        position: absolute;
-        z-index: 10;
-        top: 156px;
-        left: 92px;
-        width: 700px;
-        padding: 34px 42px 40px;
-        border: 1px solid var(--line-strong);
-        background: rgba(247, 249, 244, 0.97);
-      }
-
-      .scene-terms .headline,
-      .scene-work .headline,
-      .scene-review .headline {
-        font-size: 72px;
-      }
-
-      .scene-terms .subhead,
-      .scene-work .subhead,
-      .scene-review .subhead {
+        color: #2f4a41;
         font-size: 25px;
+        line-height: 1.35;
       }
 
-      .terms-frame,
-      .work-frame,
-      .review-frame {
-        top: 148px;
-        right: 62px;
-        left: 390px;
-        height: 842px;
+      .scene-terms .scene-copy {
+        top: 192px;
+        left: 88px;
+        width: 560px;
       }
 
-      .scene-terms .copy {
-        top: 218px;
+      .scene-terms .scene-title,
+      .scene-work .scene-title,
+      .scene-review .scene-title {
+        font-size: 82px;
       }
 
-      .scene-work .copy {
-        top: 550px;
+      .terms-frame {
+        top: 184px;
+        right: 78px;
+        width: 1160px;
+        height: 741px;
       }
 
-      .scene-work .work-frame {
-        right: 120px;
-        left: 120px;
-      }
-
-      .scene-review .copy {
-        top: 610px;
-      }
-
-      .review-frame {
-        right: 120px;
-        left: 120px;
-      }
-
-      .review-frame.is-secondary,
-      .review-frame.is-tertiary {
-        z-index: 4;
-      }
-
-      .review-index {
+      .terms-metrics {
         position: absolute;
         z-index: 12;
-        top: 160px;
-        right: 92px;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        color: var(--muted);
+        bottom: 90px;
+        left: 88px;
+        display: grid;
+        grid-template-columns: repeat(3, 150px);
+        border-block: 1px solid rgba(10, 31, 25, 0.3);
+      }
+
+      .metric {
+        display: grid;
+        gap: 8px;
+        padding: 18px 20px 19px 0;
+        border-right: 1px solid rgba(10, 31, 25, 0.18);
+      }
+
+      .metric + .metric {
+        padding-left: 20px;
+      }
+
+      .metric:last-child {
+        border-right: 0;
+      }
+
+      .metric span {
+        font-size: 13px;
+      }
+
+      .metric strong {
+        font-size: 23px;
+        font-weight: 650;
+      }
+
+      .scene-work .scene-copy {
+        top: 260px;
+        right: 96px;
+        width: 760px;
+      }
+
+      .scene-work .scene-deck {
+        max-width: 650px;
+      }
+
+      .work-frame {
+        top: 150px;
+        left: 96px;
+        width: 720px;
+        height: 816px;
+      }
+
+      .work-frame img {
+        object-position: center top;
+      }
+
+      .work-boundary {
+        position: absolute;
+        z-index: 11;
+        right: 96px;
+        bottom: 124px;
+        width: 740px;
+        height: 1px;
+        background: rgba(10, 31, 25, 0.35);
+      }
+
+      .work-boundary::before,
+      .work-boundary::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 11px;
+        height: 11px;
+        border: 1px solid rgba(10, 31, 25, 0.5);
+        border-radius: 50%;
+        background: #f7f9f4;
+        transform: translateY(-50%);
+      }
+
+      .work-boundary::before {
+        left: 0;
+      }
+
+      .work-boundary::after {
+        right: 0;
+      }
+
+      .work-boundary span {
+        position: absolute;
+        top: 20px;
+        color: #5f7168;
         font-family: "Geist Mono", monospace;
-        font-size: 16px;
+        font-size: 15px;
         letter-spacing: 0.06em;
         text-transform: uppercase;
       }
 
-      .review-labels {
-        position: relative;
-        width: 110px;
-        height: 20px;
-        text-align: right;
+      .work-boundary span:first-child {
+        left: 0;
       }
 
-      .review-labels span {
+      .work-boundary span:last-child {
+        right: 0;
+      }
+
+      .scene-review .scene-copy {
+        top: 190px;
+        left: 88px;
+        width: 650px;
+      }
+
+      .review-frame {
+        top: 148px;
+        right: 78px;
+        width: 880px;
+        height: 830px;
+      }
+
+      .review-frame img {
+        object-position: center top;
+      }
+
+      .decision-frame {
+        z-index: 12;
+        top: 345px;
+        right: 60px;
+        width: 1120px;
+        height: 647px;
+      }
+
+      .decision-frame img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1120px;
+        height: 647px;
+      }
+
+      .review-state {
+        position: absolute;
+        z-index: 14;
+        bottom: 100px;
+        left: 88px;
+        display: grid;
+        grid-template-columns: auto 180px;
+        gap: 24px;
+        align-items: center;
+        color: #5f7168;
+        font-family: "Geist Mono", monospace;
+        font-size: 16px;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      .review-state i {
+        height: 1px;
+        background: rgba(10, 31, 25, 0.3);
+      }
+
+      .review-state span {
         position: absolute;
         inset: 0;
       }
 
-      .review-index i {
+      .review-state-labels {
+        position: relative;
+        width: 180px;
+        height: 24px;
+      }
+
+      #state-decision {
+        opacity: 0;
+      }
+
+      .end-copy {
+        position: absolute;
+        z-index: 12;
+        top: 202px;
+        left: 92px;
+        width: 1540px;
+      }
+
+      .end-brand {
+        position: absolute;
+        z-index: 14;
+        top: 46px;
+        left: 62px;
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+
+      .end-brand-mark {
         display: block;
-        width: 94px;
-        height: 1px;
-        background: var(--line-strong);
+        width: 42px;
+        height: 42px;
+        padding: 3px;
+        background: #f7f9f4 url("assets/atlas-mark.svg") center / contain no-repeat;
       }
 
-      .scene-end {
+      .end-brand span {
+        font-size: 25px;
+        font-weight: 540;
+        letter-spacing: -0.025em;
+      }
+
+      .end-copy .kicker {
+        color: rgba(247, 249, 244, 0.55);
+      }
+
+      .end-copy h2 {
+        max-width: 1460px;
+        margin: 26px 0 0;
+        font-size: 116px;
+        font-weight: 360;
+        letter-spacing: -0.055em;
+        line-height: 0.92;
+      }
+
+      .end-scopes {
+        position: absolute;
+        z-index: 12;
+        right: 88px;
+        bottom: 96px;
+        left: 88px;
         display: grid;
-        place-items: center;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        border-block: 1px solid rgba(247, 249, 244, 0.28);
       }
 
-      #review-final {
-        background: var(--paper-lift) url("assets/mei-final-work.png") center / cover no-repeat;
+      .end-scope {
+        min-height: 142px;
+        padding: 24px 28px;
+        border-right: 1px solid rgba(247, 249, 244, 0.22);
       }
 
-      #review-transcript {
-        background: var(--paper-lift) url("assets/mei-transcript.png") center / cover no-repeat;
+      .end-scope:last-child {
+        border-right: 0;
       }
 
-      .end-lockup {
-        display: grid;
-        justify-items: center;
-        text-align: center;
+      .end-scope span {
+        color: rgba(247, 249, 244, 0.5);
+        font-size: 14px;
       }
 
-      .end-lockup h2 {
-        max-width: 1120px;
-        margin: 0;
-        font-size: 112px;
-        font-weight: 470;
-        letter-spacing: -0.062em;
-        line-height: 0.95;
-      }
-
-      .end-lockup p {
-        margin: 38px 0 0;
-        color: var(--muted);
-        font-family: "Geist Mono", monospace;
-        font-size: 18px;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
+      .end-scope strong {
+        display: block;
+        margin-top: 22px;
+        font-size: 29px;
+        font-weight: 520;
+        letter-spacing: -0.025em;
       }
     </style>
   </head>
   <body>
-    <div
-      id="root"
-      data-composition-id="main"
-      data-width="1920"
-      data-height="1080"
-      data-start="0"
-      data-duration="28"
-    >
-      <div class="brand">
-        <img src="assets/atlas-mark.svg" alt="" />
-        <span>Atlas</span>
+    <div data-hf-id="hf-2emo" id="root" data-composition-id="main" data-width="1920" data-height="1080" data-start="0" data-duration="23.5">
+      <div data-hf-id="hf-9c54" class="film-brand" data-layout-allow-overlap="">
+        <img data-hf-id="hf-oprl" src="assets/atlas-mark.svg" alt="">
+        <span data-hf-id="hf-gmmo">Atlas</span>
       </div>
+      <span data-hf-id="hf-fud6" class="film-rail" data-layout-allow-overlap=""></span>
 
-      <section
-        id="scene-problem"
-        class="scene scene-problem"
-        data-layout-allow-overlap
-        data-layout-allow-occlusion
-      >
-        <span class="counter" data-layout-allow-overlap>The missing part</span>
-        <span class="film-rule"></span>
-        <div class="copy">
-          <p class="eyeline">The problem</p>
-          <h1 class="headline">A finished answer is not enough.</h1>
+      <section data-hf-id="hf-620d" id="scene-problem" class="scene scene-problem" data-layout-allow-overlap="" data-layout-allow-occlusion="" data-layout-allow-overflow="">
+        <span data-hf-id="hf-9cfy" class="scene-index">01 / The missing part</span>
+        <div data-hf-id="hf-bney" class="scene-copy">
+          <p data-hf-id="hf-y1ng" class="kicker">The problem</p>
+          <h1 data-hf-id="hf-gjn5" class="scene-title">A finished answer hides the work.</h1>
         </div>
-        <div class="frame answer-frame">
-          <img src="assets/mei-final-work.png" alt="Mei Chen's final pricing work" />
+        <figure data-hf-id="hf-dicm" class="product-frame answer-frame" role="img" aria-label="A completed rubric decision">
+          <figcaption data-hf-id="hf-4395" class="surface-label">Final decision</figcaption>
+        </figure>
+        <figure data-hf-id="hf-nr5z" class="product-frame record-reveal" role="img" aria-label="The reasoning record behind the decision">
+          <figcaption data-hf-id="hf-p1aq" class="surface-label">Learning record</figcaption>
+        </figure>
+        <span data-hf-id="hf-eten" class="record-seam" id="record-seam"></span>
+        <div data-hf-id="hf-rd5y" class="problem-note">
+          <strong data-hf-id="hf-93vm">What disappears</strong>
+          <span data-hf-id="hf-l30u">The questions, choices, and revisions that produced the answer.</span>
         </div>
-        <div class="frame reasoning-frame">
-          <img src="assets/mei-transcript.png" alt="The reasoning behind Mei Chen's final work" />
-        </div>
-        <div class="problem-note">
-          <strong>What is missing</strong>
-          <span>The questions, choices, and revisions that produced the answer.</span>
-        </div>
-        <span class="wipe-line" id="problem-wipe"></span>
       </section>
 
-      <section
-        id="scene-terms"
-        class="scene scene-terms"
-        data-layout-allow-overlap
-        data-layout-allow-occlusion
-      >
-        <span class="counter" data-layout-allow-overlap>Teacher sets the terms</span>
-        <span class="film-rule"></span>
-        <div class="frame terms-frame">
-          <img src="assets/course-agent.png" alt="Course agent settings for ECON-241" />
+      <section data-hf-id="hf-1659" id="scene-terms" class="scene scene-terms" data-layout-allow-overlap="" data-layout-allow-occlusion="" data-layout-allow-overflow="">
+        <span data-hf-id="hf-qnyy" class="scene-index">02 / Before the work</span>
+        <div data-hf-id="hf-ai32" class="scene-copy">
+          <p data-hf-id="hf-t3uq" class="kicker">Teacher</p>
+          <h2 data-hf-id="hf-ah10" class="scene-title">Set the terms first.</h2>
+          <p data-hf-id="hf-uivy" class="scene-deck">Define how the agent teaches, what it may use, and where it must stop.</p>
         </div>
-        <div class="copy">
-          <p class="eyeline">Teacher</p>
-          <h2 class="headline">Set how the agent teaches.</h2>
-          <p class="subhead">Voice, challenge, sources, direct answers, and where it must stop.</p>
+        <figure data-hf-id="hf-4ajr" class="product-frame terms-frame">
+          <img data-hf-id="hf-xcp9" src="assets/course-agent-control.png" alt="Course agent teaching controls">
+          <figcaption data-hf-id="hf-8b0d" class="surface-label">Course agent · teacher view</figcaption>
+        </figure>
+        <div data-hf-id="hf-32kd" class="terms-metrics">
+          <div data-hf-id="hf-dq4c" class="metric"><span data-hf-id="hf-537v">Direct answers</span><strong data-hf-id="hf-o8gs">Never</strong></div>
+          <div data-hf-id="hf-q6lw" class="metric"><span data-hf-id="hf-zxgy">Challenge</span><strong data-hf-id="hf-nlyc">Adaptive</strong></div>
+          <div data-hf-id="hf-ozot" class="metric"><span data-hf-id="hf-gcpp">Sources</span><strong data-hf-id="hf-6gfn">Required</strong></div>
         </div>
-        <span class="wipe-line" id="terms-wipe"></span>
       </section>
 
-      <section
-        id="scene-work"
-        class="scene scene-work"
-        data-layout-allow-overlap
-        data-layout-allow-occlusion
-      >
-        <span class="counter" data-layout-allow-overlap>Student works inside them</span>
-        <span class="film-rule"></span>
-        <div class="frame work-frame">
-          <img src="assets/mei-session.png" alt="Mei Chen working with the ECON-241 course agent" />
+      <section data-hf-id="hf-vqej" id="scene-work" class="scene scene-work" data-layout-allow-overlap="" data-layout-allow-occlusion="" data-layout-allow-overflow="">
+        <span data-hf-id="hf-j9w8" class="scene-index">03 / Inside the assignment</span>
+        <figure data-hf-id="hf-ohm1" class="product-frame work-frame">
+          <img data-hf-id="hf-xjfu" src="assets/student-reasoning-detail.png" alt="A student working through a pricing problem with the course agent">
+          <figcaption data-hf-id="hf-s7p8" class="surface-label">Reasoning session · student view</figcaption>
+        </figure>
+        <div data-hf-id="hf-awe3" class="scene-copy">
+          <p data-hf-id="hf-oxin" class="kicker">Student</p>
+          <h2 data-hf-id="hf-oqc7" class="scene-title">The agent asks. The student decides.</h2>
+          <p data-hf-id="hf-3llh" class="scene-deck">Hints and challenges follow the teacher’s terms. The important moves stay with the student.</p>
         </div>
-        <div class="copy">
-          <p class="eyeline">Student</p>
-          <h2 class="headline">The student does the work.</h2>
-          <p class="subhead">The agent questions and challenges without choosing the answer.</p>
+        <div data-hf-id="hf-zlca" class="work-boundary">
+          <span data-hf-id="hf-l9ux">Question</span>
+          <span data-hf-id="hf-rjck">Revision</span>
         </div>
-        <span class="wipe-line" id="work-wipe"></span>
       </section>
 
-      <section
-        id="scene-review"
-        class="scene scene-review"
-        data-layout-allow-overlap
-        data-layout-allow-occlusion
-      >
-        <span class="counter" data-layout-allow-overlap>Teacher sees the learning</span>
-        <span class="film-rule"></span>
-        <div class="review-index">
-          <span class="review-labels" data-layout-allow-overlap>
-            <span id="review-label-transcript">Transcript</span>
-            <span id="review-label-final">Final work</span>
-            <span id="review-label-rubric">Rubric</span>
-          </span>
-          <i></i>
+      <section data-hf-id="hf-xnbj" id="scene-review" class="scene scene-review" data-layout-allow-overlap="" data-layout-allow-occlusion="" data-layout-allow-overflow="">
+        <span data-hf-id="hf-vodd" class="scene-index">04 / After submission</span>
+        <div data-hf-id="hf-bap4" class="scene-copy">
+          <p data-hf-id="hf-nqxy" class="kicker">Teacher</p>
+          <h2 data-hf-id="hf-m0ku" class="scene-title">Open the evidence.</h2>
+          <p data-hf-id="hf-zolw" class="scene-deck">The transcript, final work, and rubric stay connected. The teacher makes the decision.</p>
         </div>
-        <div
-          class="frame review-frame"
-          id="review-transcript"
-          role="img"
-          aria-label="Teacher review of Mei Chen's transcript"
-        ></div>
-        <div
-          class="frame review-frame is-secondary"
-          id="review-final"
-          role="img"
-          aria-label="Teacher review of Mei Chen's final work"
-        ></div>
-        <div class="frame review-frame is-tertiary" id="review-grade">
-          <img src="assets/mei-grade.png" alt="Teacher rubric grade for Mei Chen" />
+        <figure data-hf-id="hf-739a" class="product-frame review-frame">
+          <img data-hf-id="hf-s8tu" src="assets/teacher-evidence-detail.png" alt="Transcript passages used in teacher review">
+          <figcaption data-hf-id="hf-0ulu" class="surface-label">Transcript evidence</figcaption>
+        </figure>
+        <figure data-hf-id="hf-ueyw" class="product-frame decision-frame">
+          <img data-hf-id="hf-jbjr" src="assets/teacher-decision-detail.png" alt="Teacher rubric decision">
+          <figcaption data-hf-id="hf-56tv" class="surface-label">Teacher decision</figcaption>
+        </figure>
+        <div data-hf-id="hf-cjp8" class="review-state">
+          <div data-hf-id="hf-hh9c" class="review-state-labels">
+            <span data-hf-id="hf-w4bk" id="state-evidence">Transcript evidence</span>
+            <span data-hf-id="hf-n3os" id="state-decision">Teacher decision</span>
+          </div>
+          <i data-hf-id="hf-wt6k"></i>
         </div>
-        <div class="copy">
-          <p class="eyeline">Teacher</p>
-          <h2 class="headline">See how the answer was made.</h2>
-          <p class="subhead">Transcript, final work, and rubric stay together.</p>
-        </div>
-        <span class="wipe-line" id="review-wipe"></span>
       </section>
 
-      <section
-        id="scene-end"
-        class="scene scene-end"
-        data-layout-allow-overlap
-        data-layout-allow-occlusion
-      >
-        <div class="end-lockup">
-          <h2>Stop guessing.<br />See the learning.</h2>
-          <p>atlas-lms.com</p>
+      <section data-hf-id="hf-nsdx" id="scene-end" class="scene scene-end" data-layout-allow-overlap="" data-layout-allow-occlusion="" data-layout-allow-overflow="">
+        <div data-hf-id="hf-kinz" class="end-brand">
+          <span data-hf-id="hf-b54t" class="end-brand-mark" aria-hidden="true"></span>
+          <span data-hf-id="hf-oinc">Atlas</span>
+        </div>
+        <div data-hf-id="hf-7omn" class="end-copy">
+          <p data-hf-id="hf-wx4z" class="kicker">Atlas</p>
+          <h2 data-hf-id="hf-g5rf">Stop policing the output.<br data-hf-id="hf-x5px">Set the terms for the work.</h2>
+        </div>
+        <div data-hf-id="hf-2p4f" class="end-scopes">
+          <div data-hf-id="hf-g5h0" class="end-scope"><span data-hf-id="hf-onag">Individual teacher</span><strong data-hf-id="hf-jo3q">AI Assignments</strong></div>
+          <div data-hf-id="hf-58zw" class="end-scope"><span data-hf-id="hf-wmgg">Teacher or course team</span><strong data-hf-id="hf-7lqu">Bring Your Course</strong></div>
+          <div data-hf-id="hf-422t" class="end-scope"><span data-hf-id="hf-xpmz">School or college</span><strong data-hf-id="hf-hzn3">Full LMS</strong></div>
         </div>
       </section>
     </div>
 
     <script>
       window.__timelines = window.__timelines || {};
-      const tl = gsap.timeline({ paused: true });
+      var tl = gsap.timeline({ paused: true });
 
-      gsap.set('[data-composition-id="main"] .scene', { opacity: 0 });
-      gsap.set("#scene-problem", { opacity: 1 });
-      gsap.set("#scene-terms", { opacity: 1, clipPath: "inset(0 0 0 100%)" });
-      gsap.set("#scene-work", { opacity: 1, clipPath: "inset(0 0 0 100%)" });
-      gsap.set("#scene-review", { opacity: 1, clipPath: "inset(0 0 0 100%)" });
-      gsap.set("#scene-end", { opacity: 1, clipPath: "inset(0 0 0 100%)" });
+      gsap.set("#scene-problem .record-reveal", { width: 0 });
+      gsap.set("#record-seam", { opacity: 0, x: 0 });
+      gsap.set("#scene-review .decision-frame", { height: 0 });
+      gsap.set("#state-decision", { opacity: 0 });
 
-      gsap.set("#scene-problem .copy, #scene-problem .problem-note", { opacity: 0 });
-      gsap.set("#scene-problem .answer-frame", { opacity: 0, clipPath: "inset(100% 0 0 0)" });
-      gsap.set("#scene-problem .reasoning-frame", { clipPath: "inset(0 100% 0 0)" });
-      gsap.set("#problem-wipe", { x: 987 });
+      tl.from("#scene-problem .kicker", { x: -54, opacity: 0, duration: 0.42, ease: "expo.out" }, 0.2);
+      tl.from("#scene-problem .scene-title", { y: 44, opacity: 0, duration: 0.88, ease: "power3.out" }, 0.36);
+      tl.from("#scene-problem .answer-frame", { scale: 0.94, opacity: 0, duration: 1.12, ease: "power1.out" }, 0.62);
+      tl.from("#scene-problem .problem-note", { x: -38, opacity: 0, duration: 0.63, ease: "power2.out" }, 1.12);
+      tl.to("#record-seam", { opacity: 1, duration: 0.16, ease: "none" }, 2.2);
+      tl.to("#record-seam", { x: 860, duration: 1.15, ease: "sine.inOut" }, 2.2);
+      tl.to("#scene-problem .record-reveal", { width: 880, duration: 1.15, ease: "sine.inOut" }, 2.2);
+      tl.to("#record-seam", { opacity: 0, duration: 0.2, ease: "none" }, 3.36);
 
-      gsap.set("#scene-terms .copy, #scene-work .copy, #scene-review .copy", { opacity: 0 });
-      gsap.set("#scene-terms .terms-frame, #scene-work .work-frame", { clipPath: "inset(0 100% 0 0)" });
-      gsap.set("#terms-wipe, #work-wipe, #review-wipe", { x: 0 });
+      tl.to("#scene-problem", { x: -1920, duration: 0.56, ease: "power3.inOut" }, 4.7);
+      tl.fromTo("#scene-terms", { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.56, ease: "power3.inOut" }, 4.7);
+      tl.from("#scene-terms .kicker", { x: -50, opacity: 0, duration: 0.4, ease: "expo.out" }, 5.32);
+      tl.from("#scene-terms .scene-title", { x: -76, opacity: 0, duration: 0.74, ease: "power4.out" }, 5.42);
+      tl.from("#scene-terms .scene-deck", { opacity: 0, duration: 0.92, ease: "sine.out" }, 5.72);
+      tl.from("#scene-terms .terms-frame", { x: 120, opacity: 0, duration: 1.18, ease: "power2.out" }, 5.38);
+      tl.from("#scene-terms .terms-metrics", { scaleX: 0, transformOrigin: "left center", duration: 0.68, ease: "power3.out" }, 6.04);
 
-      gsap.set("#review-transcript", { clipPath: "inset(0 0 0 0)" });
-      gsap.set("#review-final, #review-grade", { clipPath: "inset(0 100% 0 0)" });
-      gsap.set("#review-label-final, #review-label-rubric", { opacity: 0 });
-      gsap.set("#scene-end .end-lockup", { opacity: 0 });
+      tl.to("#scene-terms", { x: -1920, duration: 0.52, ease: "power2.inOut" }, 9.3);
+      tl.fromTo("#scene-work", { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.52, ease: "power2.inOut" }, 9.3);
+      tl.from("#scene-work .work-frame", { y: 74, opacity: 0, duration: 0.94, ease: "power3.out" }, 9.86);
+      tl.from("#scene-work .kicker", { opacity: 0, duration: 0.34, ease: "none" }, 10.04);
+      tl.from("#scene-work .scene-title", { x: 88, opacity: 0, duration: 0.8, ease: "expo.out" }, 10.12);
+      tl.from("#scene-work .scene-deck", { x: 42, opacity: 0, duration: 0.62, ease: "power1.out" }, 10.46);
+      tl.from("#scene-work .work-boundary", { scaleX: 0, transformOrigin: "left center", duration: 1.34, ease: "sine.inOut" }, 10.78);
 
-      tl.to("#scene-problem .copy", { opacity: 1, duration: 0.7, ease: "power1.out" }, 0.2);
-      tl.to("#scene-problem .answer-frame", { opacity: 1, clipPath: "inset(0 0 0 0)", duration: 1.0, ease: "power3.inOut" }, 0.65);
-      tl.to("#scene-problem .problem-note", { opacity: 1, duration: 0.7, ease: "power1.out" }, 1.15);
-      tl.to("#problem-wipe", { opacity: 1, duration: 0.15 }, 2.35);
-      tl.to("#problem-wipe", { x: 1845, duration: 1.35, ease: "power2.inOut" }, 2.35);
-      tl.to("#scene-problem .reasoning-frame", { clipPath: "inset(0 0 0 0)", duration: 1.35, ease: "power2.inOut" }, 2.35);
-      tl.to("#problem-wipe", { opacity: 0, duration: 0.18 }, 3.72);
+      tl.set("#scene-review", { opacity: 1, zIndex: 1 }, 14.0);
+      tl.set("#scene-work", { zIndex: 10, clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)" }, 14.0);
+      tl.to("#scene-work", { clipPath: "polygon(60% 0%, 100% 0%, 100% 40%, 60% 0%)", duration: 0.56, ease: "power3.inOut" }, 14.0);
+      tl.set("#scene-work", { opacity: 0, zIndex: "auto", clipPath: "none" }, 14.56);
+      tl.set("#scene-review", { zIndex: "auto" }, 14.56);
+      tl.from("#scene-review .review-frame", { scale: 0.965, opacity: 0, duration: 1.04, ease: "power1.out" }, 14.48);
+      tl.from("#scene-review .kicker", { x: -44, opacity: 0, duration: 0.42, ease: "expo.out" }, 14.68);
+      tl.from("#scene-review .scene-title", { x: -62, opacity: 0, duration: 0.78, ease: "power4.out" }, 14.8);
+      tl.from("#scene-review .scene-deck", { y: 32, opacity: 0, duration: 0.72, ease: "sine.out" }, 15.12);
+      tl.to("#scene-review .decision-frame", { height: 647, duration: 0.96, ease: "power2.inOut" }, 17.18);
+      tl.to("#state-evidence", { opacity: 0, duration: 0.2, ease: "none" }, 17.18);
+      tl.to("#state-decision", { opacity: 1, duration: 0.28, ease: "power1.out" }, 17.42);
 
-      tl.to("#scene-terms", { clipPath: "inset(0 0 0 0)", duration: 0.9, ease: "power3.inOut" }, 5.75);
-      tl.to("#scene-terms .terms-frame", { clipPath: "inset(0 0 0 0)", duration: 1.15, ease: "power3.inOut" }, 6.15);
-      tl.to("#scene-terms .copy", { opacity: 1, duration: 0.7, ease: "power1.out" }, 6.65);
-      tl.to("#terms-wipe", { opacity: 1, x: 1880, duration: 1.1, ease: "power2.inOut" }, 9.75);
-      tl.to("#terms-wipe", { opacity: 0, duration: 0.15 }, 10.85);
-
-      tl.to("#scene-work", { clipPath: "inset(0 0 0 0)", duration: 0.9, ease: "power3.inOut" }, 11.95);
-      tl.to("#scene-work .work-frame", { clipPath: "inset(0 0 0 0)", duration: 1.15, ease: "power3.inOut" }, 12.35);
-      tl.to("#scene-work .copy", { opacity: 1, duration: 0.7, ease: "power1.out" }, 12.85);
-      tl.to("#work-wipe", { opacity: 1, x: 1880, duration: 1.1, ease: "power2.inOut" }, 16.05);
-      tl.to("#work-wipe", { opacity: 0, duration: 0.15 }, 17.17);
-
-      tl.to("#scene-review", { clipPath: "inset(0 0 0 0)", duration: 0.9, ease: "power3.inOut" }, 17.95);
-      tl.to("#scene-review .copy", { opacity: 1, duration: 0.7, ease: "power1.out" }, 18.55);
-      tl.to("#review-final", { clipPath: "inset(0 0 0 0)", duration: 0.85, ease: "power3.inOut" }, 20.25);
-      tl.to("#review-label-transcript", { opacity: 0, duration: 0.2, ease: "power1.out" }, 20.25);
-      tl.to("#review-label-final", { opacity: 1, duration: 0.2, ease: "power1.out" }, 20.45);
-      tl.to("#review-grade", { clipPath: "inset(0 0 0 0)", duration: 0.85, ease: "power3.inOut" }, 22.25);
-      tl.to("#review-label-final", { opacity: 0, duration: 0.2, ease: "power1.out" }, 22.25);
-      tl.to("#review-label-rubric", { opacity: 1, duration: 0.2, ease: "power1.out" }, 22.45);
-      tl.to("#review-wipe", { opacity: 1, x: 1880, duration: 1.0, ease: "power2.inOut" }, 23.55);
-      tl.to("#review-wipe", { opacity: 0, duration: 0.15 }, 24.55);
-
-      tl.to("#scene-end", { clipPath: "inset(0 0 0 0)", duration: 0.75, ease: "power3.inOut" }, 24.8);
-      tl.to("#scene-end .end-lockup", { opacity: 1, duration: 0.85, ease: "power1.out" }, 25.25);
+      tl.to("#scene-review", { x: -1920, duration: 0.6, ease: "power3.inOut" }, 19.3);
+      tl.fromTo("#scene-end", { x: 1920, opacity: 1 }, { x: 0, opacity: 1, duration: 0.6, ease: "power3.inOut" }, 19.3);
+      tl.to(".film-brand", { opacity: 0, duration: 0.22, ease: "power2.in" }, 19.3);
+      tl.to(".film-rail", { backgroundColor: "rgba(247, 249, 244, 0.22)", duration: 0.38, ease: "none" }, 19.48);
+      tl.from("#scene-end .end-brand", { x: -46, opacity: 0, duration: 0.52, ease: "expo.out" }, 19.9);
+      tl.from("#scene-end .kicker", { x: -58, opacity: 0, duration: 0.46, ease: "expo.out" }, 19.96);
+      tl.from("#scene-end h2", { y: 52, opacity: 0, duration: 0.98, ease: "power2.out" }, 20.06);
+      tl.from("#scene-end .end-scopes", { scaleX: 0, transformOrigin: "left center", duration: 0.82, ease: "power4.out" }, 20.84);
+      tl.from("#scene-end .end-scope strong", { y: 28, opacity: 0, stagger: 0.12, duration: 0.56, ease: "power1.out" }, 21.28);
 
       window.__timelines.main = tl;
       window.__hyperframesReady = true;

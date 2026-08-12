@@ -6,10 +6,10 @@ const ORGANIZATION_TYPES = new Set([
   "Individual",
 ]);
 const INTERESTS = new Set([
+  "AI Assignments",
+  "Bring Your Course",
+  "Full LMS",
   "Product demo",
-  "First-course launch",
-  "Institutional rollout",
-  "Individual access",
   "Research or conversation",
   "Product updates",
 ]);
@@ -94,6 +94,7 @@ export default async function handler(req, res) {
     role: singleLine(body.role, 120),
     organizationType: singleLine(body.organizationType, 120),
     institution: singleLine(body.institution, 200),
+    courseContext: text(body.courseContext, 3_000),
     useCase: text(body.useCase, 4_000),
     currentApproach: text(body.currentApproach, 2_500),
     source: singleLine(body.source, 180),
@@ -111,6 +112,8 @@ export default async function handler(req, res) {
     submission.email,
     submission.role,
     submission.organizationType,
+    submission.courseContext,
+    submission.useCase,
     submission.consent,
   ];
 
@@ -157,8 +160,11 @@ export default async function handler(req, res) {
     line("Interests", submission.interests.join(", ")),
     line("How they found Atlas", submission.source),
     "",
-    "Use case:",
-    submission.useCase || "Not provided",
+    "Course or institutional context:",
+    submission.courseContext,
+    "",
+    "What they want to test:",
+    submission.useCase,
     "",
     "Current approach:",
     submission.currentApproach || "Not provided",

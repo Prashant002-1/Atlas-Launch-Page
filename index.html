@@ -21,7 +21,7 @@
     <meta property="og:url" content="https://atlas-lms.com/" />
     <meta
       property="og:image"
-      content="https://atlas-lms.com/assets/atlas-product-film-poster-v2.jpg"
+      content="https://atlas-lms.com/assets/atlas-product-film-poster-v3.jpg"
     />
     <meta property="og:image:width" content="1440" />
     <meta property="og:image:height" content="810" />
@@ -38,7 +38,7 @@
     />
     <meta
       name="twitter:image"
-      content="https://atlas-lms.com/assets/atlas-product-film-poster-v2.jpg"
+      content="https://atlas-lms.com/assets/atlas-product-film-poster-v3.jpg"
     />
 
     <title>Atlas | See the learning</title>
@@ -53,11 +53,13 @@
     <link rel="stylesheet" href="/vendor/lenis.css" />
     <link rel="stylesheet" href="/styles.css" />
     <link rel="stylesheet" href="/site-pages.css?v=20260811c" />
+    <link rel="stylesheet" href="/product-story.css?v=20260812b" />
     <script src="/vendor/lenis.min.js" defer></script>
     <script src="/field.js" defer></script>
     <script src="/definition.js" defer></script>
     <script src="/motion.js" defer></script>
-    <script src="/site.js?v=20260811c" defer></script>
+    <script src="/site.js?v=20260812d" defer></script>
+    <script src="/product-story.js?v=20260812a" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
   </head>
@@ -162,118 +164,374 @@
           </div>
         </section>
 
-        <div class="home-main">
-          <section class="truth" id="why" aria-labelledby="truth-title">
-            <div class="truth-signal" aria-hidden="true">
-              <span>Submission</span>
-              <span>Learning</span>
+        <div class="home-main product-home">
+          <section class="control-thesis" id="why" aria-labelledby="control-thesis-title">
+            <div class="shell control-thesis-shell">
+              <div class="control-thesis-main">
+                <p class="coordinate-label" data-reveal>Why Atlas exists</p>
+                <h2 id="control-thesis-title" data-reveal data-reveal-delay="1">
+                  Stop policing the output. Set the terms for the work.
+                </h2>
+              </div>
+              <div class="control-thesis-copy" data-reveal data-reveal-delay="2">
+                <p>
+                  AI is already inside student work. Another detector only asks
+                  teachers to guess after the fact.
+                </p>
+                <p>
+                  Atlas changes the point of control. The teacher decides how
+                  the agent may help before the work begins. The questions,
+                  revisions, sources, and final answer stay connected, so the
+                  teacher can judge the learning record instead of trying to
+                  reconstruct it.
+                </p>
+              </div>
             </div>
-            <div class="shell truth-inner">
-              <p class="truth-overline" data-reveal>Why Atlas exists</p>
-              <h2 id="truth-title" data-reveal data-reveal-delay="1">
-                A finished answer no longer tells you who did the work.
-              </h2>
-              <div class="truth-copy" data-reveal data-reveal-delay="2">
-                <p>
-                  Students already use AI. Teachers are left reading the result
-                  and guessing what happened before it arrived.
-                </p>
-                <p>
-                  Atlas puts the agent inside the course. The teacher decides
-                  what it can do. The student still has to question, reason,
-                  and revise. The teacher can see that process and grade the
-                  learning, not just the output.
-                </p>
-              </div>
-
-              <div class="truth-window" data-reveal>
-                <div class="truth-window-head">
-                  <span>The part a submission usually hides</span>
-                  <span>Mei Chen · ECON-241</span>
-                </div>
-                <img
-                  src="/assets/product-captures/mei-transcript.png"
-                  alt="Teacher view of Mei Chen's transcript with the reasoning used in the grade highlighted"
-                  width="1280"
-                  height="720"
-                />
-              </div>
+            <div class="control-thesis-rule" aria-hidden="true">
+              <span>Final answer</span>
+              <i></i>
+              <span>Learning record</span>
             </div>
           </section>
 
-          <section class="product-film" id="inside" aria-labelledby="film-title">
-            <div class="shell film-heading">
-              <p>Inside Atlas</p>
-              <h2 id="film-title">The work stays with the answer.</h2>
+          <section class="record-film" aria-labelledby="record-film-title">
+            <header class="shell record-film-intro">
+              <div>
+                <p class="coordinate-label">Atlas in 23 seconds</p>
+                <h2 id="record-film-title">Follow the work, not just the answer.</h2>
+              </div>
               <p>
-                Set the course rules, let the student work, then review the
-                reasoning and the result together.
+                The teacher sets the terms. The student reasons with the
+                course agent. Atlas keeps that work open for the teacher&rsquo;s
+                decision.
               </p>
-            </div>
-            <figure class="film-bleed" data-reveal>
+            </header>
+            <div class="record-film-stage">
+              <div class="record-film-meta" aria-hidden="true">
+                <span>Teacher</span>
+                <i></i>
+                <span>Student</span>
+                <i></i>
+                <span>Teacher</span>
+              </div>
               <video
                 data-product-film
-                src="/assets/atlas-product-film-v2.mp4"
-                poster="/assets/atlas-product-film-poster-v2.jpg"
-                preload="metadata"
-                autoplay
                 muted
-                loop
                 playsinline
-              ></video>
-              <figcaption class="visually-hidden">
-                Atlas product sequence showing course setup, student reasoning,
-                and teacher review.
-              </figcaption>
-            </figure>
-          </section>
-
-          <section class="agent-system" id="agents" aria-labelledby="agent-system-title">
-            <div class="shell agent-system-shell">
-              <div class="agent-system-lead">
-                <h2 id="agent-system-title">
-                  One agent for the person. One set of terms for the course.
-                </h2>
-                <a class="text-link" href="/how-it-works/">
-                  Follow the full course journey
-                </a>
-              </div>
-              <div class="agent-orbit" data-reveal-group>
-                <article>
-                  <span>Student</span>
-                  <h3>Works for each student.</h3>
-                  <p>
-                    Remembers their courses, questions, feedback, strengths,
-                    and gaps.
-                  </p>
-                </article>
-                <article class="agent-course">
-                  <span>Course</span>
-                  <h3>Configured by the teacher.</h3>
-                  <p>
-                    Carries the course materials, teaching approach, sources,
-                    and assignment boundaries.
-                  </p>
-                </article>
-                <article>
-                  <span>Teacher</span>
-                  <h3>Works for each teacher.</h3>
-                  <p>
-                    Helps plan the course, review student work, and decide what
-                    to teach next.
-                  </p>
-                </article>
-              </div>
+                preload="metadata"
+                poster="/assets/atlas-product-film-poster-v3.jpg"
+              >
+                <source src="/assets/atlas-product-film-v3.mp4" type="video/mp4" />
+              </video>
             </div>
           </section>
 
-          <section class="home-close" aria-labelledby="home-close-title">
-            <div class="shell home-close-inner">
-              <img src="/brand/atlas-mark.svg" alt="" width="52" height="52" />
-              <h2 id="home-close-title">Stop guessing. See the learning.</h2>
+          <section class="course-terrain" id="product" aria-labelledby="course-terrain-title" data-product-stage>
+            <img
+              class="course-terrain-map"
+              src="/assets/course-terrain.png"
+              alt=""
+              width="1672"
+              height="941"
+              aria-hidden="true"
+            />
+            <div class="shell course-terrain-shell">
+              <header class="course-terrain-head">
+                <div>
+                  <p class="coordinate-label">One assignment, kept intact</p>
+                  <h2 id="course-terrain-title">The course sets the terrain.</h2>
+                </div>
+                <p>
+                  The agent works inside the teacher&rsquo;s boundaries. The
+                  student makes the important moves. The record shows how the
+                  answer was reached.
+                </p>
+              </header>
+
+              <div class="terrain-stage">
+                <div class="terrain-bearing" aria-hidden="true">
+                  <span>N 40&deg; 43&prime;</span>
+                  <i></i>
+                  <span>W 74&deg; 00&prime;</span>
+                </div>
+
+                <div class="terrain-tabs" role="tablist" aria-label="Atlas assignment journey">
+                  <button
+                    id="terrain-tab-terms"
+                    class="terrain-tab is-active"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="terrain-panel-terms"
+                    data-product-tab="terms"
+                  >
+                    <span>Teacher</span>
+                    <strong>Set the terms</strong>
+                    <small>Help level, sources, boundaries, rubric</small>
+                  </button>
+                  <button
+                    id="terrain-tab-work"
+                    class="terrain-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="terrain-panel-work"
+                    data-product-tab="work"
+                  >
+                    <span>Student</span>
+                    <strong>Work with the agent</strong>
+                    <small>Question, test, revise, submit</small>
+                  </button>
+                  <button
+                    id="terrain-tab-review"
+                    class="terrain-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="terrain-panel-review"
+                    data-product-tab="review"
+                  >
+                    <span>Teacher</span>
+                    <strong>Open the evidence</strong>
+                    <small>Reasoning, final work, rubric, decision</small>
+                  </button>
+                </div>
+
+                <div class="terrain-panels">
+                  <article
+                    id="terrain-panel-terms"
+                    class="terrain-panel is-active"
+                    role="tabpanel"
+                    aria-labelledby="terrain-tab-terms"
+                    data-product-panel="terms"
+                  >
+                    <div class="terrain-panel-copy">
+                      <p>Before the student begins</p>
+                      <h3>The teacher defines what help means here.</h3>
+                      <p>
+                        Set the session length, what the agent may do, what the
+                        student must show, and how the work will be judged.
+                      </p>
+                    </div>
+                    <figure class="product-surface product-surface-cockpit">
+                      <img
+                        src="/assets/product-surfaces/course-agent-control.png"
+                        alt="Course agent configuration showing its voice, teaching approach, student disclosure, and boundaries"
+                        width="940"
+                        height="600"
+                      />
+                      <figcaption>ECON-241 course agent · teacher view</figcaption>
+                    </figure>
+                  </article>
+
+                  <article
+                    id="terrain-panel-work"
+                    class="terrain-panel"
+                    role="tabpanel"
+                    aria-labelledby="terrain-tab-work"
+                    data-product-panel="work"
+                    hidden
+                  >
+                    <div class="terrain-panel-copy">
+                      <p>During the assignment</p>
+                      <h3>The agent keeps asking. The student keeps deciding.</h3>
+                      <p>
+                        Atlas can point to course material, challenge an
+                        assumption, and give the next hint. It does not choose
+                        the answer or write the submission.
+                      </p>
+                    </div>
+                    <figure class="product-surface product-surface-session">
+                      <img
+                        src="/assets/product-surfaces/student-reasoning-detail.png"
+                        alt="A student reasoning through a pricing problem with the course agent"
+                        width="760"
+                        height="860"
+                      />
+                      <figcaption>Course agent session · student view</figcaption>
+                    </figure>
+                  </article>
+
+                  <article
+                    id="terrain-panel-review"
+                    class="terrain-panel"
+                    role="tabpanel"
+                    aria-labelledby="terrain-tab-review"
+                    data-product-panel="review"
+                    hidden
+                  >
+                    <div class="terrain-panel-copy">
+                      <p>After submission</p>
+                      <h3>The reasoning stays with the answer.</h3>
+                      <p>
+                        Review the transcript, the passages used in grading,
+                        the final work, and the rubric together. The teacher
+                        makes the final decision.
+                      </p>
+                    </div>
+                    <figure class="product-surface product-surface-evidence">
+                      <img
+                        src="/assets/product-surfaces/teacher-evidence-detail.png"
+                        alt="Teacher review of a student's transcript with the passages used in grading highlighted"
+                        width="820"
+                        height="850"
+                      />
+                      <figcaption>Learning record · teacher view</figcaption>
+                    </figure>
+                  </article>
+                </div>
+              </div>
+
+              <a class="terrain-next text-link" href="/how-it-works/">
+                Follow the complete assignment
+              </a>
+            </div>
+          </section>
+
+          <section class="course-operator" aria-labelledby="course-operator-title" data-operator>
+            <div class="shell course-operator-shell">
+              <div class="course-operator-heading">
+                <p class="coordinate-label">Work with Atlas</p>
+                <h2 id="course-operator-title">Tell it what you want to teach.</h2>
+                <p>
+                  Atlas works on the course in ordinary language. It prepares
+                  the change. The teacher reviews it before it becomes part of
+                  the course.
+                </p>
+              </div>
+
+              <section
+                class="operator-console"
+                aria-label="Examples of work a teacher can do with Atlas"
+              >
+                <div class="operator-prompt" aria-live="polite">
+                  <span>You</span>
+                  <p data-operator-prompt>
+                    Build a 30-minute AI assignment that makes students defend
+                    a pricing decision with course evidence.
+                  </p>
+                </div>
+                <div class="operator-result">
+                  <span>Atlas prepares</span>
+                  <p data-operator-result>
+                    Assignment instructions, session boundaries, course
+                    sources, and a rubric for teacher review.
+                  </p>
+                </div>
+                <div class="operator-actions" role="tablist" aria-label="Atlas course work examples">
+                  <button class="is-active" type="button" role="tab" aria-selected="true" data-operator-index="0">AI assignment</button>
+                  <button type="button" role="tab" aria-selected="false" data-operator-index="1">Course module</button>
+                  <button type="button" role="tab" aria-selected="false" data-operator-index="2">Practice set</button>
+                  <button type="button" role="tab" aria-selected="false" data-operator-index="3">Course agent</button>
+                  <button type="button" role="tab" aria-selected="false" data-operator-index="4">Class review</button>
+                </div>
+              </section>
+            </div>
+          </section>
+
+          <section class="atlas-scopes" id="start" aria-labelledby="atlas-scopes-title" data-scope-selector>
+            <div class="shell atlas-scopes-shell">
+              <header class="atlas-scopes-head">
+                <p class="coordinate-label">Start with the part you need</p>
+                <h2 id="atlas-scopes-title">From one assignment to the whole institution.</h2>
+                <p>
+                  Atlas is one learning system. You do not have to adopt all of
+                  it at once.
+                </p>
+              </header>
+
+              <div class="scope-selector">
+                <div class="scope-tabs" role="tablist" aria-label="Ways to start with Atlas">
+                  <button
+                    id="scope-tab-assignment"
+                    class="scope-tab is-active"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                    aria-controls="scope-panel-assignment"
+                    data-scope="assignment"
+                  >
+                    <span>Individual teacher</span>
+                    <strong>AI Assignments</strong>
+                  </button>
+                  <button
+                    id="scope-tab-course"
+                    class="scope-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="scope-panel-course"
+                    data-scope="course"
+                  >
+                    <span>Teacher or course team</span>
+                    <strong>Bring Your Course</strong>
+                  </button>
+                  <button
+                    id="scope-tab-lms"
+                    class="scope-tab"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    aria-controls="scope-panel-lms"
+                    data-scope="lms"
+                  >
+                    <span>School or college</span>
+                    <strong>Full LMS</strong>
+                  </button>
+                </div>
+
+                <div class="scope-panels">
+                  <article id="scope-panel-assignment" class="scope-panel is-active" role="tabpanel" aria-labelledby="scope-tab-assignment" data-scope-panel="assignment">
+                    <div>
+                      <p>Put one governed agent session inside a course you already teach.</p>
+                      <ul>
+                        <li>Teacher-set assignment contract</li>
+                        <li>Student reasoning session</li>
+                        <li>Transcript, final work, and rubric review</li>
+                      </ul>
+                    </div>
+                    <a class="button" href="/access/?interest=ai-assignments">Request AI Assignments</a>
+                  </article>
+                  <article id="scope-panel-course" class="scope-panel" role="tabpanel" aria-labelledby="scope-tab-course" data-scope-panel="course" hidden>
+                    <div>
+                      <p>Bring the materials and structure of a real course into Atlas.</p>
+                      <ul>
+                        <li>Course agent grounded in your materials</li>
+                        <li>Modules, assignments, practice, and feedback</li>
+                        <li>AI Assignments included</li>
+                      </ul>
+                    </div>
+                    <a class="button" href="/access/?interest=bring-course">Bring a course</a>
+                  </article>
+                  <article id="scope-panel-lms" class="scope-panel" role="tabpanel" aria-labelledby="scope-tab-lms" data-scope-panel="lms" hidden>
+                    <div>
+                      <p>Run Atlas as the learning system for a school or college.</p>
+                      <ul>
+                        <li>Institution, roles, courses, and student records</li>
+                        <li>Gradebooks, integrations, and administration</li>
+                        <li>Course agents and AI Assignments throughout</li>
+                      </ul>
+                    </div>
+                    <a class="button" href="/access/?interest=full-lms">Discuss institutional access</a>
+                  </article>
+                </div>
+              </div>
+
+              <a class="scope-detail-link text-link" href="/work-with-us/">
+                Compare the three ways to begin
+              </a>
+            </div>
+          </section>
+
+          <section class="home-close product-close" aria-labelledby="home-close-title">
+            <div class="shell product-close-inner">
               <div>
+                <p>Bring one assignment, one course, or the institution.</p>
+                <h2 id="home-close-title">See what Atlas would make visible.</h2>
+              </div>
+              <div class="product-close-actions">
                 <a class="button button-lg" href="/access/">Request a demo</a>
-                <a class="text-link" href="/work-with-us/">See how we begin</a>
+                <a class="text-link" href="/how-it-works/">See how Atlas works</a>
               </div>
             </div>
           </section>

@@ -963,6 +963,29 @@
   font-size: var(--text-small);
 }
 
+.access-path {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.35fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  margin-bottom: 2.2rem;
+  padding: 1.2rem 1.35rem;
+  border-block: 1px solid var(--line-strong);
+  background: var(--wash);
+}
+
+.access-path[hidden] {
+  display: none;
+}
+
+.access-path span {
+  font-weight: 590;
+}
+
+.access-path p {
+  max-width: 55ch;
+  color: var(--ink-soft);
+}
+
 .access-row {
   display: grid;
   border-top: 1px solid var(--line);
@@ -1083,6 +1106,14 @@
 
 .access-optional[open] summary {
   border-bottom: 1px solid var(--line);
+}
+
+.access-current-field {
+  padding-block: 1.2rem;
+}
+
+.access-current-field textarea {
+  min-height: 7rem;
 }
 
 .access-submit-row {
