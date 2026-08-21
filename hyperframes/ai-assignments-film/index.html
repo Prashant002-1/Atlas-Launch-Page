@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, height=1080" />
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
+<style>
+  @font-face {
+    font-family: "Geist";
+    src: url("assets/geist-sans-variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+  }
+  @font-face {
+    font-family: "Geist Mono";
+    src: url("assets/geist-mono-variable.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: block;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    background: #071712;
+  }
+  body { font-family: "Geist", system-ui, sans-serif; color: #f1f4ee; }
+
+  :root {
+    --ink: #0a1f19;
+    --ink-deep: #071712;
+    --paper: #f1f4ee;
+    --paper-dim: #b8c4bd;
+    --paper-faint: #8fa199;
+    --pine: #14543d;
+    --mint: #72d49a;
+    --line-dark: rgba(241, 244, 238, 0.14);
+  }
+
+  /* ---------- stage & scenes ---------- */
+  #root { position: relative; width: 1920px; height: 1080px; background: var(--ink-deep); }
+
+  .scene {
+    position: absolute; inset: 0;
+    background: radial-gradient(130% 100% at 50% 18%, #0d251e 0%, var(--ink) 48%, var(--ink-deep) 100%);
+    opacity: 1;
+  }
+  /* scenes fade in as their own entrance -> true crossfade over the previous */
+  #s2, #s3, #s4, #s5, #s6, #s7, #s8 { will-change: opacity; }
+  .scene-inner {
+    position: relative; width: 100%; height: 100%;
+    padding: 120px 140px; display: flex; flex-direction: column;
+  }
+
+  .kicker {
+    font-family: "Geist Mono", monospace; font-size: 22px; font-weight: 450;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--paper-dim);
+  }
+  .hero {
+    font-weight: 520; letter-spacing: -0.03em; line-height: 1.04; color: var(--paper);
+  }
+  .support { font-weight: 400; color: var(--paper-dim); letter-spacing: -0.01em; }
+
+  /* ---------- S1 ---------- */
+  #s1 .scene-inner { justify-content: center; gap: 56px; }
+  #s1 .hero { font-size: 118px; max-width: 1450px; }
+  #s1 .hero .indent { padding-left: 220px; display: block; }
+  #s1 .support { font-size: 34px; padding-left: 224px; }
+
+  /* ---------- S2 ---------- */
+  #s2 .scene-inner { justify-content: center; gap: 40px; }
+  #s2 .tactic-row { display: flex; flex-direction: column; gap: 22px; min-height: 210px; justify-content: center; }
+  .stat-wrap { display: flex; align-items: center; gap: 36px; position: absolute; left: 140px; right: 140px; bottom: 120px; }
+  .tactic {
+    align-self: flex-start;
+    font-family: "Geist Mono", monospace; font-size: 30px; font-weight: 450;
+    letter-spacing: 0.14em; color: var(--paper);
+    border: 1px solid var(--line-dark); border-left: 3px solid var(--pine);
+    padding: 18px 34px; border-radius: 4px;
+  }
+  #s2 .detector-row { display: flex; gap: 28px; align-items: stretch; margin-top: 8px; position: relative; }
+  .detector-card {
+    flex: 1; border: 1px solid var(--line-dark); border-radius: 10px;
+    padding: 26px 30px; display: flex; flex-direction: column; gap: 12px;
+    background: rgba(241, 244, 238, 0.03);
+  }
+  .detector-card .tool { font-family: "Geist Mono", monospace; font-size: 17px; letter-spacing: 0.18em; color: var(--paper-faint); }
+  .detector-card .verdict { font-family: "Geist Mono", monospace; font-size: 40px; font-weight: 520; color: var(--paper); font-variant-numeric: tabular-nums; }
+  #s2 .strike {
+    position: absolute; left: -14px; right: -14px; top: 50%; height: 3px;
+    background: #d97a52; transform-origin: left center; transform: scaleX(0); border-radius: 2px;
+  }
+  #s2 .same-p { font-size: 30px; color: var(--paper-dim); font-style: italic; }
+  .claim-big { font-size: 96px; font-weight: 560; letter-spacing: -0.03em; line-height: 1.06; color: var(--paper); max-width: 1500px; }
+  .claim-sub { font-size: 34px; font-weight: 400; color: var(--paper-dim); margin-top: 26px; }
+
+  /* ---------- S3 ---------- */
+  #s3 .scene-inner { justify-content: center; align-items: center; text-align: center; gap: 64px; }
+  #s3 .hero { font-size: 96px; max-width: 1420px; }
+  #s3 .hero .soft { color: var(--paper-dim); }
+  #s3 .seed-dot {
+    position: absolute; left: 50%; bottom: 130px; width: 10px; height: 10px; margin-left: -5px;
+    border-radius: 50%; background: var(--mint); box-shadow: 0 0 24px rgba(114, 212, 154, 0.65);
+  }
+
+  /* ---------- floating mac-style windows ---------- */
+  .win-shadow { filter: drop-shadow(0 60px 90px rgba(0, 0, 0, 0.55)); }
+  .win {
+    background: var(--paper); color: #16261f;
+    border-radius: 18px; overflow: hidden;
+    box-shadow: inset 0 0 0 1px rgba(10, 31, 25, 0.08);
+  }
+  .win-titlebar {
+    height: 52px; display: flex; align-items: center; gap: 9px; padding: 0 24px;
+    border-bottom: 1px solid rgba(10, 31, 25, 0.09); background: #eaefe6;
+  }
+  .tl-dot { width: 13px; height: 13px; border-radius: 50%; }
+    .tl-dot.r { background: #df6e63; } .tl-dot.y { background: #e3b95c; } .tl-dot.g { background: #7cc38b; }
+  .win-title {
+    margin-left: 14px; font-family: "Geist Mono", monospace; font-size: 14px; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #57675e;
+  }
+  .win-body { padding: 34px 38px; position: relative; }
+  #assign-win .win-body { height: 620px; }
+  #aw-manifest, #aw-chat { position: absolute; left: 38px; right: 38px; top: 34px; bottom: 34px; }
+  #aw-manifest { justify-content: center; }
+  #aw-chat { justify-content: flex-start; gap: 14px; }
+  #aw-chat .bubble { font-size: 23px; padding: 15px 21px; }
+  #aw-chat .hint-chip { margin-top: 2px; }
+
+  .bubble {
+    max-width: 78%; padding: 20px 26px; border-radius: 16px;
+    font-size: 25px; line-height: 1.42; font-weight: 430; letter-spacing: -0.005em;
+  }
+  .bubble.me { background: var(--pine); color: #eef4ec; border-bottom-right-radius: 5px; margin-left: auto; }
+  .bubble.them { background: #e3e9dd; color: #16261f; border-bottom-left-radius: 5px; }
+  .chat-col { display: flex; flex-direction: column; gap: 20px; }
+
+  .composer {
+    display: flex; align-items: center; gap: 20px;
+    border: 1.5px solid rgba(10, 31, 25, 0.22); border-radius: 12px;
+    padding: 20px 24px; background: #fbfcf9;
+  }
+  .composer .text { font-size: 24px; line-height: 1.4; flex: 1; color: #22352c; min-height: 68px; }
+  .caret { display: inline-block; width: 2.5px; height: 28px; background: var(--pine); vertical-align: -5px; }
+  .send-btn {
+    align-self: center; flex: none; background: var(--ink); color: var(--paper);
+    font-family: "Geist Mono", monospace; font-size: 15px; letter-spacing: 0.14em;
+    padding: 14px 22px; border-radius: 9px;
+  }
+
+  .manifest { display: flex; flex-direction: column; gap: 18px; }
+  .manifest-row { display: flex; align-items: center; gap: 16px; font-family: "Geist Mono", monospace; font-size: 20px; letter-spacing: 0.06em; color: #22352c; }
+  .manifest-key { color: #6d7d74; width: 150px; flex: none; }
+  .mcheck { width: 22px; height: 22px; flex: none; }
+
+  .hint-chip {
+    align-self: flex-start; font-family: "Geist Mono", monospace; font-size: 14px;
+    letter-spacing: 0.14em; color: #3c5a4c; border: 1px solid rgba(20, 84, 61, 0.35);
+    border-radius: 999px; padding: 8px 16px; background: rgba(114, 212, 154, 0.12);
+  }
+  .timer-chip {
+    margin-left: auto; font-family: "Geist Mono", monospace; font-size: 15px; letter-spacing: 0.1em;
+    color: #6d7d74; border: 1px solid rgba(10, 31, 25, 0.14); border-radius: 8px; padding: 7px 13px;
+    font-variant-numeric: tabular-nums; background: #fbfcf9;
+  }
+
+  /* grading window */
+  .grade-grid { display: grid; grid-template-columns: 300px 1fr; gap: 36px; }
+  .transcript-strip { border-right: 1px solid rgba(10, 31, 25, 0.09); padding-right: 30px; display: flex; flex-direction: column; gap: 14px; }
+  .excerpt { font-size: 16.5px; line-height: 1.45; color: #55685e; background: #eef2ea; border-radius: 8px; padding: 12px 14px; }
+  .strip-label { font-family: "Geist Mono", monospace; font-size: 13px; letter-spacing: 0.16em; color: #6f7f75; margin-bottom: 4px; }
+  .rubric { display: flex; flex-direction: column; gap: 16px; }
+  .rubric-row { display: flex; align-items: center; gap: 16px; font-size: 22px; color: #22352c; }
+  .rubric-row .rc { width: 26px; height: 26px; flex: none; }
+  .score-card {
+    position: absolute; right: 38px; bottom: 34px;
+    background: var(--ink); color: var(--paper); border-radius: 14px;
+    padding: 22px 30px; display: flex; align-items: baseline; gap: 18px;
+    box-shadow: 0 24px 60px rgba(10, 31, 25, 0.35);
+  }
+  .score-num { font-size: 58px; font-weight: 560; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+  .score-tag { font-family: "Geist Mono", monospace; font-size: 14px; letter-spacing: 0.16em; color: var(--mint); }
+  .adjust-chip {
+    position: absolute; left: 38px; bottom: 40px; max-width: 420px;
+    background: #ffffff; border: 1.5px solid rgba(10, 31, 25, 0.18); border-radius: 12px;
+    padding: 16px 22px; font-size: 20px; color: #22352c; box-shadow: 0 18px 44px rgba(10, 31, 25, 0.18);
+  }
+  .adjust-chip .who { font-family: "Geist Mono", monospace; font-size: 13px; letter-spacing: 0.16em; color: #6f7f75; display: block; margin-bottom: 6px; }
+
+  /* ---------- S5 coordination ---------- */
+  .coord-label {
+    position: absolute; font-family: "Geist Mono", monospace; font-size: 16px;
+    letter-spacing: 0.2em; color: var(--paper-dim);
+  }
+  #link-svg { position: absolute; inset: 0; pointer-events: none; }
+
+  /* ---------- captions under windows ---------- */
+  .under-caption { text-align: center; font-size: 27px; color: var(--paper-dim); margin-top: 26px; }
+  .under-caption .accent { color: var(--mint); }
+
+  /* ---------- S8 ---------- */
+  #s8 .scene-inner { justify-content: center; align-items: center; text-align: center; gap: 40px; }
+  #s8 .brand { font-size: 148px; font-weight: 560; letter-spacing: -0.035em; line-height: 1; }
+  #s8 .rule { width: 88px; height: 2px; background: var(--pine); }
+  #s8 .product-line { font-size: 42px; font-weight: 430; color: var(--paper-dim); letter-spacing: 0.01em; }
+  #s8 .thesis { font-size: 37px; color: var(--paper); font-weight: 450; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="62" data-width="1920" data-height="1080">
+
+  <!-- ============ S1 — THE OPEN SECRET (0–8) ============ -->
+  <section id="s1" class="scene clip" data-start="0" data-duration="8" data-track-index="1">
+    <div class="scene-inner">
+      <div class="kicker" id="s1-kicker">The open secret</div>
+      <h1 class="hero">
+        <span class="w">Every</span> <span class="w">submission</span> <span class="w">now</span>
+        <span class="indent"><span class="w">has</span> <span class="w">two</span> <span class="w">authors.</span></span>
+      </h1>
+      <p class="support" id="s1-sub">One of them never came to class.</p>
+    </div>
+  </section>
+
+  <!-- ============ S2 — THE POLICE WORK (7–16) ============ -->
+  <section id="s2" class="scene clip" data-start="7" data-duration="9" data-track-index="2" style="z-index:2;">
+    <div class="scene-inner">
+      <div class="kicker" id="s2-kicker">The response so far</div>
+      <div class="tactic-row">
+        <div class="tactic" id="tac-1">Draft-history audits</div>
+        <div class="tactic" id="tac-2">Oral spot-checks</div>
+        <div class="tactic" id="tac-3">Detector dashboards</div>
+      </div>
+      <div class="detector-row" id="detector-row">
+        <div class="detector-card"><span class="tool">DETECTOR A</span><span class="verdict">4% AI</span></div>
+        <div class="detector-card"><span class="tool">DETECTOR B</span><span class="verdict">71% AI</span></div>
+        <div class="detector-card"><span class="tool">DETECTOR C</span><span class="verdict">2% AI</span></div>
+        <div class="strike" id="strike"></div>
+      </div>
+      <p class="same-p" id="same-p">Same paragraph. Written by a human, flagged by everyone.</p>
+      <div class="stat-wrap" id="stat-wrap">
+        <div class="claim-big" id="claim-big">Every student is already using AI.</div>
+        <p class="claim-sub" id="claim-sub">Pretending otherwise just costs teachers their time.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ S3 — THE PIVOT (15–22) ============ -->
+  <section id="s3" class="scene clip" data-start="15" data-duration="7" data-track-index="3" style="z-index:3;">
+    <div class="scene-inner">
+      <div class="kicker" id="s3-kicker">The pivot</div>
+      <h1 class="hero" id="s3-hero">
+        <span class="w">You</span> <span class="w">cannot</span> <span class="w">police</span> <span class="w">your</span> <span class="w">way</span> <span class="w">out.</span><br/>
+        <span class="soft"><span class="w">Start</span> <span class="w">watching</span> <span class="w">the</span> <span class="w">thinking</span> <span class="w">instead.</span></span>
+      </h1>
+      <div class="seed-dot" id="seed-dot"></div>
+    </div>
+  </section>
+
+  <!-- ============ S4 backdrop — ONE SENTENCE (21–30) ============ -->
+  <section id="s4" class="scene clip" data-start="21" data-duration="9" data-track-index="4" style="z-index:4;">
+    <div class="scene-inner">
+      <div class="kicker" id="s4-kicker">It starts with one sentence from the teacher</div>
+      <p class="under-caption" id="s4-caption" style="position:absolute; left:0; right:0; bottom:96px;">
+        Voice works too. So does &ldquo;like last semester, but harder.&rdquo;
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ S5 backdrop — COORDINATION (29–39) ============ -->
+  <section id="s5" class="scene clip" data-start="29" data-duration="10" data-track-index="5" style="z-index:5;">
+    <svg id="link-svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+      <path id="link-path" d="M 872 560 L 1146 560" stroke="#72d49a" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <circle id="pkt-1" r="7" fill="#72d49a" cx="872" cy="560"/>
+      <circle id="pkt-2" r="7" fill="#72d49a" cx="872" cy="560"/>
+      <circle id="pkt-3" r="7" fill="#72d49a" cx="872" cy="560"/>
+    </svg>
+    <div class="coord-label" id="lbl-course" style="left:340px; top:640px;">COURSE AGENT</div>
+    <div class="coord-label" id="lbl-assign" style="left:1240px; top:640px;">ASSIGNMENT AGENT</div>
+    <div style="position:absolute; left:0; right:0; bottom:110px; text-align:center;">
+      <h1 class="hero" id="s5-hero" style="font-size:62px; max-width:1300px; margin:0 auto;">Your agent doesn&rsquo;t assist.<br/>It builds the agent your students meet.</h1>
+      <p class="support" id="s5-sub" style="font-size:29px; margin-top:22px;">No configuration maze. No prompt engineering. A conversation.</p>
+    </div>
+  </section>
+
+  <!-- ============ S6 backdrop — STUDENT VIEW (38–48) ============ -->
+  <section id="s6" class="scene clip" data-start="38" data-duration="10" data-track-index="6" style="z-index:6;">
+    <div class="scene-inner">
+      <div class="kicker" id="s6-kicker" style="text-align:center;">The student&rsquo;s view</div>
+      <p class="under-caption" id="s6-caption" style="position:absolute; left:0; right:0; bottom:92px;">
+        The reasoning is the submission. <span class="accent">The finished answer doesn&rsquo;t exist to copy.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ S7 backdrop — GRADING (47–56) ============ -->
+  <section id="s7" class="scene clip" data-start="47" data-duration="9" data-track-index="7" style="z-index:7;">
+    <div class="scene-inner">
+      <div class="kicker" id="s7-kicker" style="text-align:center;">After submission</div>
+      <p class="under-caption" id="s7-caption" style="position:absolute; left:0; right:0; bottom:92px;">
+        Draft grades arrive in seconds. <span class="accent">The judgment stays yours.</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ S8 — CLOSE (55–62) ============ -->
+  <section id="s8" class="scene clip" data-start="55" data-duration="7" data-track-index="8" style="z-index:8;">
+    <div class="scene-inner">
+      <div class="brand" id="s8-brand">Atlas</div>
+      <div class="rule" id="s8-rule"></div>
+      <div class="product-line" id="s8-product">AI Assignments</div>
+      <p class="thesis" id="s8-thesis">Stop detecting AI. Start assigning it.</p>
+    </div>
+  </section>
+
+  <!-- ============ TEACHER WINDOW (22–38.5) ============ -->
+  <div id="teacher-win" class="clip" data-start="22" data-duration="16.5" data-track-index="9"
+       style="position:absolute; left:1030px; top:270px; width:730px; z-index:20;">
+    <div class="win-shadow">
+      <div class="win">
+        <div class="win-titlebar">
+          <span class="tl-dot r"></span><span class="tl-dot y"></span><span class="tl-dot g"></span>
+          <span class="win-title">Course Agent</span>
+          <span class="timer-chip" style="visibility:hidden;">00:00</span>
+        </div>
+        <div class="win-body">
+          <div class="chat-col">
+            <div class="composer" id="tw-composer">
+              <div class="text"><span id="tw-type"></span><span class="caret" id="tw-caret"></span></div>
+              <div class="send-btn" id="tw-send">SEND</div>
+            </div>
+            <div class="bubble me" id="tw-sent" style="opacity:0;"></div>
+            <div class="bubble them" id="tw-reply" style="opacity:0;">Done. &ldquo;Elasticity under pressure&rdquo; is live &mdash; 40 minutes, Socratic hints, three sources. I&rsquo;ll introduce it when you say.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ASSIGNMENT WINDOW (30.5–48) ============ -->
+  <div id="assign-win" class="clip" data-start="30.5" data-duration="17.5" data-track-index="10"
+       style="position:absolute; left:1150px; top:330px; width:700px; z-index:21;">
+    <div class="win-shadow">
+      <div class="win">
+        <div class="win-titlebar">
+          <span class="tl-dot r"></span><span class="tl-dot y"></span><span class="tl-dot g"></span>
+          <span class="win-title">Assignment Agent</span>
+          <span class="timer-chip" id="aw-timer">40:00</span>
+        </div>
+        <div class="win-body" style="height:620px;">
+          <div class="manifest" id="aw-manifest">
+            <div class="manifest-row"><svg class="mcheck" viewBox="0 0 24 24"><path d="M4 12.5 L9.5 18 L20 6.5" stroke="#14543d" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span class="manifest-key">assignment</span><span>Elasticity under pressure</span></div>
+            <div class="manifest-row"><svg class="mcheck" viewBox="0 0 24 24"><path d="M4 12.5 L9.5 18 L20 6.5" stroke="#14543d" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span class="manifest-key">time</span><span>40 minutes, in session</span></div>
+            <div class="manifest-row"><svg class="mcheck" viewBox="0 0 24 24"><path d="M4 12.5 L9.5 18 L20 6.5" stroke="#14543d" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span class="manifest-key">hints</span><span>Socratic, three maximum</span></div>
+            <div class="manifest-row"><svg class="mcheck" viewBox="0 0 24 24"><path d="M4 12.5 L9.5 18 L20 6.5" stroke="#14543d" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span class="manifest-key">sources</span><span>three citations required</span></div>
+            <div class="manifest-row"><svg class="mcheck" viewBox="0 0 24 24"><path d="M4 12.5 L9.5 18 L20 6.5" stroke="#bf5f3b" stroke-width="3" fill="none" stroke-linecap="round"/></svg><span class="manifest-key">answers</span><span>withheld &mdash; always</span></div>
+          </div>
+          <div class="chat-col" id="aw-chat" style="opacity:0; visibility:hidden;">
+            <div class="bubble me" id="aw-b1" style="opacity:0;">wait &mdash; what am I actually supposed to do?</div>
+            <div class="bubble them" id="aw-b2" style="opacity:0;">Forty minutes. Take a position: does a 10% soda tax actually cut consumption? Argue it with three sources. I can nudge &mdash; I won&rsquo;t solve it for you.</div>
+            <div class="bubble me" id="aw-b3" style="opacity:0;">okay&hellip; does the tax even bite if demand is inelastic?</div>
+            <div class="bubble them" id="aw-b4" style="opacity:0;">Now you&rsquo;re asking the right question. What would make demand for soda stick?</div>
+            <div class="hint-chip" id="aw-hint" style="opacity:0;">HINT 1 OF 3 &middot; SOCRATIC MODE</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ GRADING WINDOW (48.5–56) ============ -->
+  <div id="grade-win" class="clip" data-start="48.5" data-duration="7.5" data-track-index="11"
+       style="position:absolute; left:1070px; top:230px; width:790px; z-index:22;">
+    <div class="win-shadow">
+      <div class="win">
+        <div class="win-titlebar">
+          <span class="tl-dot r"></span><span class="tl-dot y"></span><span class="tl-dot g"></span>
+          <span class="win-title">Grading &middot; Session 14</span>
+        </div>
+        <div class="win-body" style="min-height:470px; padding-bottom:150px;">
+          <div class="grade-grid">
+            <div class="transcript-strip">
+              <div class="strip-label">REASONING TRACE</div>
+              <div class="excerpt">&ldquo;&hellip;if demand is inelastic, the tax mostly raises revenue, not behavior&hellip;&rdquo;</div>
+              <div class="excerpt">&ldquo;&hellip;addiction makes short-run demand sticky &mdash; cite the meta-analysis&hellip;&rdquo;</div>
+              <div class="excerpt">&ldquo;&hellip;counterexample: Mexico&rsquo;s 2014 soda tax, roughly 6% drop&hellip;&rdquo;</div>
+            </div>
+            <div class="rubric" id="gw-rubric">
+              <div class="rubric-row"><svg class="rc" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" stroke="#14543d" stroke-width="2" fill="none"/><path class="tick" d="M7.5 13.5 L11.5 17.5 L18.5 9" stroke="#14543d" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><span>Claim is clear and committed</span></div>
+              <div class="rubric-row"><svg class="rc" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" stroke="#14543d" stroke-width="2" fill="none"/><path class="tick" d="M7.5 13.5 L11.5 17.5 L18.5 9" stroke="#14543d" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><span>Course concepts applied correctly</span></div>
+              <div class="rubric-row"><svg class="rc" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" stroke="#14543d" stroke-width="2" fill="none"/><path class="tick" d="M7.5 13.5 L11.5 17.5 L18.5 9" stroke="#14543d" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><span>Sources cited &mdash; 3 of 3</span></div>
+              <div class="rubric-row"><svg class="rc" viewBox="0 0 26 26"><circle cx="13" cy="13" r="11" stroke="#14543d" stroke-width="2" fill="none"/><path class="tick" d="M7.5 13.5 L11.5 17.5 L18.5 9" stroke="#14543d" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><span>Reasoning traceable end to end</span></div>
+            </div>
+          </div>
+          <div class="score-card" id="gw-score" style="opacity:0;">
+            <span class="score-num" id="gw-score-num">92</span>
+            <span class="score-tag" id="gw-score-tag">AGENT DRAFT &middot; A&minus;</span>
+          </div>
+          <div class="adjust-chip" id="gw-adjust" style="opacity:0;">
+            <span class="who">TEACHER</span>
+            +2 &mdash; she found the counterexample on her own.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+window.__timelines = window.__timelines || {};
+const tl = gsap.timeline({ paused: true });
+
+/* scene containers fade in as their entrance -> no dead frames between scenes */
+[["#s2", 7], ["#s3", 15], ["#s4", 21], ["#s5", 29], ["#s6", 38], ["#s7", 47], ["#s8", 55]].forEach(([sel, t]) => {
+  tl.from(sel, { opacity: 0, duration: 1.1, ease: "sine.inOut" }, t);
+});
+
+/* helpers ---------------------------------------------------------- */
+function words(sel, t, stagger, dur, y) {
+  const els = document.querySelectorAll(sel + " .w");
+  tl.from(els, { opacity: 0, y: y || 34, duration: dur || 0.9, ease: "power3.out", stagger: stagger || 0.09 }, t);
+}
+function riseIn(id, t, vars) {
+  tl.from(id, Object.assign({ opacity: 0, y: 36, duration: 0.9, ease: "power3.out" }, vars || {}), t);
+}
+/* typewriter: deterministic stepped textContent updates (keeps natural word wrap) */
+function typeInto(spanSel, text, t0, cps) {
+  const span = document.querySelector(spanSel);
+  const step = 1 / cps;
+  const n = text.length;
+  for (let i = 1; i <= n; i++) {
+    tl.call(((s, str) => () => { s.textContent = str; })(span, text.slice(0, i)), [], t0 + i * step);
+  }
+  return t0 + n * step;
+}
+
+/* ===== S1 — the open secret (0–8) ================================= */
+riseIn("#s1-kicker", 0.5, { duration: 0.8 });
+words("#s1 .hero", 1.3, 0.11, 1.0, 44);
+tl.to("#s1 .hero", { y: -14, duration: 4.0, ease: "sine.inOut" }, 2.6);
+riseIn("#s1-sub", 4.6, { duration: 1.0 });
+/* deliberate exit into S2 */
+tl.to(["#s1-kicker", "#s1-sub"], { opacity: 0, y: -20, duration: 0.5, ease: "power2.in" }, 6.95);
+tl.to("#s1 .hero", { opacity: 0, y: -26, duration: 0.55, ease: "power2.in" }, 7.05);
+
+/* ===== S2 — the police work (7–16) ================================ */
+tl.from("#s2-kicker", { opacity: 0, y: 26, duration: 0.7, ease: "sine.out" }, 7.9);
+tl.from("#tac-1", { opacity: 0, x: -46, duration: 0.65, ease: "power2.out" }, 8.4);
+tl.from("#tac-2", { opacity: 0, x: -46, duration: 0.65, ease: "power2.out" }, 9.0);
+tl.from("#tac-3", { opacity: 0, x: -46, duration: 0.65, ease: "power2.out" }, 9.6);
+/* tactics settle to half-strength as the detector row takes over */
+tl.to(["#tac-1", "#tac-2", "#tac-3"], { opacity: 0.45, duration: 0.7, ease: "sine.inOut", stagger: 0.06 }, 10.8);
+
+tl.from("#detector-row .detector-card", { opacity: 0, y: 40, duration: 0.8, ease: "power3.out", stagger: 0.14 }, 11.0);
+tl.to("#strike", { scaleX: 1, duration: 0.7, ease: "power2.inOut" }, 12.4);
+riseIn("#same-p", 13.0, { y: 20, duration: 0.7 });
+
+/* the policing apparatus clears the stage for the plain truth */
+tl.to(["#tac-1", "#tac-2", "#tac-3", "#detector-row", "#same-p"], {
+  opacity: 0, y: -26, duration: 0.6, ease: "power2.in", stagger: 0.05
+}, 14.1);
+
+/* claim lands as words, not a number */
+tl.from("#stat-wrap", { opacity: 0, y: 46, duration: 0.9, ease: "power3.out" }, 14.3);
+tl.from("#claim-big", { opacity: 0, y: 34, duration: 1.0, ease: "power3.out" }, 14.5);
+tl.from("#claim-sub", { opacity: 0, y: 24, duration: 0.9, ease: "power2.out" }, 15.2);
+/* deliberate exit into S3 */
+tl.to("#stat-wrap", { opacity: 0, y: -26, duration: 0.55, ease: "power2.in" }, 15.95);
+
+/* ===== S3 — the pivot (15–22) ===================================== */
+tl.from("#s3-kicker", { opacity: 0, y: 24, duration: 0.7, ease: "sine.out" }, 16.4);
+words("#s3-hero", 17.0, 0.08, 0.85, 30);
+tl.to("#s3-hero", { y: -12, duration: 4.4, ease: "sine.inOut" }, 18.6);
+tl.from("#seed-dot", { opacity: 0, scale: 0.2, duration: 0.9, ease: "back.out(2)" }, 20.2);
+tl.to("#seed-dot", { scale: 1.5, duration: 0.7, ease: "sine.inOut", repeat: 1, yoyo: true }, 21.25);
+/* deliberate exit into S4 */
+tl.to(["#s3-kicker", "#s3-hero"], { opacity: 0, y: -24, duration: 0.55, ease: "power2.in" }, 20.95);
+tl.to("#seed-dot", { opacity: 0, duration: 0.5, ease: "sine.inOut" }, 21.15);
+
+/* ===== S4 — one sentence (21–30) ================================== */
+tl.from("#s4-kicker", { opacity: 0, y: 26, duration: 0.8, ease: "sine.out" }, 21.6);
+
+/* teacher window: enters at 22 */
+tl.from("#teacher-win", { opacity: 0, y: 70, scale: 0.96, duration: 1.1, ease: "power3.out" }, 22.2);
+
+const msg = "Build a 40-minute assignment on price elasticity. Socratic hints only \u2014 never the answer. Three citations required.";
+tl.set("#tw-caret", { opacity: 1 }, 23.6);
+const typeEnd = typeInto("#tw-type", msg, 23.6, 34);   /* ~3.5s, ends ~27.1 */
+tl.set("#tw-caret", { opacity: 0 }, typeEnd + 0.05);
+tl.from("#tw-send", { opacity: 0, y: 10, duration: 0.4, ease: "sine.out" }, 23.4);
+/* message lifts out of the composer into the thread; composer empties */
+tl.call(() => { document.querySelector("#tw-type").textContent = ""; }, [], typeEnd + 0.35);
+tl.set("#tw-sent", { textContent: msg, opacity: 0 }, typeEnd + 0.35);
+tl.to("#tw-composer", { opacity: 0.35, duration: 0.5, ease: "sine.inOut" }, typeEnd + 0.4);
+tl.fromTo("#tw-sent", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, typeEnd + 0.5);
+tl.fromTo("#tw-reply", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.7, ease: "power2.out" }, typeEnd + 1.4);
+riseIn("#s4-caption", 28.2, { y: 22, duration: 0.8 });
+/* deliberate exit into S5: teacher window hands off and lifts away */
+tl.to("#s4-caption", { opacity: 0, duration: 0.45, ease: "power2.in" }, 28.85);
+/* teacher window persists into S5; the drift tween below owns the move */
+
+/* ===== S5 — coordination (29–39) =================================== */
+/* teacher window drifts left + shrinks (transform deltas, not layout) */
+tl.to("#teacher-win", { x: -830, y: 150, scale: 0.8, duration: 1.5, ease: "power2.inOut" }, 29.4);
+tl.from("#assign-win", { opacity: 0, x: 120, y: 40, scale: 0.97, duration: 1.2, ease: "power3.out" }, 30.8);
+
+/* manifest rows type in */
+tl.from("#aw-manifest .manifest-row", { opacity: 0, x: 34, duration: 0.55, ease: "power2.out", stagger: 0.28 }, 31.8);
+
+/* connection draws, packets flow */
+const path = document.querySelector("#link-path");
+const L = path.getTotalLength();
+tl.set("#link-path", { strokeDasharray: L, strokeDashoffset: L }, 32.6);
+tl.to("#link-path", { strokeDashoffset: 0, duration: 0.9, ease: "power2.inOut" }, 32.6);
+tl.from(["#lbl-course", "#lbl-assign"], { opacity: 0, y: 14, duration: 0.6, ease: "sine.out", stagger: 0.15 }, 33.2);
+
+const pkts = ["#pkt-1", "#pkt-2", "#pkt-3"];
+pkts.forEach((sel, i) => {
+  const proxy = { p: 0 };
+  const el = document.querySelector(sel);
+  tl.set(sel, { opacity: 0 }, 33.6 + i * 0.75);
+  tl.set(sel, { opacity: 1 }, 33.65 + i * 0.75);
+  tl.to(proxy, {
+    p: 1, duration: 1.15, ease: "sine.inOut",
+    onUpdate: () => {
+      const pt = path.getPointAtLength(proxy.p * L);
+      el.setAttribute("cx", pt.x); el.setAttribute("cy", pt.y);
+    }
+  }, 33.65 + i * 0.75);
+  tl.set(sel, { opacity: 0 }, 34.85 + i * 0.75);
+});
+
+tl.from("#s5-hero", { opacity: 0, y: 44, duration: 1.0, ease: "power3.out" }, 35.4);
+tl.from("#s5-sub", { opacity: 0, y: 26, duration: 0.9, ease: "power2.out" }, 36.3);
+/* deliberate exit into S6 */
+tl.to(["#s5-hero", "#s5-sub"], { opacity: 0, y: -24, duration: 0.55, ease: "power2.in" }, 37.55);
+tl.to(["#lbl-course", "#lbl-assign"], { opacity: 0, duration: 0.45, ease: "sine.inOut" }, 37.65);
+tl.to("#link-path", { opacity: 0, duration: 0.45, ease: "sine.inOut" }, 37.7);
+
+/* ===== S6 — the student's view (38–48) ============================= */
+/* swap: manifest -> chat; window glides center-left and grows */
+tl.to("#aw-manifest", { autoAlpha: 0, duration: 0.5, ease: "sine.inOut" }, 38.3);
+tl.to("#teacher-win", { opacity: 0, y: -60, duration: 0.9, ease: "power2.in" }, 37.6);
+tl.to("#assign-win", { x: -575, y: -125, scale: 1.06, duration: 1.5, ease: "power2.inOut" }, 38.4);
+tl.to("#aw-chat", { autoAlpha: 1, duration: 0.4, ease: "sine.out" }, 39.0);
+
+tl.from("#s6-kicker", { opacity: 0, y: 24, duration: 0.8, ease: "sine.out" }, 38.9);
+
+/* timer ticks 40:00 -> 34:12 across the scene */
+[["39.6","40:00"],["40.8","39:12"],["42.0","38:24"],["43.2","37:30"],["44.4","36:41"],["45.6","35:47"],["46.6","34:12"]].forEach(([t, v]) => {
+  tl.call(() => { document.querySelector("#aw-timer").textContent = v; }, [], parseFloat(t));
+});
+
+tl.fromTo("#aw-b1", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 40.2);
+tl.fromTo("#aw-b2", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 41.4);
+tl.fromTo("#aw-b3", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 43.6);
+tl.fromTo("#aw-b4", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 44.8);
+tl.fromTo("#aw-hint", { opacity: 0, scale: 0.85 }, { opacity: 1, scale: 1, duration: 0.5, ease: "back.out(1.8)" }, 45.9);
+riseIn("#s6-caption", 46.3, { y: 22, duration: 0.8 });
+/* deliberate exit into S7 */
+tl.to("#s6-caption", { opacity: 0, duration: 0.45, ease: "power2.in" }, 46.85);
+
+/* ===== S7 — grading (47–56) ======================================== */
+tl.to("#assign-win", { opacity: 0, x: -140, y: -40, duration: 0.9, ease: "power2.in" }, 47.0);
+tl.from("#grade-win", { opacity: 0, x: 130, y: 50, scale: 0.97, duration: 1.2, ease: "power3.out" }, 48.4);
+tl.from("#s7-kicker", { opacity: 0, y: 24, duration: 0.8, ease: "sine.out" }, 48.9);
+
+tl.from("#gw-rubric .rubric-row", { opacity: 0, x: 30, duration: 0.5, ease: "power2.out", stagger: 0.42 }, 50.2);
+document.querySelectorAll("#gw-rubric .tick").forEach((tick, i) => {
+  const len = tick.getTotalLength();
+  tl.set(tick, { strokeDasharray: len, strokeDashoffset: len }, 50.5 + i * 0.42);
+  tl.to(tick, { strokeDashoffset: 0, duration: 0.35, ease: "power2.out" }, 50.5 + i * 0.42);
+});
+tl.from(".transcript-strip .excerpt", { opacity: 0, x: -24, duration: 0.55, ease: "power2.out", stagger: 0.2 }, 50.0);
+
+/* draft score stamps in */
+tl.fromTo("#gw-score", { opacity: 0, scale: 0.9, y: 16 }, { opacity: 1, scale: 1, y: 0, duration: 0.55, ease: "back.out(1.6)" }, 52.6);
+const scoreObj = { v: 0 };
+const scoreNum = document.querySelector("#gw-score-num");
+tl.fromTo(scoreObj, { v: 0 }, {
+  v: 92, duration: 0.9, ease: "power2.out",
+  onUpdate: () => { scoreNum.textContent = Math.round(scoreObj.v); }
+}, 52.7);
+
+/* teacher adjusts; score flips to 94 approved */
+tl.fromTo("#gw-adjust", { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" }, 53.8);
+tl.call(() => { scoreNum.textContent = "94"; }, [], 54.6);
+tl.call(() => { document.querySelector("#gw-score-tag").textContent = "APPROVED \u00b7 A"; }, [], 54.6);
+tl.to("#gw-score", { scale: 1.04, duration: 0.22, ease: "power2.out", yoyo: true, repeat: 1 }, 54.6);
+riseIn("#s7-caption", 54.2, { y: 22, duration: 0.8 });
+/* deliberate exit into S7: grading window lifts away whole */
+tl.to("#grade-win", { opacity: 0, y: -40, duration: 0.55, ease: "power2.in" }, 54.95);
+tl.to(["#s7-kicker", "#s7-caption"], { opacity: 0, y: -20, duration: 0.5, ease: "power2.in" }, 54.95);
+
+/* ===== S8 — close (55–62) ========================================== */
+tl.from("#s8-brand", { opacity: 0, y: 46, duration: 1.2, ease: "power3.out" }, 55.6);
+tl.to("#s8-brand", { y: -10, duration: 5.0, ease: "sine.inOut" }, 57.2);
+tl.from("#s8-rule", { scaleX: 0, opacity: 0, duration: 0.8, ease: "power2.inOut" }, 56.5);
+tl.from("#s8-product", { opacity: 0, y: 26, duration: 0.9, ease: "power2.out" }, 57.1);
+tl.from("#s8-thesis", { opacity: 0, y: 26, duration: 0.9, ease: "power2.out" }, 58.0);
+
+window.__timelines["main"] = tl;
+</script>
+</body>
+</html>
