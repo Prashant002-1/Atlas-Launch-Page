@@ -37,10 +37,16 @@ Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 80s · VO + a
 
 ## Build
 
+Binary assets are tracked as reproducible sources (fonts live inside `src/fontdata.ts`;
+the grain plate is procedural; the engraved plate + VO stems are base64 text in
+`assets-src/`). Renders are not tracked, per repo policy.
+
 ```sh
+bash scripts/restore-assets.sh   # grain, plate, VO stems, score, final mix
 npm install
 npx remotion still src/index.ts Film out/f0900.png --frame=900   # QA stills
-npm run render                                                    # out/ai-assignments.mp4
+npm run render                    # out/ai-assignments.mp4 (2400 frames)
 ```
 
-`public/audio/film_audio.wav` is rebuilt via `scripts/make_bed.py` + the ffmpeg mix in `scripts/mix.sh`.
+Rendering note: on small containers use `--concurrency=1` (a second worker page froze
+under software GL here) and expect ~2min per 450 frames.
