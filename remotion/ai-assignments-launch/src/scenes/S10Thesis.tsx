@@ -45,10 +45,10 @@ export const S10Thesis: React.FC = () => {
 
       {/* thesis */}
       <div style={{ position: "absolute", left: PAD_X, top: 330 }}>
-        <Line at={sec(86.3)} size={88} color={C.paper} exitAt={sec(90.4)}>
+        <Line at={sec(86.0)} size={88} color={C.paper} exitAt={sec(90.4)}>
           This was never about
         </Line>
-        <Line at={sec(86.7)} size={88} color={C.paper} exitAt={sec(90.45)}>
+        <Line at={sec(86.4)} size={88} color={C.paper} exitAt={sec(90.45)}>
           preventing AI.
         </Line>
         <div style={{ height: 38 }} />

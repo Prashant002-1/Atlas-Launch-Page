@@ -26,11 +26,11 @@ export const S5Build: React.FC = () => {
   const caretOn = p < 1 && frame % 16 < 10;
   // once the thought is complete, the dictation recedes and the line takes over
   const recede = interpolate(frame, [T5.recede, T5.recede + 14], [1, 0.24], { ...clamp, easing: settle });
-  const ledgerIn = interpolate(frame, [sec(26.6), sec(27.1)], [0, 1], { ...clamp, easing: settle });
+  const ledgerIn = interpolate(frame, [sec(25.6), sec(26.1)], [0, 1], { ...clamp, easing: settle });
 
   return (
     <AbsoluteFill style={{ opacity: 1 - out }}>
-      <Kicker at={sec(24.9)} dur={12} exitAt={T5.headline - 6} style={{ position: "absolute", left: PAD_X, top: 132 }}>
+      <Kicker at={sec(24.65)} dur={12} exitAt={T5.headline - 6} style={{ position: "absolute", left: PAD_X, top: 132 }}>
         Just tell it what you want · type or speak
       </Kicker>
 

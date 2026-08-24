@@ -57,8 +57,8 @@ export const T6 = {
 } as const;
 
 export const T7 = {
-  win: s(52.3),
-  a1: s(53.3),
+  win: s(52.05),
+  a1: s(53.0),
   a2: s(55.4),
   stu: s(57.2),
   a3: s(59.0),
@@ -68,9 +68,9 @@ export const T7 = {
 } as const;
 
 export const T9 = {
-  kicker: s(74.0),
-  win: s(74.4),
-  rows: [s(75.2), s(76.0), s(76.8)],
+  kicker: s(73.7),
+  win: s(74.0),
+  rows: [s(74.8), s(75.5), s(76.2)],
   mark: s(78.0),
   buttons: s(79.4),
   publish: s(81.4),

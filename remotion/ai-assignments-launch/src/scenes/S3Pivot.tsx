@@ -10,7 +10,7 @@ import { sec } from "../timeline";
 export const S3Pivot: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const draw = interpolate(frame, [sec(12.0), sec(14.4)], [0, 1], { ...clamp, easing: settle });
+  const draw = interpolate(frame, [sec(11.75), sec(14.1)], [0, 1], { ...clamp, easing: settle });
   const fadeRoute = interpolate(frame, [sec(16.8), sec(17.35)], [1, 0], clamp);
 
   // underline skeleton under "how it comes in." (line 2 sits ~y588-688; phrase right side)
@@ -54,11 +54,11 @@ export const S3Pivot: React.FC = () => {
       </svg>
 
       <div style={{ textAlign: "center", marginTop: -60 }}>
-        <Line at={sec(11.9)} size={100} exitAt={sec(16.85)} style={{ textAlign: "center" }}>
+        <Line at={sec(11.65)} size={100} exitAt={sec(16.85)} style={{ textAlign: "center" }}>
           You can&rsquo;t keep AI out.
         </Line>
         <div style={{ height: 26 }} />
-        <Line at={sec(12.9)} size={100} exitAt={sec(16.9)} style={{ textAlign: "center", color: C.inkSoft }}>
+        <Line at={sec(12.6)} size={100} exitAt={sec(16.9)} style={{ textAlign: "center", color: C.inkSoft }}>
           You can decide how it comes in.
         </Line>
       </div>
@@ -73,7 +73,7 @@ export const S3Pivot: React.FC = () => {
           opacity: interpolate(frame, [sec(16.8), sec(17.3)], [1, 0], clamp),
         }}
       >
-        <InkStroke points={upts} at={sec(13.9)} dur={13} size={8} color={C.ink} opacity={0.9} />
+        <InkStroke points={upts} at={sec(13.6)} dur={13} size={8} color={C.ink} opacity={0.9} />
       </svg>
     </AbsoluteFill>
   );

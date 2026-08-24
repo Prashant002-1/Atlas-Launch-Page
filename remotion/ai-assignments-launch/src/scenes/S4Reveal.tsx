@@ -11,7 +11,7 @@ import { sec } from "../timeline";
 export const S4Reveal: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const winIn = interpolate(frame, [sec(19.3), sec(19.9)], [0, 1], { ...clamp, easing: settle });
+  const winIn = interpolate(frame, [sec(19.0), sec(19.6)], [0, 1], { ...clamp, easing: settle });
   const out = interpolate(frame, [sec(24.1), sec(24.6)], [0, 1], { ...clamp, easing: exitIn });
   const segIdx = interpolate(frame, [sec(20.5), sec(20.95)], [0, 3], { ...clamp, easing: glide });
   const segW = 146;
@@ -20,11 +20,11 @@ export const S4Reveal: React.FC = () => {
   return (
     <AbsoluteFill style={{ opacity: 1 - out }}>
       <div style={{ position: "absolute", left: PAD_X, top: 306 }}>
-        <Kicker at={sec(17.7)} exitAt={sec(24.0)}>
+        <Kicker at={sec(17.45)} exitAt={sec(24.0)}>
           A new assignment type
         </Kicker>
         <div style={{ height: 30 }} />
-        <Line at={sec(18.0)} size={120} exitAt={sec(24.05)}>
+        <Line at={sec(17.7)} size={120} exitAt={sec(24.05)}>
           AI Assignments.
         </Line>
         <div style={{ height: 40 }} />

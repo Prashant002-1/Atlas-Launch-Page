@@ -11,7 +11,7 @@ import { sec } from "../timeline";
 export const S2Problem: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const sheetIn = interpolate(frame, [sec(5.4), sec(6.1)], [0, 1], { ...clamp, easing: settle });
+  const sheetIn = interpolate(frame, [sec(5.0), sec(5.7)], [0, 1], { ...clamp, easing: settle });
   const sheetOut = interpolate(frame, [sec(10.95), sec(11.4)], [0, 1], { ...clamp, easing: exitIn });
   const float = Math.sin((frame - sec(4.6)) / 52) * 5;
   const gestOut = interpolate(frame, [sec(9.9), sec(11.0)], [1, 0], { ...clamp, easing: exitIn });
@@ -21,10 +21,10 @@ export const S2Problem: React.FC = () => {
   return (
     <AbsoluteFill>
       <div style={{ position: "absolute", left: PAD_X, top: 392, width: 930 }}>
-        <Line at={sec(5.0)} size={90} exitAt={sec(11.0)}>
+        <Line at={sec(4.65)} size={90} exitAt={sec(11.0)}>
           You&rsquo;re grading
         </Line>
-        <Line at={sec(5.3)} size={90} exitAt={sec(11.05)}>
+        <Line at={sec(4.9)} size={90} exitAt={sec(11.05)}>
           the AI&rsquo;s work.
         </Line>
         <div style={{ height: 30 }} />
@@ -44,7 +44,7 @@ export const S2Problem: React.FC = () => {
       >
         {/* the thinking, painted, dissolving behind the polished page */}
         <div style={{ position: "absolute", left: -120, top: 10, opacity: gestOut }}>
-          <Plate name="gestures" at={sec(5.9)} x={0} y={0} w={760} drawFrames={34} opacity={0.65} />
+          <Plate name="gestures" at={sec(5.5)} x={0} y={0} w={760} drawFrames={34} opacity={0.65} />
         </div>
         <div
           style={{

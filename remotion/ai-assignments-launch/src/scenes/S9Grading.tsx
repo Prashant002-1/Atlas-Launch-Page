@@ -118,10 +118,10 @@ export const S9Grading: React.FC = () => {
       </div>
 
       <div style={{ position: "absolute", left: PAD_X, top: 400, width: 700 }}>
-        <Line at={sec(74.8)} size={78} exitAt={T9.exit}>
+        <Line at={sec(74.0)} size={78} exitAt={T9.exit}>
           Evidence attached.
         </Line>
-        <Line at={sec(75.3)} size={78} exitAt={T9.exit + 1} style={{ color: C.inkSoft }}>
+        <Line at={sec(74.5)} size={78} exitAt={T9.exit + 1} style={{ color: C.inkSoft }}>
           Judgment yours.
         </Line>
         <div style={{ height: 34 }} />

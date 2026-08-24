@@ -161,7 +161,7 @@ export const S7Student: React.FC = () => {
         </MacWindow>
       </div>
 
-      <Kicker at={sec(52.6)} exitAt={sec(66.8)} style={{ position: "absolute", left: 170, top: 160 }}>
+      <Kicker at={sec(52.05)} exitAt={sec(66.8)} style={{ position: "absolute", left: 170, top: 160 }}>
         The student&rsquo;s side
       </Kicker>
     </AbsoluteFill>
