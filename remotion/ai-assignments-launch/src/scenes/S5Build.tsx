@@ -2,7 +2,6 @@ import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { Kicker, Line } from "../text/Reveal";
 import { MacWindow } from "../ui/MacWindow";
-import { RoughNote } from "../ui/handmade";
 import { C, F, PAD_X, T } from "../theme";
 import { clamp, settle, exitIn, glide } from "../ease";
 import { RAMBLE, T5, sec } from "../timeline";
@@ -37,7 +36,7 @@ export const S5Build: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ opacity: 1 - out }}>
-      <Kicker at={sec(27.9)} dur={14} exitAt={T5.exit - 2} style={{ position: "absolute", left: PAD_X, top: 118 }}>
+      <Kicker at={sec(27.9)} dur={14} exitAt={T5.headline - 6} style={{ position: "absolute", left: PAD_X, top: 118 }}>
         Just tell it what you want · type or speak
       </Kicker>
 
@@ -192,10 +191,6 @@ export const S5Build: React.FC = () => {
         </Line>
       </div>
 
-      {/* the pen confirms the boundary row once it lands */}
-      <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-        <RoughNote kind="underline" x={1358} y={468} w={250} at={T5.rows[3] + 14} dur={12} seed={23} strokeWidth={2} exitAt={T5.exit} />
-      </svg>
     </AbsoluteFill>
   );
 };

@@ -1,6 +1,6 @@
 # AI Assignments — launch film (Remotion)
 
-Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 130s · single-take VO + composed score.
+Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 118s · single-take VO (Puck) + composed score.
 
 ## The five decisions
 
@@ -12,7 +12,7 @@ Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 130s · singl
 | Type | Geist 470 display (−0.035em), Geist Mono labels, no italic emphasis; the one emphasized phrase gets an animated ink underline. |
 | Motion | Everything settles like paper: masked line reveals, `cubic-bezier(0.16,1,0.3,1)`, 0.4–0.9s entrances, no bounce, no zoom entrances. One continuous background world instead of scene-by-scene voids. |
 
-## The argument (beats, v2)
+## The argument (beats, v3)
 
 1. **0–6.4 · The fact** — "Every student is already using AI."
 2. **6.4–14.4 · The problem** — the polished page, the thinking dissolving behind it.
@@ -28,7 +28,7 @@ Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 130s · singl
 
 ## Sound (v2)
 
-- VO: ONE recorded take (Charon, pro), sliced into 12 stems at paragraph silences, tempo 1.13. One narrator by construction.
+- VO: ONE recorded take (Puck, pro), sliced into 12 stems at paragraph silences, tempo 1.05. One narrator by construction.
 - Score: `scripts/make_bed2.py`. Contemporary classical in D: felt piano motif, string ensemble, pulse ostinato through the ramble, timpani under the closing order, stereo Schroeder hall. Minor shading for the problem and the dark cut; the major third arrives at the resolve. Mixed quiet under VO (`scripts/mix2.sh`).
 
 ## Guardrails honored
