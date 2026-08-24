@@ -59,11 +59,11 @@ export const S10Thesis: React.FC = () => {
 
       {/* the order */}
       <div style={{ position: "absolute", left: PAD_X, top: 400 }}>
-        <Line at={sec(90.9)} size={106} color={C.paper} exitAt={sec(95.1)}>
+        <Line at={sec(90.9)} size={106} color={C.paper} exitAt={sec(95.55)}>
           Stop detecting AI.
         </Line>
         <div style={{ height: 26 }} />
-        <Line at={sec(92.7)} size={106} color={C.paper} exitAt={sec(95.15)}>
+        <Line at={sec(92.7)} size={106} color={C.paper} exitAt={sec(95.6)}>
           Start assigning it.
         </Line>
       </div>

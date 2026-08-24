@@ -7,16 +7,16 @@ export const DUR = 3300;
 const s = (sec: number) => Math.round(sec * FPS);
 
 export const SC = {
-  s1: { from: s(0), to: s(4.6) },
-  s2: { from: s(4.6), to: s(11.6) },
-  s3: { from: s(11.6), to: s(17.4) },
-  s4: { from: s(17.4), to: s(24.6) },
-  s5: { from: s(24.6), to: s(45.4) }, // dictation → rubric, no chrome
-  s6: { from: s(45.4), to: s(52.0) },
-  s7: { from: s(52.0), to: s(67.6) },
-  s8: { from: s(67.6), to: s(73.6) },
-  s9: { from: s(73.6), to: s(85.8) },
-  s10: { from: s(85.8), to: s(96.2) },
+  s1: { from: s(0), to: s(5.2) },
+  s2: { from: s(4.6), to: s(12.2) },
+  s3: { from: s(11.6), to: s(18.0) },
+  s4: { from: s(17.4), to: s(25.2) },
+  s5: { from: s(24.6), to: s(46.0) }, // dictation → rubric, no chrome
+  s6: { from: s(45.4), to: s(52.6) },
+  s7: { from: s(52.0), to: s(68.2) },
+  s8: { from: s(67.6), to: s(74.2) },
+  s9: { from: s(73.6), to: s(86.4) },
+  s10: { from: s(85.8), to: s(96.8) },
   s11: { from: s(95.8), to: s(110.0) },
 } as const;
 
@@ -44,7 +44,7 @@ export const T5 = {
   rows: [s(27.8), s(30.2), s(32.2), s(34.0), s(35.8), s(37.6), s(39.4)],
   recede: s(40.2), //  dictation recedes, the line lands
   headline: s(40.6),
-  exit: s(44.9),
+  exit: s(45.3),
 } as const;
 
 export const T6 = {
@@ -53,7 +53,7 @@ export const T6 = {
   bigLine: s(47.2),
   cap1: s(48.2),
   cap2: s(50.0),
-  exit: s(51.5),
+  exit: s(51.9),
 } as const;
 
 export const T7 = {
@@ -64,7 +64,7 @@ export const T7 = {
   a3: s(59.0),
   sketch: s(59.6),
   chip: s(64.2),
-  exit: s(67.0),
+  exit: s(67.4),
 } as const;
 
 export const T9 = {
@@ -75,7 +75,7 @@ export const T9 = {
   buttons: s(79.4),
   publish: s(81.4),
   headline: s(82.6),
-  exit: s(85.3),
+  exit: s(85.7),
 } as const;
 
 export const sec = s;

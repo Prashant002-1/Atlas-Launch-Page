@@ -12,23 +12,23 @@ export const S2Problem: React.FC = () => {
   const frame = useCurrentFrame();
 
   const sheetIn = interpolate(frame, [sec(5.0), sec(5.7)], [0, 1], { ...clamp, easing: settle });
-  const sheetOut = interpolate(frame, [sec(10.95), sec(11.4)], [0, 1], { ...clamp, easing: exitIn });
+  const sheetOut = interpolate(frame, [sec(11.3), sec(11.8)], [0, 1], { ...clamp, easing: exitIn });
   const float = Math.sin((frame - sec(4.6)) / 52) * 5;
-  const gestOut = interpolate(frame, [sec(9.9), sec(11.0)], [1, 0], { ...clamp, easing: exitIn });
+  const gestOut = interpolate(frame, [sec(10.3), sec(11.4)], [1, 0], { ...clamp, easing: exitIn });
 
   const lineW = [420, 452, 388, 430, 300, 444, 412, 340, 424, 208, 436, 372, 448, 296];
 
   return (
     <AbsoluteFill>
       <div style={{ position: "absolute", left: PAD_X, top: 392, width: 930 }}>
-        <Line at={sec(4.65)} size={90} exitAt={sec(11.0)}>
+        <Line at={sec(4.65)} size={90} exitAt={sec(11.45)}>
           You&rsquo;re grading
         </Line>
-        <Line at={sec(4.9)} size={90} exitAt={sec(11.05)}>
+        <Line at={sec(4.9)} size={90} exitAt={sec(11.5)}>
           the AI&rsquo;s work.
         </Line>
         <div style={{ height: 30 }} />
-        <Line at={sec(6.7)} size={90} color={C.inkSoft} exitAt={sec(11.1)}>
+        <Line at={sec(6.7)} size={90} color={C.inkSoft} exitAt={sec(11.55)}>
           Not the student&rsquo;s.
         </Line>
       </div>
