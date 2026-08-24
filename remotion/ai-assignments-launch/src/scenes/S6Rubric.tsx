@@ -82,7 +82,7 @@ export const S6Rubric: React.FC = () => {
           return (
             <path
               key={i}
-              d={`M 1496 700 Q ${(1496 + x) / 2} 740, ${x} ${y}`}
+              d={`M 1487 608 Q ${(1487 + x) / 2} 690, ${x} ${y}`}
               stroke={C.clay}
               strokeOpacity={0.16 * p}
               strokeWidth={1.2}

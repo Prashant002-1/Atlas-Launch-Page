@@ -23,19 +23,19 @@ export const S5Ramble: React.FC = () => {
   const sendPress = interpolate(frame, [T5.send - 4, T5.send], [0, 1], clamp);
 
   const gx = 340 - hand * 190;
-  const gy = 200 + hand * 160;
+  const gy = 214 + hand * 146;
   const scale = 1 - hand * 0.16;
 
   return (
     <AbsoluteFill>
-      <Kicker at={sec(31.2)} exitAt={sec(47.2)} style={{ position: "absolute", left: PAD_X, top: 128 }}>
+      <Kicker at={sec(31.2)} exitAt={sec(47.2)} style={{ position: "absolute", left: PAD_X, top: 118 }}>
         Just tell it what you want
       </Kicker>
       <div
         style={{
           position: "absolute",
           left: PAD_X,
-          top: 168,
+          top: 158,
           ...T.sub,
           fontSize: 27,
           color: C.muted,
@@ -74,7 +74,7 @@ export const S5Ramble: React.FC = () => {
           <div
             style={{
               position: "relative",
-              height: 398,
+              height: 296,
               overflow: "hidden",
               border: "1px solid rgba(10,31,25,0.18)",
               background: "#fbfcf9",

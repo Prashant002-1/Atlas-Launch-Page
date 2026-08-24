@@ -67,7 +67,7 @@ export const S3Pivot: React.FC = () => {
                 position: "absolute",
                 left: "0.04em",
                 right: "0.1em",
-                bottom: "-0.06em",
+                bottom: "0.02em",
                 height: 5,
                 background: C.ink,
                 transform: `scaleX(${under})`,

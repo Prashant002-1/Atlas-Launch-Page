@@ -39,9 +39,9 @@ export const S7Student: React.FC = () => {
   return (
     <AbsoluteFill style={{ opacity: 1 - out }}>
       <svg width={1920} height={1080} style={{ position: "absolute", inset: 0 }}>
-        <g transform="translate(1470, 520)" opacity={ringsIn * 0.3}>
-          {ring(280, 0.16, 0)}
-          {ring(370, 0.1, 1.4)}
+        <g transform="translate(1470, 520)" opacity={ringsIn * 0.5}>
+          {ring(280, 0.22, 0)}
+          {ring(370, 0.14, 1.4)}
         </g>
       </svg>
 
