@@ -4,17 +4,18 @@ import { PaperField } from "./bg/PaperField";
 import { S1Open } from "./scenes/S1Open";
 import { S2Problem } from "./scenes/S2Problem";
 import { S3Pivot } from "./scenes/S3Pivot";
-import { S45Architecture } from "./scenes/S45Architecture";
-import { S6Student } from "./scenes/S6Student";
-import { S7Thesis } from "./scenes/S7Thesis";
-import { S8Close } from "./scenes/S8Close";
+import { S4Reveal } from "./scenes/S4Reveal";
+import { S5Ramble } from "./scenes/S5Ramble";
+import { S6Rubric } from "./scenes/S6Rubric";
+import { S7Student } from "./scenes/S7Student";
+import { S8Friction } from "./scenes/S8Friction";
+import { S9Grading } from "./scenes/S9Grading";
+import { S10Thesis } from "./scenes/S10Thesis";
+import { S11Close } from "./scenes/S11Close";
 import { SC } from "./timeline";
 
-// Scene files are written against GLOBAL frame numbers (sec(...) constants in
-// timeline.ts). A Sequence resets useCurrentFrame to local frames, so each
-// scene is wrapped in an inner Sequence with a negative offset that re-anchors
-// its children back to the global clock, while the outer Sequence still
-// controls mount/unmount.
+// Scenes are written against GLOBAL frames; the inner negative-offset
+// Sequence re-anchors them while the outer one controls mounting.
 const Global: React.FC<{
   b: { from: number; to: number };
   name: string;
@@ -34,14 +35,14 @@ export const Film: React.FC = () => {
       <Global b={SC.s1} name="S1 open"><S1Open /></Global>
       <Global b={SC.s2} name="S2 problem"><S2Problem /></Global>
       <Global b={SC.s3} name="S3 pivot"><S3Pivot /></Global>
-      <Global b={SC.s45} name="S45 reveal + architecture"><S45Architecture /></Global>
-      <Global b={SC.s6} name="S6 student"><S6Student /></Global>
-      <Sequence from={SC.s7.from} durationInFrames={SC.s7.to - SC.s7.from} name="S7 thesis" layout="none">
-        <AbsoluteFill><S7Thesis from={SC.s7.from} /></AbsoluteFill>
-      </Sequence>
-      <Sequence from={SC.s8.from} durationInFrames={SC.s8.to - SC.s8.from} name="S8 close" layout="none">
-        <AbsoluteFill><S8Close from={SC.s8.from} /></AbsoluteFill>
-      </Sequence>
+      <Global b={SC.s4} name="S4 reveal"><S4Reveal /></Global>
+      <Global b={SC.s5} name="S5 ramble"><S5Ramble /></Global>
+      <Global b={SC.s6} name="S6 rubric + ship"><S6Rubric /></Global>
+      <Global b={SC.s7} name="S7 student"><S7Student /></Global>
+      <Global b={SC.s8} name="S8 friction"><S8Friction /></Global>
+      <Global b={SC.s9} name="S9 draft grade"><S9Grading /></Global>
+      <Global b={SC.s10} name="S10 thesis"><S10Thesis /></Global>
+      <Global b={SC.s11} name="S11 close"><S11Close /></Global>
       <Audio src={staticFile("audio/film_audio.wav")} />
     </AbsoluteFill>
   );
