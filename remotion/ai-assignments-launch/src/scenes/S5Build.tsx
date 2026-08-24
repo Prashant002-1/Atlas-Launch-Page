@@ -1,196 +1,125 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { Kicker, Line } from "../text/Reveal";
-import { MacWindow } from "../ui/MacWindow";
 import { C, F, PAD_X, T } from "../theme";
-import { clamp, settle, exitIn, glide } from "../ease";
+import { clamp, settle, exitIn } from "../ease";
 import { RAMBLE, T5, sec } from "../timeline";
 
-// THE BUILD — the prompt is the interface. Every phrase you type
-// becomes a rubric row, live, on the right.
+// THE DICTATION — no chrome, no box. The teacher's words type straight onto
+// the paper, large; the rubric sets itself beside them as a flat ledger.
 const ROWS = [
-  { k: "Personality", v: "Curious, a little playful", frac: 0.075 },
-  { k: "Method", v: "Analogies first, 3Blue1Brown style", frac: 0.3 },
-  { k: "Visuals", v: "Sketches it when seeing helps", frac: 0.41 },
-  { k: "Boundary", v: "Hints only. Never the answer.", frac: 0.52, accent: true },
-  { k: "Sources", v: "Course readings, cited", frac: 0.65 },
-  { k: "Applied", v: "Real examples, thesis tested", frac: 0.76 },
-  { k: "Context", v: "Midterm problem 7 follow up", frac: 0.97 },
+  { k: "Personality", v: "Curious, a little playful" },
+  { k: "Method", v: "Analogies first, 3Blue1Brown style" },
+  { k: "Visuals", v: "Sketches it when seeing helps" },
+  { k: "Boundary", v: "Hints only. Never the answer.", accent: true },
+  { k: "Sources", v: "Course readings, cited" },
+  { k: "Applied", v: "Real examples, thesis tested" },
+  { k: "Context", v: "Midterm problem 7 follow up" },
 ];
 
 export const S5Build: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const winIn = interpolate(frame, [T5.winIn, T5.winIn + 20], [0, 1], { ...clamp, easing: settle });
-  const cardIn = interpolate(frame, [T5.cardIn, T5.cardIn + 20], [0, 1], { ...clamp, easing: settle });
-  const out = interpolate(frame, [T5.exit, T5.exit + 14], [0, 1], { ...clamp, easing: exitIn });
-
-  // accelerating type
+  const out = interpolate(frame, [T5.exit, T5.exit + 12], [0, 1], { ...clamp, easing: exitIn });
   const p = interpolate(frame, [T5.typeStart, T5.typeEnd], [0, 1], clamp);
-  const prog = Math.pow(p, 1.18);
-  const typed = RAMBLE.slice(0, Math.round(RAMBLE.length * prog));
-  const sent = frame >= T5.send;
-  const caretOn = !sent && frame % 18 < 11;
-  const sendPress = interpolate(frame, [T5.send - 4, T5.send], [0, 1], clamp);
-  const pulse = 1 + 0.015 * Math.sin(interpolate(frame, [T5.pulse, T5.pulse + 18], [0, Math.PI], clamp));
+  const typed = RAMBLE.slice(0, Math.round(RAMBLE.length * Math.pow(p, 1.15)));
+  const caretOn = p < 1 && frame % 16 < 10;
+  // once the thought is complete, the dictation recedes and the line takes over
+  const recede = interpolate(frame, [T5.recede, T5.recede + 14], [1, 0.24], { ...clamp, easing: settle });
+  const ledgerIn = interpolate(frame, [sec(26.6), sec(27.1)], [0, 1], { ...clamp, easing: settle });
 
   return (
     <AbsoluteFill style={{ opacity: 1 - out }}>
-      <Kicker at={sec(27.9)} dur={14} exitAt={T5.headline - 6} style={{ position: "absolute", left: PAD_X, top: 118 }}>
+      <Kicker at={sec(24.9)} dur={12} exitAt={T5.headline - 6} style={{ position: "absolute", left: PAD_X, top: 132 }}>
         Just tell it what you want · type or speak
       </Kicker>
 
-      {/* the prompt */}
+      {/* the dictation — words straight onto the paper */}
       <div
         style={{
           position: "absolute",
           left: PAD_X,
-          top: 210,
-          opacity: winIn,
-          transform: `translateY(${(1 - winIn) * 50}px)`,
+          top: 220,
+          width: 980,
+          height: 660,
+          overflow: "hidden",
+          opacity: recede,
+          WebkitMaskImage: "linear-gradient(to bottom, transparent 0%, black 22%)",
+          maskImage: "linear-gradient(to bottom, transparent 0%, black 22%)",
         }}
       >
-        <MacWindow title="Course agent" width={880}>
-          <div
+        <div
+          style={{
+            position: "absolute",
+            left: 0,
+            right: 0,
+            bottom: 6,
+            fontFamily: F.sans,
+            fontSize: 31,
+            lineHeight: 1.62,
+            fontWeight: 430,
+            color: C.ink,
+            letterSpacing: "-0.012em",
+          }}
+        >
+          {typed}
+          <span
             style={{
-              position: "relative",
-              height: 452,
-              overflow: "hidden",
-              border: "1px solid rgba(10,31,25,0.18)",
-              background: "#fbfcf9",
+              display: "inline-block",
+              width: 3,
+              height: 34,
+              background: C.clay,
+              verticalAlign: -6,
+              marginLeft: 2,
+              opacity: caretOn ? 1 : 0,
             }}
-          >
-            <div
-              style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                bottom: 0,
-                maxHeight: "100%",
-                padding: "18px 24px",
-                fontFamily: F.sans,
-                fontSize: 22,
-                lineHeight: 1.5,
-                color: "#22352c",
-                letterSpacing: "-0.004em",
-              }}
-            >
-              {typed}
-              <span
-                style={{
-                  display: "inline-block",
-                  width: 2.5,
-                  height: 24,
-                  background: C.clay,
-                  verticalAlign: -4,
-                  opacity: caretOn ? 1 : 0,
-                }}
-              />
-            </div>
-            <div
-              style={{
-                position: "absolute",
-                left: 0,
-                right: 0,
-                top: 0,
-                height: 46,
-                background: "linear-gradient(to bottom, #fbfcf9, rgba(251,252,249,0))",
-              }}
-            />
-          </div>
-          <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 14 }}>
-            <div
-              style={{
-                ...T.label,
-                fontSize: 13.5,
-                color: C.paperLift,
-                background: C.ink,
-                opacity: sent ? 0.55 : 1,
-                padding: "12px 24px",
-                transform: `scale(${1 - sendPress * 0.04})`,
-              }}
-            >
-              {sent ? "Sent" : "Send to agent"}
-            </div>
-          </div>
-        </MacWindow>
+          />
+        </div>
       </div>
 
-      {/* the rubric, assembling live */}
-      <div
-        style={{
-          position: "absolute",
-          left: 1210,
-          top: 236,
-          width: 566,
-          opacity: cardIn,
-          transform: `translateY(${(1 - cardIn) * 40}px) scale(${pulse})`,
-          background: C.paperLift,
-          boxShadow: "0 0 0 1px rgba(10,31,25,0.14), 0 22px 52px rgba(10,31,25,0.09)",
-          padding: "26px 30px 30px",
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 20 }}>
-          <span style={{ width: 11, height: 11, background: C.clay }} />
+      {/* the ledger — flat type, hairlines, no card */}
+      <div style={{ position: "absolute", left: 1280, top: 224, width: 500, opacity: ledgerIn }}>
+        <div style={{ display: "flex", alignItems: "baseline", gap: 12, paddingBottom: 12, borderBottom: "1px solid rgba(10,31,25,0.22)" }}>
+          <span style={{ width: 10, height: 10, background: C.clay, alignSelf: "center" }} />
           <span style={{ ...T.label, fontSize: 14, color: C.inkSoft }}>Agent rubric</span>
-          <span style={{ ...T.label, fontSize: 11.5, color: C.muted, marginLeft: "auto" }}>
-            building live
-          </span>
+          <span style={{ ...T.label, fontSize: 11, color: C.muted, marginLeft: "auto" }}>from your words</span>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 14.5 }}>
-          {ROWS.map((r, i) => {
-            const at = T5.rows[i];
-            const rp = interpolate(frame, [at, at + 12], [0, 1], { ...clamp, easing: settle });
-            return (
-              <div
-                key={r.k}
-                style={{
-                  display: "flex",
-                  alignItems: "baseline",
-                  gap: 16,
-                  opacity: rp,
-                  transform: `translateX(${(1 - rp) * 18}px)`,
-                }}
-              >
-                <span style={{ ...T.label, fontSize: 13, color: C.muted, width: 128, flex: "none" }}>{r.k}</span>
-                <span
-                  style={{
-                    fontFamily: F.sans,
-                    fontSize: 19,
-                    fontWeight: 440,
-                    color: r.accent ? C.clay : C.ink,
-                    letterSpacing: "-0.01em",
-                  }}
-                >
-                  {r.v}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* sparks: each completed phrase flies to its row */}
-      <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
         {ROWS.map((r, i) => {
           const at = T5.rows[i];
-          const fp = interpolate(frame, [at - 8, at + 8], [0, 1], { ...clamp, easing: glide });
-          if (fp <= 0 || fp >= 1) return null;
-          const x0 = 1000, y0 = 300 + r.frac * 330;
-          const x1 = 1210, y1 = 316 + i * 42;
-          const x = x0 + (x1 - x0) * fp;
-          const y = y0 + (y1 - y0) * fp - Math.sin(fp * Math.PI) * 46;
-          return <circle key={i} cx={x} cy={y} r={5} fill={C.clay} opacity={Math.sin(fp * Math.PI)} />;
+          const rp = interpolate(frame, [at, at + 10], [0, 1], { ...clamp, easing: settle });
+          return (
+            <div
+              key={r.k}
+              style={{
+                padding: "13px 0",
+                borderBottom: "1px solid rgba(10,31,25,0.08)",
+                opacity: rp,
+                transform: `translateY(${(1 - rp) * 10}px)`,
+              }}
+            >
+              <div style={{ ...T.label, fontSize: 11.5, color: C.muted, marginBottom: 5 }}>{r.k}</div>
+              <div
+                style={{
+                  fontFamily: F.sans,
+                  fontSize: 21,
+                  fontWeight: 440,
+                  color: r.accent ? C.clay : C.ink,
+                  letterSpacing: "-0.012em",
+                }}
+              >
+                {r.v}
+              </div>
+            </div>
+          );
         })}
-      </svg>
+      </div>
 
-      {/* headline after send */}
+      {/* the line */}
       <div style={{ position: "absolute", left: 0, right: 0, top: 122, textAlign: "center" }}>
-        <Line at={T5.headline} size={58} dur={20} exitAt={T5.exit} style={{ textAlign: "center" }}>
+        <Line at={T5.headline} size={58} dur={16} exitAt={T5.exit} style={{ textAlign: "center" }}>
           Your rubric. Your agent. No two alike.
         </Line>
       </div>
-
     </AbsoluteFill>
   );
 };

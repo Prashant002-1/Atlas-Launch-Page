@@ -14,7 +14,7 @@ export const Line: React.FC<{
   dur?: number;
   style?: React.CSSProperties;
   exitAt?: number;
-}> = ({ at, children, size = 96, color = C.ink, weight = 470, dur = 26, style, exitAt }) => {
+}> = ({ at, children, size = 96, color = C.ink, weight = 470, dur = 16, style, exitAt }) => {
   const frame = useCurrentFrame();
   const p = interpolate(frame, [at, at + dur], [0, 1], { ...clamp, easing: settle });
   const out = exitAt
@@ -59,7 +59,7 @@ export const Words: React.FC<{
     <div style={{ ...T.sub, fontSize: size, color, opacity: 1 - out, ...style }}>
       {words.map((w, i) => {
         const s = at + i * gapFrames;
-        const p = interpolate(frame, [s, s + 16], [0, 1], { ...clamp, easing: settle });
+        const p = interpolate(frame, [s, s + 12], [0, 1], { ...clamp, easing: settle });
         return (
           <span
             key={i}
@@ -87,7 +87,7 @@ export const Kicker: React.FC<{
   style?: React.CSSProperties;
 }> = ({ at, children, color = C.muted, exitAt, style }) => {
   const frame = useCurrentFrame();
-  const p = interpolate(frame, [at, at + 18], [0, 1], { ...clamp, easing: settle });
+  const p = interpolate(frame, [at, at + 12], [0, 1], { ...clamp, easing: settle });
   const out = exitAt
     ? interpolate(frame, [exitAt, exitAt + 10], [0, 1], { ...clamp, easing: exitIn })
     : 0;

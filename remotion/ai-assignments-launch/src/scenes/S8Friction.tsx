@@ -9,15 +9,14 @@ export const S8Friction: React.FC = () => {
   return (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
       <div style={{ textAlign: "center", marginTop: -30 }}>
-        <Line at={sec(74.8)} size={98} dur={20} exitAt={sec(80.2)} style={{ textAlign: "center" }}>
+        <Line at={sec(68.5)} size={98} exitAt={sec(73.0)} style={{ textAlign: "center" }}>
           Cheating a conversation
         </Line>
         <div style={{ height: 22 }} />
         <Line
-          at={sec(75.4)}
+          at={sec(69.1)}
           size={98}
-          dur={20}
-          exitAt={sec(80.25)}
+          exitAt={sec(73.05)}
           style={{ textAlign: "center", color: C.inkSoft }}
         >
           is harder than having one.

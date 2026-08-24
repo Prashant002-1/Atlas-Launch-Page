@@ -2,7 +2,6 @@ import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { Kicker, Line } from "../text/Reveal";
 import { MacWindow } from "../ui/MacWindow";
-import { RoughNote } from "../ui/handmade";
 import { C, F, PAD_X, T } from "../theme";
 import { clamp, settle, exitIn } from "../ease";
 import { T9, sec } from "../timeline";
@@ -119,10 +118,10 @@ export const S9Grading: React.FC = () => {
       </div>
 
       <div style={{ position: "absolute", left: PAD_X, top: 400, width: 700 }}>
-        <Line at={sec(82.2)} size={78} dur={20} exitAt={T9.exit}>
+        <Line at={sec(74.8)} size={78} exitAt={T9.exit}>
           Evidence attached.
         </Line>
-        <Line at={sec(82.7)} size={78} dur={20} exitAt={T9.exit + 1} style={{ color: C.inkSoft }}>
+        <Line at={sec(75.3)} size={78} exitAt={T9.exit + 1} style={{ color: C.inkSoft }}>
           Judgment yours.
         </Line>
         <div style={{ height: 34 }} />
@@ -130,9 +129,6 @@ export const S9Grading: React.FC = () => {
           Review it, adjust it, publish it.
         </Line>
       </div>
-      <svg width={1920} height={1080} style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-        <RoughNote kind="circle" x={1518} y={318} w={150} h={104} at={T9.publish + 6} dur={14} seed={31} strokeWidth={2.6} exitAt={T9.exit} />
-      </svg>
     </AbsoluteFill>
   );
 };

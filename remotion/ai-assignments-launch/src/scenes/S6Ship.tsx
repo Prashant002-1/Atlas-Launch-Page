@@ -10,7 +10,7 @@ import { T6, sec } from "../timeline";
 export const S6Ship: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const cardIn = interpolate(frame, [sec(51.0), sec(51.5)], [0, 1], clamp);
+  const cardIn = interpolate(frame, [sec(45.4), sec(45.8)], [0, 1], clamp);
   const out = interpolate(frame, [T6.exit, T6.exit + 14], [0, 1], { ...clamp, easing: exitIn });
   const ship = 1 + 0.02 * Math.sin(interpolate(frame, [T6.fanout, T6.fanout + 18], [0, Math.PI], clamp));
   const cap1 = interpolate(frame, [T6.cap1, T6.cap1 + 12], [0, 1], { ...clamp, easing: settle });
@@ -20,7 +20,7 @@ export const S6Ship: React.FC = () => {
   const dotsCx = 960;
   const dotsCy = 852;
   const spread = 1300;
-  const cardX = 1210, cardY = 236, cardW = 566, cardB = 236 + 178;
+  const cardX = 1280, cardY = 224, cardW = 500, cardB = 224 + 168;
 
   return (
     <AbsoluteFill style={{ opacity: 1 - out }}>
@@ -56,8 +56,8 @@ export const S6Ship: React.FC = () => {
           opacity: cardIn,
           transform: `scale(${ship})`,
           background: C.paperLift,
-          boxShadow: "0 0 0 1px rgba(10,31,25,0.14), 0 22px 52px rgba(10,31,25,0.09)",
-          padding: "24px 30px",
+          border: "1px solid rgba(10,31,25,0.18)",
+          padding: "22px 26px",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>

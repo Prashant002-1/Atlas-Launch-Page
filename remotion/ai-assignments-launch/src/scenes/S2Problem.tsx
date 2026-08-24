@@ -11,24 +11,24 @@ import { sec } from "../timeline";
 export const S2Problem: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const sheetIn = interpolate(frame, [sec(6.1), sec(6.9)], [0, 1], { ...clamp, easing: settle });
-  const sheetOut = interpolate(frame, [sec(12.4), sec(12.9)], [0, 1], { ...clamp, easing: exitIn });
-  const float = Math.sin((frame - sec(5.2)) / 52) * 5;
-  const gestOut = interpolate(frame, [sec(11.2), sec(12.4)], [1, 0], { ...clamp, easing: exitIn });
+  const sheetIn = interpolate(frame, [sec(5.4), sec(6.1)], [0, 1], { ...clamp, easing: settle });
+  const sheetOut = interpolate(frame, [sec(10.95), sec(11.4)], [0, 1], { ...clamp, easing: exitIn });
+  const float = Math.sin((frame - sec(4.6)) / 52) * 5;
+  const gestOut = interpolate(frame, [sec(9.9), sec(11.0)], [1, 0], { ...clamp, easing: exitIn });
 
   const lineW = [420, 452, 388, 430, 300, 444, 412, 340, 424, 208, 436, 372, 448, 296];
 
   return (
     <AbsoluteFill>
       <div style={{ position: "absolute", left: PAD_X, top: 392, width: 930 }}>
-        <Line at={sec(5.6)} size={90} dur={20} exitAt={sec(12.4)}>
+        <Line at={sec(5.0)} size={90} exitAt={sec(11.0)}>
           You&rsquo;re grading
         </Line>
-        <Line at={sec(5.9)} size={90} dur={20} exitAt={sec(12.45)}>
+        <Line at={sec(5.3)} size={90} exitAt={sec(11.05)}>
           the AI&rsquo;s work.
         </Line>
         <div style={{ height: 30 }} />
-        <Line at={sec(7.6)} size={90} dur={20} color={C.inkSoft} exitAt={sec(12.5)}>
+        <Line at={sec(6.7)} size={90} color={C.inkSoft} exitAt={sec(11.1)}>
           Not the student&rsquo;s.
         </Line>
       </div>
@@ -44,7 +44,7 @@ export const S2Problem: React.FC = () => {
       >
         {/* the thinking, painted, dissolving behind the polished page */}
         <div style={{ position: "absolute", left: -120, top: 10, opacity: gestOut }}>
-          <Plate name="gestures" at={sec(6.6)} x={0} y={0} w={760} drawFrames={40} opacity={0.65} />
+          <Plate name="gestures" at={sec(5.9)} x={0} y={0} w={760} drawFrames={34} opacity={0.65} />
         </div>
         <div
           style={{
@@ -63,7 +63,7 @@ export const S2Problem: React.FC = () => {
             Submitted · on time
           </div>
           {lineW.map((w, i) => {
-            const at = sec(6.7) + i * 2.4;
+            const at = sec(6.0) + i * 2.0;
             const p = interpolate(frame, [at, at + 9], [0, 1], { ...clamp, easing: settle });
             return <Shimmer key={i} w={w * p} tone={i === 0 ? "#cfdacb" : "#dde5d9"} h={i === 0 ? 16 : 11} />;
           })}

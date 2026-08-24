@@ -42,7 +42,7 @@ export const AssignRow: React.FC<{
   active?: boolean;
 }> = ({ at, tag, tagColor, tagBorder, barW, active }) => {
   const frame = useCurrentFrame();
-  const p = interpolate(frame, [at, at + 16], [0, 1], { ...clamp, easing: settle });
+  const p = interpolate(frame, [at, at + 11], [0, 1], { ...clamp, easing: settle });
   return (
     <div
       style={{
@@ -114,7 +114,7 @@ export const Bubble: React.FC<{
   width?: number | string;
 }> = ({ at, who, children, width = "82%" }) => {
   const frame = useCurrentFrame();
-  const p = interpolate(frame, [at, at + 16], [0, 1], { ...clamp, easing: settle });
+  const p = interpolate(frame, [at, at + 11], [0, 1], { ...clamp, easing: settle });
   const isAgent = who === "agent";
   return (
     <div
@@ -175,9 +175,9 @@ export const ClassDots: React.FC<{ at: number; n?: number; cx: number; cy: numbe
         const jitter = rand(i * 7 + 3) * 10 - 5;
         const x = cx - spread / 2 + (spread / (n - 1)) * i;
         const y = cy + Math.sin((i / (n - 1)) * Math.PI) * -26 + jitter;
-        const s = at + i * 1.1;
+        const s = at + i * 0.8;
         const p = interpolate(frame, [s, s + 14], [0, 1], { ...clamp, easing: settle });
-        const lit = interpolate(frame, [s + 10, s + 26], [0, 1], { ...clamp, easing: settle });
+        const lit = interpolate(frame, [s + 8, s + 18], [0, 1], { ...clamp, easing: settle });
         return (
           <div
             key={i}
