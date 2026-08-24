@@ -40,7 +40,7 @@ const RubricRow: React.FC<{ at: number; k: string; v: string; accent?: boolean }
 export const S6Rubric: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const ackWin = interpolate(frame, [sec(47.9), sec(48.5)], [0, 1], { ...clamp, easing: settle });
+  const ackWin = interpolate(frame, [sec(47.6), sec(48.2)], [0, 1], { ...clamp, easing: settle });
   const cardIn = interpolate(frame, [T6.card, T6.card + 22], [0, 1], { ...clamp, easing: settle });
   const linkDraw = interpolate(frame, [T6.link, T6.link + 24], [0, 1], { ...clamp, easing: glide });
   const pulse = interpolate(frame, [T6.link + 30, T6.link + 58], [0, 1], clamp);
@@ -182,7 +182,7 @@ export const S6Rubric: React.FC = () => {
         </div>
       </div>
 
-      <Kicker at={sec(48.0)} exitAt={T6.exit - 4} style={{ position: "absolute", left: 150, top: 190 }}>
+      <Kicker at={sec(48.0)} exitAt={T6.bigLine - 2} style={{ position: "absolute", left: 150, top: 190 }}>
         One agent configures another
       </Kicker>
     </AbsoluteFill>

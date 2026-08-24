@@ -12,8 +12,8 @@ export const S5Ramble: React.FC = () => {
 
   const winIn = interpolate(frame, [T5.winIn, T5.winIn + 26], [0, 1], { ...clamp, easing: settle });
   // hand-off toward S6's compact window: glide + shrink + fade
-  const hand = interpolate(frame, [sec(47.4), sec(48.2)], [0, 1], { ...clamp, easing: glide });
-  const fadeOut = interpolate(frame, [sec(47.7), sec(48.2)], [0, 1], { ...clamp, easing: exitIn });
+  const hand = interpolate(frame, [sec(47.4), sec(48.1)], [0, 1], { ...clamp, easing: glide });
+  const fadeOut = interpolate(frame, [sec(47.85), sec(48.35)], [0, 1], { ...clamp, easing: exitIn });
 
   // accelerating type: starts deliberate, ends quick
   const p = interpolate(frame, [T5.typeStart, T5.typeEnd], [0, 1], clamp);

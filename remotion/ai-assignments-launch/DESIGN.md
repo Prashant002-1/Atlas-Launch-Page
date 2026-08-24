@@ -1,6 +1,6 @@
 # AI Assignments — launch film (Remotion)
 
-Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 80s · VO + authored score.
+Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 130s · single-take VO + composed score.
 
 ## The five decisions
 
@@ -8,25 +8,28 @@ Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 80s · VO + a
 |---|---|
 | Register | A quiet instrument demonstrating itself — the film ends where the site begins: on paper. |
 | Canvas | Course Paper `#f1f4ee`, radial lift, ≤3% grain, drifting 15° halftone lattice, two slow ink pools that re-compose for every scene. Dark ink appears once, as a narrative cut. |
-| Accent budget | One signal color: **clay** `#bf5f3b` — the selected assignment type, the config pulse, indicator bars, lit class dots, the signal rings, "how it comes in.", "Deliberately.", the close rule. Ink carries all structure. Pine and mint are retired from the film (the green lives only in the paper/ink neutrals). |
-| Type | Geist 470 display (−0.035em), Geist Mono labels, Spectral italic twice ("how it comes in.", "Deliberately."). |
+| Accent budget | One signal color: **clay** `#bf5f3b` — the selected assignment type, the config pulse, indicator bars, lit class dots, the underlined pivot phrase, the sketch fan, the close rule. Ink carries all structure. Pine and mint are retired from the film (the green lives only in the paper/ink neutrals). |
+| Type | Geist 470 display (−0.035em), Geist Mono labels, no italic emphasis; the one emphasized phrase gets an animated ink underline. |
 | Motion | Everything settles like paper: masked line reveals, `cubic-bezier(0.16,1,0.3,1)`, 0.4–0.9s entrances, no bounce, no zoom entrances. One continuous background world instead of scene-by-scene voids. |
 
-## The argument (beats)
+## The argument (beats, v2)
 
-1. **0–8 · The fact** — "Every student is already using AI." Stated plainly, no stats, no tease.
-2. **8–17 · The problem** — the polished page in front, the thinking dissolving behind it. "So grading became guessing."
-3. **17–25 · The pivot** — "You can't keep AI out. You can decide *how it comes in.*"
-4. **25–36 · The reveal** — AI Assignments: a new assignment type, in the composer, right beside Essay / Problem set / Quiz.
-5. **36–52 · The architecture** (centerpiece) — one sentence to your course agent → it configures an assignment agent (terms visible) → ships one to every student. "Your agent builds the agent your students meet."
-6. **52–63 · The student's side** — it guides, questions, pushes back; understanding flows back to the teacher as signal, not surveillance. No names, no grades, no dummy data.
-7. **63–71.5 · The thesis** (the one dark cut) — an engraved course-map plate (clay contours on ink paper, generated still, archival drift + breathing signal rings) under "This was never about preventing AI. It's about teaching with it. *Deliberately.*" The contour motif completes an arc: route path (S3) → contour rings (S6) → the full plate here.
-8. **71.5–80 · The close** — back on paper: mark, wordmark, "AI Assignments", assignments first · assessments next, request access. Ends on stillness.
+1. **0–6.4 · The fact** — "Every student is already using AI."
+2. **6.4–14.4 · The problem** — the polished page, the thinking dissolving behind it.
+3. **14.4–21.6 · The pivot** — "You can't keep AI out. You can decide how it comes in." (animated ink underline)
+4. **21.6–30.4 · The reveal** — AI Assignments, in the composer beside Essay / Problem set / Quiz.
+5. **30.4–47.4 · The ramble** (the driver) — the teacher just writes what they want, 3Blue1Brown analogies, sketched animations, hints never answers, cite the readings, test the thesis, problem 7 follow up. Accelerating type, auto-scroll, type-or-speak.
+6. **47.4–64.8 · Agent rubric + ship** — the ramble distills into a seven-row rubric (no icons), "Your rubric. Your agent. No two alike.", then fans out: personal for each student, every conversation recorded.
+7. **64.8–84 · The student's side** — opens with the problem-7 connection, asks for the claim, and draws the picture in-chat (axes, confident fit, clay fan where data thins).
+8. **84–91.6 · Friction** — "Cheating a conversation is harder than having one."
+9. **91.6–106 · Draft grade** — evidence quotes against the teacher's rubric, a draft mark, adjust or publish. "Evidence attached. Judgment yours."
+10. **106–116.5 · The dark cut** — thesis, then the order: "Stop detecting AI. Start assigning it."
+11. **116–130 · Close** — mark, wordmark, AI Assignments, request access. Stillness.
 
-## Sound
+## Sound (v2)
 
-- VO: Gemini TTS pro (Charon), 8 stems, ~112 words, placed per-beat, trimmed + loudness-matched.
-- Score: `scripts/make_bed.py` — synthesized bed in D. Open fifths the whole film; an F-natural shade enters only under the dark cut; the major third (F♯) arrives only at the resolve. Struck-sine motif marks scene boundaries. Sidechain-ducked under VO, mixed to −16 LUFS.
+- VO: ONE recorded take (Charon, pro), sliced into 12 stems at paragraph silences, tempo 1.13. One narrator by construction.
+- Score: `scripts/make_bed2.py`. Contemporary classical in D: felt piano motif, string ensemble, pulse ostinato through the ramble, timpani under the closing order, stereo Schroeder hall. Minor shading for the problem and the dark cut; the major third arrives at the resolve. Mixed quiet under VO (`scripts/mix2.sh`).
 
 ## Guardrails honored
 
