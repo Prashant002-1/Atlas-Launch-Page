@@ -1,6 +1,6 @@
 # AI Assignments — launch film (Remotion)
 
-Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 118s · single-take VO (Puck) + composed score.
+Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 110s · single-take VO (Puck) + composed score. Scene windows overlap 0.6s: every cut is a content crossfade, never empty paper.
 
 ## The five decisions
 
@@ -12,24 +12,24 @@ Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 118s · singl
 | Type | Geist 470 display (−0.035em), Geist Mono labels, no italic emphasis; the one emphasized phrase gets an animated ink underline. |
 | Motion | Everything settles like paper: masked line reveals, `cubic-bezier(0.16,1,0.3,1)`, 0.4–0.9s entrances, no bounce, no zoom entrances. One continuous background world instead of scene-by-scene voids. |
 
-## The argument (beats, v3)
+## The argument (beats, v5)
 
-1. **0–6.4 · The fact** — "Every student is already using AI."
-2. **6.4–14.4 · The problem** — the polished page, the thinking dissolving behind it.
-3. **14.4–21.6 · The pivot** — "You can't keep AI out. You can decide how it comes in." (animated ink underline)
-4. **21.6–30.4 · The reveal** — AI Assignments, in the composer beside Essay / Problem set / Quiz.
-5. **30.4–47.4 · The ramble** (the driver) — the teacher just writes what they want, 3Blue1Brown analogies, sketched animations, hints never answers, cite the readings, test the thesis, problem 7 follow up. Accelerating type, auto-scroll, type-or-speak.
-6. **47.4–64.8 · Agent rubric + ship** — the ramble distills into a seven-row rubric (no icons), "Your rubric. Your agent. No two alike.", then fans out: personal for each student, every conversation recorded.
-7. **64.8–84 · The student's side** — opens with the problem-7 connection, asks for the claim, and draws the picture in-chat (axes, confident fit, clay fan where data thins).
-8. **84–91.6 · Friction** — "Cheating a conversation is harder than having one."
-9. **91.6–106 · Draft grade** — evidence quotes against the teacher's rubric, a draft mark, adjust or publish. "Evidence attached. Judgment yours."
-10. **106–116.5 · The dark cut** — thesis, then the order: "Stop detecting AI. Start assigning it."
-11. **116–130 · Close** — mark, wordmark, AI Assignments, request access. Stillness.
+1. **0–4.6 · The fact** — "Every student is already using AI." beside a painted field current (128 brush strokes, baked p5.brush).
+2. **4.6–11.6 · The problem, plainly** — "You're grading the AI's work. Not the student's." Painted pencil gestures dissolve behind the polished page.
+3. **11.6–17.4 · The pivot** — "You can't keep AI out. You can decide how it comes in." Hand-inked underline (perfect-freehand).
+4. **17.4–24.6 · The reveal** — AI Assignments in the composer beside Essay / Problem set / Quiz (the one floating window).
+5. **24.6–45.4 · The dictation** — the teacher's words type straight onto the paper, no chrome; the Agent Rubric assembles as a flat hairline ledger, row by row, synced to the typing. "Your rubric. Your agent. No two alike."
+6. **45.4–52 · Ship** — the sealed rubric fans to 26 anonymous seats. "Your agent builds the agent your students meet." Personal for each student · every conversation recorded.
+7. **52–67.6 · The student's side** — problem-7 opener, claim, and the agent draws the picture in-chat.
+8. **67.6–73.6 · Friction** — "Cheating a conversation is harder than having one." Ghost of the field painting behind.
+9. **73.6–85.8 · Draft grade** — evidence against the teacher's rubric, a drafted 91, adjust or publish.
+10. **85.8–96.2 · The dark cut** — thesis, then the order: "Stop detecting AI. Start assigning it." Timpani + risers.
+11. **95.8–110 · Close** — mark, wordmark, AI Assignments, request access. Stillness.
 
-## Sound (v2)
+## Sound (v5)
 
-- VO: ONE recorded take (Puck, pro), sliced into 12 stems at paragraph silences, tempo 1.05. One narrator by construction.
-- Score: `scripts/make_bed2.py`. Contemporary classical in D: felt piano motif, string ensemble, pulse ostinato through the ramble, timpani under the closing order, stereo Schroeder hall. Minor shading for the problem and the dark cut; the major third arrives at the resolve. Mixed quiet under VO (`scripts/mix2.sh`).
+- VO: ONE Puck take (pro), sliced into 12 stems at paragraph silences, tempo 1.05.
+- Score: `scripts/make_bed2.py`. Felt piano (long decay, soft hammers), seven-voice string ensemble with sub-octave doubling, rounded pulse ostinato that grows with the typing, noise risers into both peaks, two timpani under the closing order, long stereo Schroeder hall. D center; minor shading for problem and dark cut; the major third arrives at the resolve. Mixed under VO with gentle sidechain (`scripts/mix2.sh`).
 
 ## Guardrails honored
 
@@ -48,7 +48,8 @@ the grain plate is procedural; the engraved plate + VO stems are base64 text in
 bash scripts/restore-assets.sh   # grain, plate, VO stems, score, final mix
 npm install
 npx remotion still src/index.ts Film out/f0900.png --frame=900   # QA stills
-npm run render                    # out/ai-assignments.mp4 (2400 frames)
+node bake/bake.mjs               # bake the brush plates (p5.brush, headless)
+npm run render                    # 3300 frames; use --timeout=600000
 ```
 
 Rendering note: on small containers use `--concurrency=1` (a second worker page froze
