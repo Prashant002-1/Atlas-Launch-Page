@@ -31,8 +31,8 @@ def add(i, l, r, s):
 # ---------------------------------------------------------------- felt piano
 def piano(t0, f, vel=0.5, pan=0.0, tau=None):
     if tau is None:
-        tau = 2.6 if f < 200 else 1.7 if f < 500 else 1.25
-    dur = int(min(tau * 4.2, 6.0) * SR)
+        tau = 3.5 if f < 200 else 2.3 if f < 500 else 1.7
+    dur = int(min(tau * 4.0, 7.0) * SR)
     i0 = int(t0 * SR)
     gl = vel * (1 - max(0, pan) * 0.8)
     gr = vel * (1 + min(0, pan) * 0.8)
@@ -48,11 +48,11 @@ def piano(t0, f, vel=0.5, pan=0.0, tau=None):
             + 0.06 * math.exp(-tt / (tau * 0.22)) * math.sin(TAU * f * 4.06 * tt)
         )
         # felt: one-pole lowpass
-        lp += 0.24 * (s - lp)
+        lp += 0.19 * (s - lp)
         v = env * lp
         if tt < 0.03:  # hammer breath
             seed = (seed * 1103515245 + 12345) & 0x7FFFFFFF
-            v += (seed / 0x3FFFFFFF - 1.0) * (0.03 - tt) * 1.1 * math.exp(-tt / 0.01)
+            v += (seed / 0x3FFFFFFF - 1.0) * (0.03 - tt) * 0.7 * math.exp(-tt / 0.01)
         add(i0 + j, v * gl * 0.5, v * gr * 0.5, v * vel * 0.30)
 
 
@@ -62,9 +62,9 @@ def string_note(t0, f, dur_s, vel=0.3, atk=1.4, rel=2.4, pan=0.0, dark=0.22):
     i0 = int(t0 * SR)
     gl = vel * (1 - max(0, pan) * 0.8)
     gr = vel * (1 + min(0, pan) * 0.8)
-    det = [0.0, 0.0035, -0.0032, 0.0068, -0.0061]
-    amp = [1.0, 0.62, 0.62, 0.38, 0.38]
-    ph = [0.0, 1.1, 2.3, 3.7, 4.9]
+    det = [0.0, 0.0035, -0.0032, 0.0068, -0.0061, 0.0102, -0.0096]
+    amp = [1.0, 0.62, 0.62, 0.38, 0.38, 0.22, 0.22]
+    ph = [0.0, 1.1, 2.3, 3.7, 4.9, 0.7, 2.9]
     lp = 0.0
     for j in range(dur):
         tt = j / SR
@@ -76,20 +76,21 @@ def string_note(t0, f, dur_s, vel=0.3, atk=1.4, rel=2.4, pan=0.0, dark=0.22):
             env = max(0.0, 1.0 - (tt - dur_s) / rel) ** 1.5
         if env <= 0.0:
             continue
-        vib = 1.0 + 0.0016 * math.sin(TAU * 5.1 * tt) * min(1.0, tt / 1.2)
+        vib = 1.0 + 0.0022 * math.sin(TAU * 5.1 * tt) * min(1.0, tt / 1.2)
         s = 0.0
-        for k in range(5):
+        for k in range(7):
             fk = f * (1 + det[k]) * vib
             # saw-lite: 4 harmonics
             s += amp[k] * (
-                math.sin(TAU * fk * tt + ph[k])
+                0.22 * math.sin(TAU * 0.5 * fk * tt)
+                + math.sin(TAU * fk * tt + ph[k])
                 + 0.5 * math.sin(TAU * 2 * fk * tt + ph[k])
                 + 0.28 * math.sin(TAU * 3 * fk * tt)
                 + 0.16 * math.sin(TAU * 4 * fk * tt)
             )
         lp += dark * (s - lp)
         v = env * lp * 0.15
-        add(i0 + j, v * gl, v * gr, v * vel * 0.5)
+        add(i0 + j, v * gl, v * gr, v * vel * 0.62)
 
 
 # ------------------------------------------------------------------ ostinato
@@ -101,15 +102,15 @@ def pulse(t0, f, vel=0.2, pan=0.0):
     lp = 0.0
     for j in range(dur):
         tt = j / SR
-        env = math.exp(-tt / 0.10) * min(1.0, tt / 0.008)
+        env = math.exp(-tt / 0.15) * min(1.0, tt / 0.014)
         s = (
             math.sin(TAU * f * tt)
             + 0.5 * math.sin(TAU * 2.004 * f * tt)
             + 0.25 * math.sin(TAU * 3.01 * f * tt)
         )
-        lp += 0.2 * (s - lp)
+        lp += 0.16 * (s - lp)
         v = env * lp * 0.5
-        add(i0 + j, v * gl, v * gr, v * vel * 0.2)
+        add(i0 + j, v * gl, v * gr, v * vel * 0.3)
 
 
 # ---------------------------------------------------------------------- timp
@@ -128,6 +129,21 @@ def timp(t0, vel=0.55):
         lp += 0.12 * ((s + n) - lp)
         v = env * lp
         add(i0 + j, v * vel, v * vel, v * vel * 0.5)
+
+
+def riser(t0, dur, vel=0.18):
+    n = int(dur * SR)
+    i0 = int(t0 * SR)
+    seed = 555
+    lp = 0.0
+    for j in range(n):
+        tt = j / n
+        seed = (seed * 1103515245 + 12345) & 0x7FFFFFFF
+        w = (seed / 0x3FFFFFFF) - 1.0
+        coef = 0.02 + 0.33 * tt * tt
+        lp += coef * (w - lp)
+        v = lp * vel * (tt ** 2.2)
+        add(i0 + j, v, v * 0.94, v * 0.35)
 
 
 # ------------------------------------------------------------------- program
@@ -173,6 +189,8 @@ piano(39.5, E4, 0.2, 0.1)
 for t, f in [(40.0, A3), (41.2, B3), (42.4, Cs4), (43.6, D4)]:
     string_note(t, f, 2.0, 0.12, atk=0.7, rel=1.3, pan=0.1)
 piano(40.7, D5, 0.22, 0.15)
+
+riser(43.4, 2.2, 0.5)
 
 # SHIP: peak one
 string_note(45.6, D3, 5.8, 0.2, atk=1.0, pan=-0.15)
@@ -223,6 +241,7 @@ for j in range(int(8.9 * SR)):
     env = min(1.0, tt / 2.0) * min(1.0, max(0.0, (8.9 - tt) / 1.1))
     v = 0.16 * env * math.sin(TAU * D1 * tt)
     add(i0 + j, v, v, 0.0)
+riser(88.7, 2.2, 0.62)
 string_note(90.6, D3, 4.4, 0.2, atk=1.1, pan=-0.15)
 string_note(90.6, A3, 4.4, 0.17, atk=1.2, pan=0.15)
 string_note(91.4, D4, 3.6, 0.15, atk=0.9)
@@ -266,7 +285,7 @@ def reverb(sig, combs, aps):
     out = [0.0] * N
     bufs = [[0.0] * d for d in combs]
     idx = [0] * len(combs)
-    fb = [0.805, 0.792, 0.78, 0.766]
+    fb = [0.83, 0.82, 0.808, 0.795]
     for i in range(N):
         x = sig[i]
         acc = 0.0
@@ -289,12 +308,12 @@ def reverb(sig, combs, aps):
             out[i] = y - v * g
     return out
 
-revL = reverb(send, [1319, 1637, 1811, 1931], [(225, 0.7), (77, 0.7)])
-revR = reverb(send, [1361, 1693, 1867, 1997], [(241, 0.7), (83, 0.7)])
+revL = reverb(send, [1583, 1907, 2053, 2251], [(225, 0.7), (77, 0.7)])
+revR = reverb(send, [1637, 1963, 2113, 2309], [(241, 0.7), (83, 0.7)])
 
 for i in range(N):
-    dryL[i] += revL[i] * 0.85
-    dryR[i] += revR[i] * 0.85
+    dryL[i] += revL[i] * 1.0
+    dryR[i] += revR[i] * 1.0
 
 peak = max(max(abs(x) for x in dryL), max(abs(x) for x in dryR))
 kk = 0.55 / peak if peak > 0 else 1.0

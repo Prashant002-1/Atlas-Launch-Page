@@ -54,25 +54,36 @@ const leaf = (cx, cy, ang, len, wdt) => {
 // plates -- abstract marks, not objects ------------------------------
 const PLATES = {};
 
-{ // flow -- a current of strokes bending together, two strays in clay
-  const curve = (x0, amp, phase, top) => {
-    const pts = [];
-    for (let j = 0; j <= 8; j++) {
-      const t = j / 8;
-      const y = 700 - t * (700 - top);
-      const x = x0 + Math.sin(t * 2.6 + phase) * amp + t * t * 26;
+{ // flow -- a field painting: a bent current of many strokes, dense at the
+  // base, dissolving upward. Ink majority, clay minority, never shouting.
+  let sd = 7;
+  const rnd = () => { sd = (sd * 16807) % 2147483647; return sd / 2147483647; };
+  const ang = (x, y) => -Math.PI / 2 + 0.42 * Math.sin(y * 0.0042 + x * 0.002) + 0.24 * Math.sin(x * 0.0063 - 1.3);
+  const strokePts = (x0, y0, steps, step) => {
+    const pts = [[x0, y0]];
+    let x = x0, y = y0;
+    for (let j = 0; j < steps; j++) {
+      const a = ang(x, y);
+      x += Math.cos(a) * step;
+      y += Math.sin(a) * step;
       pts.push([x, y]);
     }
     return pts;
   };
   const ops = [];
-  for (let i = 0; i < 11; i++) {
-    const x0 = 170 + i * 46;
-    const amp = 26 + (i % 4) * 9;
-    const top = 150 + (i % 5) * 34;
-    if (i === 4 || i === 8) ops.push(st("cpencil", CLAY, 3.0));
-    else ops.push(st("charcoal", INK, 2.6));
-    ops.push(shape(curve(x0, amp, i * 0.7, top), 0.55));
+  const N = 128;
+  for (let i = 0; i < N; i++) {
+    const u = rnd();
+    const x0 = 90 + u * 640 + rnd() * 40;
+    // denser low, sparser high
+    const y0 = 780 - Math.pow(rnd(), 1.7) * 260;
+    const steps = 7 + Math.floor(rnd() * 6);
+    const step = 34 + rnd() * 26;
+    const r = rnd();
+    if (r < 0.08) ops.push(st("cpencil", CLAY, 1.5 + rnd() * 0.9));
+    else if (r < 0.3) ops.push(st("2H", SOFT, 1.1 + rnd() * 0.7));
+    else ops.push(st("charcoal", INK, 1.0 + rnd() * 1.1));
+    ops.push(shape(strokePts(x0, y0, steps, step), 0.5));
   }
   PLATES.flow = ops;
 }
