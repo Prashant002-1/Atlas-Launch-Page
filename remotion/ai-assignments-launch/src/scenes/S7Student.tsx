@@ -12,11 +12,11 @@ export const S7Student: React.FC = () => {
   const frame = useCurrentFrame();
 
   const winIn = interpolate(frame, [T7.win, T7.win + 26], [0, 1], { ...clamp, easing: settle });
-  const push = interpolate(frame, [T7.win, sec(83)], [1, 1.025], clamp);
+  const push = interpolate(frame, [T7.win, sec(73)], [1, 1.025], clamp);
   const out = interpolate(frame, [T7.exit, T7.exit + 16], [0, 1], { ...clamp, easing: exitIn });
 
   const timer =
-    frame < sec(69) ? "38:04" : frame < sec(73) ? "37:41" : frame < sec(78) ? "37:12" : "36:48";
+    frame < sec(62) ? "38:04" : frame < sec(66) ? "37:41" : frame < sec(70) ? "37:12" : "36:48";
 
   // the sketch: axes, a confident curve, then a fan of diverging ghosts where data thins
   const ax = interpolate(frame, [T7.sketch, T7.sketch + 16], [0, 1], { ...clamp, easing: settle });
@@ -34,7 +34,7 @@ export const S7Student: React.FC = () => {
       fill="none"
     />
   );
-  const ringsIn = interpolate(frame, [sec(70), sec(72)], [0, 1], clamp);
+  const ringsIn = interpolate(frame, [sec(62), sec(64)], [0, 1], clamp);
 
   return (
     <AbsoluteFill style={{ opacity: 1 - out }}>
@@ -161,7 +161,7 @@ export const S7Student: React.FC = () => {
         </MacWindow>
       </div>
 
-      <Kicker at={sec(65.2)} exitAt={sec(83.2)} style={{ position: "absolute", left: 170, top: 160 }}>
+      <Kicker at={sec(58.6)} exitAt={sec(73.2)} style={{ position: "absolute", left: 170, top: 160 }}>
         The student&rsquo;s side
       </Kicker>
     </AbsoluteFill>

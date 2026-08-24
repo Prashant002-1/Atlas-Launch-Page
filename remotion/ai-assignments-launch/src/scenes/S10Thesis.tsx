@@ -9,9 +9,9 @@ import { sec } from "../timeline";
 export const S10Thesis: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const plateIn = interpolate(frame, [sec(106.0), sec(107.0)], [0, 1], clamp);
-  const plateOut = interpolate(frame, [sec(115.1), sec(116.0)], [1, 0], { ...clamp, easing: exitIn });
-  const drift = interpolate(frame, [sec(106), sec(116.4)], [0, 1], clamp);
+  const plateIn = interpolate(frame, [sec(93.2), sec(94.1)], [0, 1], clamp);
+  const plateOut = interpolate(frame, [sec(102.5), sec(103.4)], [1, 0], { ...clamp, easing: exitIn });
+  const drift = interpolate(frame, [sec(93.2), sec(103.6)], [0, 1], clamp);
   const scale = 1.0 + drift * 0.05;
   const tx = drift * -26;
 
@@ -45,25 +45,25 @@ export const S10Thesis: React.FC = () => {
 
       {/* thesis */}
       <div style={{ position: "absolute", left: PAD_X, top: 330 }}>
-        <Line at={sec(106.7)} size={88} color={C.paper} exitAt={sec(111.3)}>
+        <Line at={sec(93.8)} size={88} dur={20} color={C.paper} exitAt={sec(97.9)}>
           This was never about
         </Line>
-        <Line at={sec(107.1)} size={88} color={C.paper} exitAt={sec(111.35)}>
+        <Line at={sec(94.2)} size={88} dur={20} color={C.paper} exitAt={sec(97.95)}>
           preventing AI.
         </Line>
         <div style={{ height: 38 }} />
-        <Line at={sec(109.0)} size={88} color="rgba(241,244,238,0.72)" exitAt={sec(111.4)}>
+        <Line at={sec(95.6)} size={88} dur={20} color="rgba(241,244,238,0.72)" exitAt={sec(98.0)}>
           It&rsquo;s about teaching with it.
         </Line>
       </div>
 
       {/* the order */}
       <div style={{ position: "absolute", left: PAD_X, top: 400 }}>
-        <Line at={sec(112.0)} size={106} color={C.paper} exitAt={sec(115.4)}>
+        <Line at={sec(98.3)} size={106} dur={20} color={C.paper} exitAt={sec(102.6)}>
           Stop detecting AI.
         </Line>
         <div style={{ height: 26 }} />
-        <Line at={sec(113.9)} size={106} color={C.paper} exitAt={sec(115.5)}>
+        <Line at={sec(100.2)} size={106} dur={20} color={C.paper} exitAt={sec(102.7)}>
           Start assigning it.
         </Line>
       </div>

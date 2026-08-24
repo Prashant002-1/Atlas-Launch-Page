@@ -1,29 +1,22 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { Line, Words } from "../text/Reveal";
-import { PAD_X, C } from "../theme";
+import { Line } from "../text/Reveal";
+import { Plate } from "../ui/Marginalia";
+import { PAD_X } from "../theme";
 import { sec } from "../timeline";
 
-// Cold open — the plain fact, stated straight.
+// Cold open — the fact, and a current already moving through the room.
 export const S1Open: React.FC = () => {
   return (
     <AbsoluteFill>
-      <div style={{ position: "absolute", left: PAD_X, right: PAD_X, top: 356 }}>
-        <Line at={sec(0.6)} size={126} exitAt={sec(5.85)}>
+      <Plate name="flow" at={sec(0.3)} x={1290} y={230} w={560} exitAt={sec(4.7)} opacity={0.55} />
+      <div style={{ position: "absolute", left: PAD_X, right: PAD_X, top: 400 }}>
+        <Line at={sec(0.5)} size={126} dur={20} exitAt={sec(4.75)}>
           Every student is
         </Line>
-        <Line at={sec(1.0)} size={126} exitAt={sec(5.9)}>
+        <Line at={sec(0.8)} size={126} dur={20} exitAt={sec(4.8)}>
           already using AI.
         </Line>
-        <div style={{ height: 54 }} />
-        <Words
-          at={sec(3.4)}
-          gapFrames={6}
-          size={33}
-          color={C.muted}
-          exitAt={sec(5.8)}
-          text="The essay.  The problem set.  The take-home."
-        />
       </div>
     </AbsoluteFill>
   );

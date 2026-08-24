@@ -5,8 +5,8 @@ import { S1Open } from "./scenes/S1Open";
 import { S2Problem } from "./scenes/S2Problem";
 import { S3Pivot } from "./scenes/S3Pivot";
 import { S4Reveal } from "./scenes/S4Reveal";
-import { S5Ramble } from "./scenes/S5Ramble";
-import { S6Rubric } from "./scenes/S6Rubric";
+import { S5Build } from "./scenes/S5Build";
+import { S6Ship } from "./scenes/S6Ship";
 import { S7Student } from "./scenes/S7Student";
 import { S8Friction } from "./scenes/S8Friction";
 import { S9Grading } from "./scenes/S9Grading";
@@ -36,8 +36,8 @@ export const Film: React.FC = () => {
       <Global b={SC.s2} name="S2 problem"><S2Problem /></Global>
       <Global b={SC.s3} name="S3 pivot"><S3Pivot /></Global>
       <Global b={SC.s4} name="S4 reveal"><S4Reveal /></Global>
-      <Global b={SC.s5} name="S5 ramble"><S5Ramble /></Global>
-      <Global b={SC.s6} name="S6 rubric + ship"><S6Rubric /></Global>
+      <Global b={SC.s5} name="S5 build"><S5Build /></Global>
+      <Global b={SC.s6} name="S6 ship"><S6Ship /></Global>
       <Global b={SC.s7} name="S7 student"><S7Student /></Global>
       <Global b={SC.s8} name="S8 friction"><S8Friction /></Global>
       <Global b={SC.s9} name="S9 draft grade"><S9Grading /></Global>

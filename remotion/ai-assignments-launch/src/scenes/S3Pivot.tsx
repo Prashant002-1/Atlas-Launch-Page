@@ -1,25 +1,31 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { Line } from "../text/Reveal";
+import { InkStroke } from "../ui/handmade";
 import { C } from "../theme";
 import { clamp, settle } from "../ease";
 import { sec } from "../timeline";
 
-// The pivot — centered, editorial. Emphasis is an animated ink underline,
-// same face, same color. A course-map bearing draws beneath.
+// The pivot — hand-inked underline, course-map bearing beneath.
 export const S3Pivot: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const draw = interpolate(frame, [sec(15.0), sec(18.3)], [0, 1], { ...clamp, easing: settle });
-  const fadeRoute = interpolate(frame, [sec(20.9), sec(21.5)], [1, 0], clamp);
-  const under = interpolate(frame, [sec(17.6), sec(18.5)], [0, 1], { ...clamp, easing: settle });
+  const draw = interpolate(frame, [sec(13.5), sec(16.2)], [0, 1], { ...clamp, easing: settle });
+  const fadeRoute = interpolate(frame, [sec(18.9), sec(19.5)], [1, 0], clamp);
+
+  // underline skeleton under "how it comes in." (line 2 sits ~y588-688; phrase right side)
+  const uy = 656;
+  const upts: [number, number][] = Array.from({ length: 14 }, (_, i) => [
+    1002 + (642 * i) / 13,
+    uy + Math.sin(i * 0.9) * 2.2,
+  ]);
 
   return (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
       <svg
         width={1400}
         height={260}
-        style={{ position: "absolute", top: 700, opacity: 0.5 * fadeRoute }}
+        style={{ position: "absolute", top: 700, left: 260, opacity: 0.5 * fadeRoute }}
       >
         <defs>
           <mask id="routeMask">
@@ -44,39 +50,31 @@ export const S3Pivot: React.FC = () => {
           mask="url(#routeMask)"
         />
         <circle cx={60} cy={190} r={5} fill={C.clay} opacity={draw > 0.02 ? 0.55 : 0} />
-        <circle
-          cx={1360}
-          cy={96}
-          r={5}
-          fill={C.clay}
-          opacity={interpolate(draw, [0.96, 1], [0, 0.55], clamp)}
-        />
+        <circle cx={1360} cy={96} r={5} fill={C.clay} opacity={interpolate(draw, [0.96, 1], [0, 0.55], clamp)} />
       </svg>
 
       <div style={{ textAlign: "center", marginTop: -60 }}>
-        <Line at={sec(14.9)} size={100} exitAt={sec(20.9)} style={{ textAlign: "center" }}>
+        <Line at={sec(13.4)} size={100} dur={20} exitAt={sec(18.9)} style={{ textAlign: "center" }}>
           You can&rsquo;t keep AI out.
         </Line>
         <div style={{ height: 26 }} />
-        <Line at={sec(16.5)} size={100} exitAt={sec(21.0)} style={{ textAlign: "center", color: C.inkSoft }}>
-          You can decide{" "}
-          <span style={{ position: "relative", display: "inline-block" }}>
-            how it comes in.
-            <span
-              style={{
-                position: "absolute",
-                left: "0.04em",
-                right: "0.1em",
-                bottom: "0.02em",
-                height: 5,
-                background: C.ink,
-                transform: `scaleX(${under})`,
-                transformOrigin: "left center",
-              }}
-            />
-          </span>
+        <Line at={sec(14.7)} size={100} dur={20} exitAt={sec(19.0)} style={{ textAlign: "center", color: C.inkSoft }}>
+          You can decide how it comes in.
         </Line>
       </div>
+
+      {/* hand-inked emphasis, drawn like a pen */}
+      <svg
+        width={1920}
+        height={1080}
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: interpolate(frame, [sec(18.9), sec(19.4)], [1, 0], clamp),
+        }}
+      >
+        <InkStroke points={upts} at={sec(15.9)} dur={16} size={8} color={C.ink} opacity={0.9} />
+      </svg>
     </AbsoluteFill>
   );
 };

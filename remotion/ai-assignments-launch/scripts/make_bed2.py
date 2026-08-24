@@ -12,7 +12,7 @@ import wave
 import struct
 
 SR = 44100
-DUR = 130.0
+DUR = 118.0
 N = int(SR * DUR)
 TAU = 2.0 * math.pi
 
@@ -134,123 +134,118 @@ def timp(t0, vel=0.55):
 D1, A1, D2, A2, D3, F3, Fs3, A3, B3, Cs4 = 36.71, 55.0, 73.42, 110.0, 146.83, 174.61, 185.0, 220.0, 246.94, 277.18
 D4, E4, F4, Fs4, A4, D5, E5, Fs5 = 293.66, 329.63, 349.23, 369.99, 440.0, 587.33, 659.26, 739.99
 
-# Act I — sparse felt piano, a shadow of strings
-piano(2.2, D4, 0.34, -0.15)
-piano(4.6, A3, 0.26, 0.15)
-piano(7.4, F4, 0.30, 0.1)          # minor shade for the problem
-piano(10.2, D4, 0.24, -0.1)
-string_note(11.0, D2, 9.0, 0.16, atk=2.6, pan=0.0)
-piano(15.4, E4, 0.26, 0.12)
-piano(18.2, Fs4, 0.30, -0.1)       # first brightness at "decide"
-string_note(16.0, A2, 5.2, 0.13, atk=2.2)
-piano(20.4, A4, 0.22, 0.1)
+# Act I: sparse felt piano, a shadow of strings
+piano(1.6, D4, 0.32, -0.15)
+piano(3.6, A3, 0.24, 0.15)
+piano(5.9, F4, 0.3, 0.1)
+piano(8.6, D4, 0.22, -0.1)
+string_note(9.0, D2, 8.0, 0.15, atk=2.4)
+piano(13.6, E4, 0.26, 0.12)
+piano(15.9, Fs4, 0.3, -0.1)
+string_note(14.2, A2, 4.6, 0.12, atk=2.0)
+piano(17.4, A4, 0.2, 0.1)
 
-# Act II — reveal warms, the ramble builds
-string_note(22.4, D3, 7.6, 0.16, atk=1.8, pan=-0.2)
-string_note(23.2, Fs3, 6.8, 0.13, atk=2.0, pan=0.2)
-string_note(24.0, A3, 6.0, 0.11, atk=2.2)
-piano(23.0, D4, 0.34, -0.1)
-piano(23.5, Fs4, 0.28, 0.05)
-piano(24.1, A4, 0.30, 0.15)
-piano(25.4, E5, 0.20, -0.15)
+# reveal warms
+string_note(20.4, D3, 6.8, 0.16, atk=1.6, pan=-0.2)
+string_note(21.2, Fs3, 6.0, 0.13, atk=1.8, pan=0.2)
+string_note(22.0, A3, 5.2, 0.11, atk=2.0)
+piano(21.0, D4, 0.32, -0.1)
+piano(21.5, Fs4, 0.26, 0.05)
+piano(22.1, A4, 0.28, 0.15)
+piano(23.2, E5, 0.18, -0.15)
 
-# ostinato through the ramble, growing
-tp = 31.6
+# THE BUILD: ostinato grows with the typing
+tp = 29.2
 k = 0
-while tp < 55.8:
-    grow = min(1.0, (tp - 31.6) / 9.0)
-    vel = 0.05 + 0.13 * grow
+while tp < 50.4:
+    grow = min(1.0, (tp - 29.2) / 12.0)
+    vel = 0.05 + 0.14 * grow
     pulse(tp, D2 if k % 2 == 0 else A1, vel, -0.12 if k % 2 == 0 else 0.12)
     tp += 0.319
     k += 1
-string_note(33.0, D2, 22.0, 0.15, atk=3.2)
-string_note(36.0, A2, 19.0, 0.13, atk=3.0, pan=0.15)
-string_note(40.0, E4, 14.0, 0.085, atk=3.4, pan=-0.2)   # add9 shimmer
-piano(33.2, D4, 0.2, -0.1)
-piano(37.3, A3, 0.18, 0.12)
-piano(41.4, Fs4, 0.22, -0.08)
-piano(45.2, E4, 0.2, 0.1)
+string_note(29.0, D2, 21.0, 0.15, atk=3.0)
+string_note(32.0, A2, 18.0, 0.13, atk=2.8, pan=0.15)
+string_note(36.5, E4, 13.0, 0.08, atk=3.2, pan=-0.2)
+piano(31.2, D4, 0.2, -0.1)
+piano(35.4, A3, 0.18, 0.12)
+piano(39.2, Fs4, 0.22, -0.08)
+piano(42.9, E4, 0.2, 0.1)
+for t, f in [(44.6, A3), (45.8, B3), (47.0, Cs4), (48.2, D4)]:
+    string_note(t, f, 2.2, 0.12, atk=0.8, rel=1.4, pan=0.1)
+piano(45.3, D5, 0.22, 0.15)
 
-# rubric assembly — a rising line
-for t, f in [(48.6, A3), (50.2, B3), (51.8, Cs4), (53.4, D4)]:
-    string_note(t, f, 2.6, 0.12, atk=0.9, rel=1.6, pan=0.1)
-piano(48.8, D5, 0.2, 0.15)
-piano(53.6, Fs4, 0.24, -0.1)
-
-# peak one: ship to class
-string_note(56.0, D3, 7.0, 0.2, atk=1.2, pan=-0.15)
-string_note(56.0, A3, 7.0, 0.16, atk=1.4, pan=0.15)
-string_note(56.4, Fs3, 6.6, 0.15, atk=1.6)
-string_note(57.0, E4, 5.6, 0.1, atk=1.8, pan=-0.25)
-for t, f, v in [(56.4, D5, 0.3), (57.1, A4, 0.26), (57.9, Fs4, 0.24), (58.7, D4, 0.28)]:
-    piano(t, f, v, 0.1 - (t - 56.4) * 0.1)
-tp = 56.0
+# SHIP: peak one
+string_note(51.2, D3, 6.2, 0.2, atk=1.1, pan=-0.15)
+string_note(51.2, A3, 6.2, 0.16, atk=1.3, pan=0.15)
+string_note(51.6, Fs3, 5.8, 0.15, atk=1.5)
+string_note(52.2, E4, 4.8, 0.1, atk=1.7, pan=-0.25)
+for t, f, v in [(51.8, D5, 0.3), (52.5, A4, 0.26), (53.2, Fs4, 0.24), (54.0, D4, 0.28)]:
+    piano(t, f, v, 0.1 - (t - 51.8) * 0.1)
+tp = 51.4
 k = 0
-while tp < 63.5:
-    fade = min(1.0, max(0.15, (63.5 - tp) / 3.0))
-    pulse(tp, D2 if k % 2 == 0 else A1, 0.16 * fade, -0.12 if k % 2 == 0 else 0.12)
+while tp < 56.8:
+    fade = min(1.0, max(0.15, (56.8 - tp) / 2.6))
+    pulse(tp, D2 if k % 2 == 0 else A1, 0.17 * fade, -0.12 if k % 2 == 0 else 0.12)
     tp += 0.319
     k += 1
 
-# Act III — intimate: the student
-string_note(65.5, D2, 17.0, 0.1, atk=4.0)
-piano(66.2, Fs4, 0.22, -0.12)
-piano(70.4, D4, 0.2, 0.1)
-piano(75.6, D5, 0.16, -0.2, tau=1.1)   # the sketch sparkle
-piano(76.1, E5, 0.15, 0.0, tau=1.1)
-piano(76.6, Fs5, 0.16, 0.2, tau=1.1)
-piano(80.2, A3, 0.2, 0.05)
+# the student: intimate
+string_note(58.5, D2, 15.0, 0.1, atk=3.6)
+piano(59.6, Fs4, 0.22, -0.12)
+piano(63.0, D4, 0.2, 0.1)
+piano(66.3, D5, 0.16, -0.2, tau=1.1)
+piano(66.75, E5, 0.15, 0.0, tau=1.1)
+piano(67.2, Fs5, 0.16, 0.2, tau=1.1)
+piano(70.6, A3, 0.2, 0.05)
 
-# friction — bare
-piano(84.7, D2, 0.34, 0.0, tau=3.4)
-piano(84.72, D3, 0.22, 0.0, tau=2.8)
-piano(87.6, F4, 0.2, 0.1)              # one minor shade
-string_note(88.5, A2, 2.6, 0.08, atk=1.6)
+# friction: bare
+piano(74.7, D2, 0.34, 0.0, tau=3.4)
+piano(74.72, D3, 0.22, 0.0, tau=2.8)
+piano(77.2, F4, 0.2, 0.1)
+string_note(78.2, A2, 2.2, 0.08, atk=1.4)
 
-# grading — warmth returns
-string_note(92.5, D3, 12.0, 0.14, atk=2.2, pan=-0.15)
-string_note(93.3, Fs3, 11.0, 0.12, atk=2.4, pan=0.15)
-string_note(94.1, A3, 10.0, 0.1, atk=2.6)
-piano(93.4, D4, 0.24, -0.1)
-for t, f in [(97.2, D4), (97.5, Fs4), (97.8, A4), (98.1, D5)]:
-    piano(t, f, 0.17, 0.1)             # the mark counts up
-piano(101.9, A4, 0.18, -0.1)
+# grading: warmth returns
+string_note(81.6, D3, 11.0, 0.14, atk=2.0, pan=-0.15)
+string_note(82.4, Fs3, 10.0, 0.12, atk=2.2, pan=0.15)
+string_note(83.2, A3, 9.0, 0.1, atk=2.4)
+piano(82.3, D4, 0.24, -0.1)
+for t, f in [(86.1, D4), (86.4, Fs4), (86.7, A4), (87.0, D5)]:
+    piano(t, f, 0.17, 0.1)
+piano(90.6, A4, 0.18, -0.1)
 
-# Act IV — dark, then the rise
-string_note(106.4, D2, 9.6, 0.2, atk=1.8, dark=0.16)
-string_note(107.2, F3, 8.6, 0.15, atk=2.2, dark=0.16, pan=-0.2)  # minor
-string_note(108.0, A2, 7.8, 0.13, atk=2.4, dark=0.16, pan=0.2)
-# sub pedal
-i0 = int(106.2 * SR)
-for j in range(int(9.6 * SR)):
+# dark, then the rise
+string_note(93.4, D2, 9.2, 0.2, atk=1.6, dark=0.16)
+string_note(94.2, F3, 8.2, 0.15, atk=2.0, dark=0.16, pan=-0.2)
+string_note(95.0, A2, 7.4, 0.13, atk=2.2, dark=0.16, pan=0.2)
+i0 = int(93.3 * SR)
+for j in range(int(9.3 * SR)):
     tt = j / SR
-    env = min(1.0, tt / 2.5) * min(1.0, max(0.0, (9.6 - tt) / 1.4))
+    env = min(1.0, tt / 2.2) * min(1.0, max(0.0, (9.3 - tt) / 1.2))
     v = 0.16 * env * math.sin(TAU * D1 * tt)
     add(i0 + j, v, v, 0.0)
-# the rise under the order
-string_note(111.6, D3, 4.6, 0.2, atk=1.4, pan=-0.15)
-string_note(111.6, A3, 4.6, 0.17, atk=1.5, pan=0.15)
-string_note(112.4, D4, 3.8, 0.15, atk=1.2)
-string_note(113.2, Fs4, 3.2, 0.12, atk=1.0, pan=-0.2)
-timp(112.05, 0.5)
-timp(113.95, 0.62)
-tp = 111.9
+string_note(97.8, D3, 4.6, 0.2, atk=1.2, pan=-0.15)
+string_note(97.8, A3, 4.6, 0.17, atk=1.3, pan=0.15)
+string_note(98.6, D4, 3.8, 0.15, atk=1.0)
+string_note(99.4, Fs4, 3.2, 0.12, atk=0.9, pan=-0.2)
+timp(98.35, 0.5)
+timp(100.25, 0.62)
+tp = 98.0
 k = 0
-while tp < 115.4:
+while tp < 102.4:
     pulse(tp, D2 if k % 2 == 0 else A1, 0.2, -0.1 if k % 2 == 0 else 0.1)
     tp += 0.2394
     k += 1
 
-# resolve — D major, first full triad at rest
-string_note(116.3, D3, 10.5, 0.15, atk=2.6, pan=-0.1)
-string_note(116.9, Fs3, 9.6, 0.12, atk=2.8, pan=0.15)
-string_note(117.5, A3, 8.8, 0.1, atk=3.0)
-string_note(118.3, D4, 7.6, 0.08, atk=3.2, pan=-0.2)
-for t, f, v in [(117.2, D5, 0.24), (118.0, A4, 0.2), (118.9, Fs4, 0.18), (119.8, D4, 0.22)]:
+# resolve: D major at rest
+string_note(103.9, D3, 10.0, 0.15, atk=2.4, pan=-0.1)
+string_note(104.5, Fs3, 9.2, 0.12, atk=2.6, pan=0.15)
+string_note(105.1, A3, 8.4, 0.1, atk=2.8)
+string_note(105.9, D4, 7.2, 0.08, atk=3.0, pan=-0.2)
+for t, f, v in [(104.6, D5, 0.24), (105.4, A4, 0.2), (106.3, Fs4, 0.18), (107.2, D4, 0.22)]:
     piano(t, f, v, 0.08)
-piano(121.3, A4, 0.14, -0.1)
-piano(122.7, D5, 0.13, 0.1)
-piano(125.5, D4, 0.15, 0.0, tau=3.2)
+piano(108.9, A4, 0.14, -0.1)
+piano(110.3, D5, 0.13, 0.1)
+piano(112.5, D4, 0.15, 0.0, tau=3.2)
 
 # ---------------------------------------------------------------------- air
 lp1 = lp2 = lp3 = 0.0

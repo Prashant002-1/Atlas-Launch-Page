@@ -9,10 +9,10 @@ import { sec } from "../timeline";
 export const S11Close: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const markIn = interpolate(frame, [sec(115.95), sec(116.85)], [0, 1], { ...clamp, easing: settle });
-  const rule = interpolate(frame, [sec(118.4), sec(119.1)], [0, 1], { ...clamp, easing: settle });
-  const road = interpolate(frame, [sec(121.0), sec(121.6)], [0, 1], { ...clamp, easing: settle });
-  const cta = interpolate(frame, [sec(122.4), sec(123.0)], [0, 1], { ...clamp, easing: settle });
+  const markIn = interpolate(frame, [sec(103.4), sec(104.3)], [0, 1], { ...clamp, easing: settle });
+  const rule = interpolate(frame, [sec(105.6), sec(106.3)], [0, 1], { ...clamp, easing: settle });
+  const road = interpolate(frame, [sec(107.8), sec(108.4)], [0, 1], { ...clamp, easing: settle });
+  const cta = interpolate(frame, [sec(109.0), sec(109.6)], [0, 1], { ...clamp, easing: settle });
 
   return (
     <AbsoluteFill style={{ alignItems: "center", justifyContent: "center" }}>
@@ -27,13 +27,13 @@ export const S11Close: React.FC = () => {
           }}
         />
         <div style={{ height: 34 }} />
-        <Line at={sec(116.6)} size={128} style={{ textAlign: "center" }}>
+        <Line at={sec(104.1)} size={128} dur={22} style={{ textAlign: "center" }}>
           Atlas
         </Line>
         <div style={{ height: 26 }} />
         <div style={{ width: 96, height: 2, background: C.clay, transform: `scaleX(${rule})` }} />
         <div style={{ height: 24 }} />
-        <Line at={sec(119.0)} size={44} weight={440} color={C.inkSoft} style={{ textAlign: "center" }}>
+        <Line at={sec(106.2)} size={44} dur={20} weight={440} color={C.inkSoft} style={{ textAlign: "center" }}>
           AI Assignments
         </Line>
         <div style={{ height: 46 }} />

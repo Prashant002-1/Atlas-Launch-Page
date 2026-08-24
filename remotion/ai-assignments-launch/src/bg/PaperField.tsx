@@ -16,50 +16,50 @@ const track = (frame: number, keys: Key[], easing = glide) => {
 };
 
 const poolAx: Key[] = [
-  { t: sec(0), v: 20 }, { t: sec(5.6), v: 20 }, { t: sec(8), v: 74 },
-  { t: sec(13.6), v: 74 }, { t: sec(16), v: 50 }, { t: sec(20.8), v: 50 },
-  { t: sec(23.2), v: 76 }, { t: sec(29.6), v: 76 }, { t: sec(32), v: 34 },
-  { t: sec(46.6), v: 34 }, { t: sec(49), v: 72 }, { t: sec(63.8), v: 72 },
-  { t: sec(66.4), v: 26 }, { t: sec(83), v: 26 }, { t: sec(85.5), v: 50 },
-  { t: sec(90.8), v: 50 }, { t: sec(93.4), v: 66 }, { t: sec(105), v: 66 },
-  { t: sec(117), v: 50 }, { t: sec(130), v: 50 },
+  { t: sec(0), v: 22 }, { t: sec(4.6), v: 22 }, { t: sec(6.6), v: 74 },
+  { t: sec(12.2), v: 74 }, { t: sec(14.2), v: 50 }, { t: sec(18.9), v: 50 },
+  { t: sec(21), v: 76 }, { t: sec(26.9), v: 76 }, { t: sec(29), v: 30 },
+  { t: sec(50.2), v: 30 }, { t: sec(52.4), v: 70 }, { t: sec(57), v: 70 },
+  { t: sec(59.4), v: 26 }, { t: sec(72.6), v: 26 }, { t: sec(75), v: 50 },
+  { t: sec(80.2), v: 50 }, { t: sec(82.6), v: 64 }, { t: sec(92.4), v: 64 },
+  { t: sec(104.4), v: 50 }, { t: sec(118), v: 50 },
 ];
 const poolAy: Key[] = [
-  { t: sec(0), v: 80 }, { t: sec(5.6), v: 76 }, { t: sec(8), v: 24 },
-  { t: sec(13.6), v: 26 }, { t: sec(16), v: 86 }, { t: sec(20.8), v: 84 },
-  { t: sec(23.2), v: 38 }, { t: sec(29.6), v: 42 }, { t: sec(32), v: 40 },
-  { t: sec(46.6), v: 44 }, { t: sec(49), v: 42 }, { t: sec(63.8), v: 46 },
-  { t: sec(66.4), v: 44 }, { t: sec(83), v: 48 }, { t: sec(85.5), v: 50 },
-  { t: sec(90.8), v: 52 }, { t: sec(93.4), v: 40 }, { t: sec(105), v: 44 },
-  { t: sec(117), v: 40 }, { t: sec(130), v: 42 },
+  { t: sec(0), v: 78 }, { t: sec(4.6), v: 74 }, { t: sec(6.6), v: 24 },
+  { t: sec(12.2), v: 26 }, { t: sec(14.2), v: 86 }, { t: sec(18.9), v: 84 },
+  { t: sec(21), v: 38 }, { t: sec(26.9), v: 42 }, { t: sec(29), v: 40 },
+  { t: sec(50.2), v: 44 }, { t: sec(52.4), v: 42 }, { t: sec(57), v: 46 },
+  { t: sec(59.4), v: 44 }, { t: sec(72.6), v: 48 }, { t: sec(75), v: 50 },
+  { t: sec(80.2), v: 52 }, { t: sec(82.6), v: 40 }, { t: sec(92.4), v: 44 },
+  { t: sec(104.4), v: 40 }, { t: sec(118), v: 42 },
 ];
 const poolBx: Key[] = [
-  { t: sec(0), v: 84 }, { t: sec(5.6), v: 84 }, { t: sec(8), v: 18 },
-  { t: sec(13.6), v: 18 }, { t: sec(16), v: 82 }, { t: sec(20.8), v: 82 },
-  { t: sec(23.2), v: 16 }, { t: sec(29.6), v: 16 }, { t: sec(32), v: 84 },
-  { t: sec(46.6), v: 84 }, { t: sec(49), v: 22 }, { t: sec(63.8), v: 22 },
-  { t: sec(66.4), v: 82 }, { t: sec(83), v: 82 }, { t: sec(85.5), v: 50 },
-  { t: sec(90.8), v: 50 }, { t: sec(93.4), v: 20 }, { t: sec(105), v: 20 },
-  { t: sec(117), v: 50 }, { t: sec(130), v: 50 },
+  { t: sec(0), v: 82 }, { t: sec(4.6), v: 82 }, { t: sec(6.6), v: 18 },
+  { t: sec(12.2), v: 18 }, { t: sec(14.2), v: 82 }, { t: sec(18.9), v: 82 },
+  { t: sec(21), v: 16 }, { t: sec(26.9), v: 16 }, { t: sec(29), v: 84 },
+  { t: sec(50.2), v: 84 }, { t: sec(52.4), v: 22 }, { t: sec(57), v: 22 },
+  { t: sec(59.4), v: 82 }, { t: sec(72.6), v: 82 }, { t: sec(75), v: 50 },
+  { t: sec(80.2), v: 50 }, { t: sec(82.6), v: 20 }, { t: sec(92.4), v: 20 },
+  { t: sec(104.4), v: 50 }, { t: sec(118), v: 50 },
 ];
 const poolBy: Key[] = [
-  { t: sec(0), v: 16 }, { t: sec(5.6), v: 18 }, { t: sec(8), v: 78 },
-  { t: sec(13.6), v: 76 }, { t: sec(16), v: 20 }, { t: sec(20.8), v: 22 },
-  { t: sec(23.2), v: 78 }, { t: sec(29.6), v: 74 }, { t: sec(32), v: 78 },
-  { t: sec(46.6), v: 76 }, { t: sec(49), v: 80 }, { t: sec(63.8), v: 78 },
-  { t: sec(66.4), v: 20 }, { t: sec(83), v: 22 }, { t: sec(85.5), v: 76 },
-  { t: sec(90.8), v: 78 }, { t: sec(93.4), v: 74 }, { t: sec(105), v: 74 },
-  { t: sec(117), v: 88 }, { t: sec(130), v: 88 },
+  { t: sec(0), v: 18 }, { t: sec(4.6), v: 20 }, { t: sec(6.6), v: 78 },
+  { t: sec(12.2), v: 76 }, { t: sec(14.2), v: 20 }, { t: sec(18.9), v: 22 },
+  { t: sec(21), v: 78 }, { t: sec(26.9), v: 74 }, { t: sec(29), v: 78 },
+  { t: sec(50.2), v: 76 }, { t: sec(52.4), v: 80 }, { t: sec(57), v: 78 },
+  { t: sec(59.4), v: 20 }, { t: sec(72.6), v: 22 }, { t: sec(75), v: 76 },
+  { t: sec(80.2), v: 78 }, { t: sec(82.6), v: 74 }, { t: sec(92.4), v: 74 },
+  { t: sec(104.4), v: 88 }, { t: sec(118), v: 88 },
 ];
 const latticeO: Key[] = [
-  { t: sec(0), v: 0.06 }, { t: sec(6.4), v: 0.052 }, { t: sec(14.4), v: 0.062 },
-  { t: sec(21.6), v: 0.042 }, { t: sec(47.4), v: 0.046 }, { t: sec(64.8), v: 0.048 },
-  { t: sec(84), v: 0.066 }, { t: sec(91.6), v: 0.046 }, { t: sec(105.4), v: 0.03 },
-  { t: sec(116.5), v: 0.03 }, { t: sec(119), v: 0.058 }, { t: sec(130), v: 0.058 },
+  { t: sec(0), v: 0.06 }, { t: sec(5.2), v: 0.052 }, { t: sec(13), v: 0.062 },
+  { t: sec(19.6), v: 0.042 }, { t: sec(51), v: 0.048 }, { t: sec(58), v: 0.05 },
+  { t: sec(74), v: 0.066 }, { t: sec(80.8), v: 0.046 }, { t: sec(92.7), v: 0.03 },
+  { t: sec(103.5), v: 0.03 }, { t: sec(106), v: 0.058 }, { t: sec(118), v: 0.058 },
 ];
 
 export const darknessAt = (frame: number) =>
-  interpolate(frame, [sec(105.6), sec(106.4), sec(115.3), sec(116.1)], [0, 1, 1, 0], clamp);
+  interpolate(frame, [sec(92.6), sec(93.4), sec(102.4), sec(103.3)], [0, 1, 1, 0], clamp);
 
 export const PaperField: React.FC = () => {
   const frame = useCurrentFrame();
@@ -73,7 +73,7 @@ export const PaperField: React.FC = () => {
   const breathe = Math.sin(frame / 190) * 1.6;
   const poolFade = 1 - dark;
   // the friction beat sinks the paper a touch
-  const sink = interpolate(frame, [sec(84), sec(85), sec(90.6), sec(91.6)], [0, 1, 1, 0], clamp);
+  const sink = interpolate(frame, [sec(74), sec(75), sec(79.9), sec(80.8)], [0, 1, 1, 0], clamp);
 
   const dx = frame * 0.045;
   const dy = frame * 0.028;
