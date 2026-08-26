@@ -20,7 +20,7 @@ Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 110s · singl
 4. **17.4–24.6 · The reveal** — AI Assignments in the composer beside Essay / Problem set / Quiz (the one floating window).
 5. **24.6–45.4 · The dictation** — the teacher's words type straight onto the paper, no chrome; the agent takes the instructions and builds the rubric from them; then the line gets its own stage. "Your rubric. Your agent. No two alike."
 6. **45.4–52 · Ship** — the rubric fans to 26 anonymous seats. "Your agent builds the agent your students meet. And works with each one." Personal for each student · every conversation recorded.
-7. **52–67.6 · The student's side** — problem-7 opener, claim, and the agent draws the picture in-chat.
+7. **52–67.6 · The student's side** — midterm-stakes opener, claim, and the agent draws the picture in-chat.
 8. **67.6–73.6 · Friction** — "Cheating a conversation is harder than having one." Ghost of the field painting behind.
 9. **73.6–85.8 · Draft grade** — evidence against the teacher's rubric, a drafted 91, adjust or publish.
 10. **85.8–96.2 · The dark cut** — thesis, then the order: "Stop detecting AI. Start assigning it." Timpani + risers.

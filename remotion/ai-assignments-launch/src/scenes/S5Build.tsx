@@ -16,7 +16,7 @@ const ROWS = [
   { k: "Boundary", v: "Hints only. Never the answer.", accent: true },
   { k: "Sources", v: "Course readings, cited" },
   { k: "Applied", v: "Real examples, thesis tested" },
-  { k: "Context", v: "Midterm problem 7 follow up" },
+  { k: "Stakes", v: "On the midterm. Taken seriously.", accent: false },
 ];
 
 export const S5Build: React.FC = () => {

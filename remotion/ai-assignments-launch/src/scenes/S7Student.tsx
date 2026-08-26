@@ -76,7 +76,7 @@ export const S7Student: React.FC = () => {
         >
           <div style={{ display: "flex", flexDirection: "column", gap: 13 }}>
             <Bubble at={T7.a1} who="agent" width="90%">
-              Heads up: this connects to problem 7 from the midterm. Let&rsquo;s get it right this time.
+              Heads up: this will be on the midterm. Worth getting right.
             </Bubble>
             <Bubble at={T7.a2} who="agent" width="72%">
               Start me off. What&rsquo;s your claim, in one sentence?

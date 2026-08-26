@@ -50,9 +50,8 @@ export const AssignRow: React.FC<{
         alignItems: "center",
         gap: 18,
         padding: "15px 18px",
-        border: "1px solid rgba(10,31,25,0.10)",
-        borderLeft: active ? `3px solid ${C.clay}` : "1px solid rgba(10,31,25,0.10)",
-        background: active ? "rgba(191,95,59,0.06)" : C.paperLift,
+        border: active ? "1px solid rgba(191,95,59,0.35)" : "1px solid rgba(10,31,25,0.10)",
+        background: active ? "rgba(191,95,59,0.05)" : C.paperLift,
         opacity: p,
         transform: `translateY(${(1 - p) * 16}px)`,
       }}
