@@ -36,7 +36,7 @@ export const VO_AT = {
 } as const;
 
 export const RAMBLE =
-  "Be curious, a little playful. Dissect the topic with them. When someone gets stuck, explain it with analogies the way 3Blue1Brown would, and if it helps, sketch a quick animation so they can see it. Give hints, never the answer. Let them build the intuition first, then lead them the rest of the way. Ask what they are citing, I care that the course readings show up. Push them to apply it to something real, then test their thesis. And this will be on the midterm, so make sure they take it seriously.";
+  "Give hints, never the answer. Let them build the intuition first, then lead them the rest of the way. Ask what they are citing, I care that the course readings show up. When someone gets stuck, explain it with analogies the way 3Blue1Brown would, and if it helps, sketch a quick animation so they can see it. Be curious with them, a little playful. Push them to apply it to something real, then test their thesis. And this will be on the midterm, so make sure they take it seriously.";
 
 export const T5 = {
   typeStart: s(25.4),

@@ -10,13 +10,13 @@ import { RAMBLE, T5, sec } from "../timeline";
 // 2. the agent takes those instructions and builds the rubric from them
 // 3. the line: your rubric, your agent, no two alike
 const ROWS = [
-  { k: "Personality", v: "Curious, a little playful" },
-  { k: "Method", v: "Analogies first, 3Blue1Brown style" },
-  { k: "Visuals", v: "Sketches it when seeing helps" },
   { k: "Boundary", v: "Hints only. Never the answer.", accent: true },
   { k: "Sources", v: "Course readings, cited" },
+  { k: "Method", v: "Analogies first, 3Blue1Brown style" },
+  { k: "Visuals", v: "Sketches it when seeing helps" },
+  { k: "Personality", v: "Curious, a little playful" },
   { k: "Applied", v: "Real examples, thesis tested" },
-  { k: "Stakes", v: "On the midterm. Taken seriously.", accent: false },
+  { k: "Stakes", v: "On the midterm. Taken seriously." },
 ];
 
 export const S5Build: React.FC = () => {
