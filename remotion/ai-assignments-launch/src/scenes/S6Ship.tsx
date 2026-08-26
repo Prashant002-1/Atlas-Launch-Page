@@ -60,15 +60,13 @@ export const S6Ship: React.FC = () => {
           padding: "22px 26px",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-          <span style={{ width: 11, height: 11, background: C.clay }} />
-          <span style={{ ...T.label, fontSize: 14, color: C.inkSoft }}>Agent rubric</span>
-          <span style={{ ...T.label, fontSize: 11.5, color: C.muted, marginLeft: "auto" }}>sealed</span>
+        <div style={{ display: "flex", alignItems: "center", marginBottom: 14 }}>
+          <span style={{ ...T.label, fontSize: 14, color: C.inkSoft }}>Rubric</span>
         </div>
         <div style={{ fontFamily: F.sans, fontSize: 19, color: C.ink, letterSpacing: "-0.01em", lineHeight: 1.55 }}>
-          Seven terms. Your voice.
+          One agent per student.
           <br />
-          <span style={{ color: C.clay }}>Shipping to your class now.</span>
+          <span style={{ color: C.clay }}>Every one carries your rubric.</span>
         </div>
       </div>
 
@@ -84,8 +82,12 @@ export const S6Ship: React.FC = () => {
       </div>
 
       <div style={{ position: "absolute", left: 0, right: 0, top: 150, textAlign: "center" }}>
-        <Line at={T6.bigLine} size={62} dur={20} exitAt={T6.exit} style={{ textAlign: "center" }}>
+        <Line at={T6.bigLine} size={60} dur={18} exitAt={T6.exit} style={{ textAlign: "center" }}>
           Your agent builds the agent your students meet.
+        </Line>
+        <div style={{ height: 14 }} />
+        <Line at={T6.bigLine + 16} size={40} dur={16} color={C.inkSoft} exitAt={T6.exit + 1} style={{ textAlign: "center" }}>
+          And works with each one.
         </Line>
       </div>
     </AbsoluteFill>

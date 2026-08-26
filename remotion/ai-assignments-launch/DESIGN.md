@@ -15,11 +15,11 @@ Replaces `hyperframes/ai-assignments-film`. 1920×1080 · 30fps · 110s · singl
 ## The argument (beats, v5)
 
 1. **0–4.6 · The fact** — "Every student is already using AI." beside a painted field current (128 brush strokes, baked p5.brush).
-2. **4.6–11.6 · The problem, plainly** — "You're grading the AI's work. Not the student's." Painted pencil gestures dissolve behind the polished page.
+2. **4.6–11.6 · The problem, plainly** — "You're grading the AI's work. Not the student's."
 3. **11.6–17.4 · The pivot** — "You can't keep AI out. You can decide how it comes in." Hand-inked underline (perfect-freehand).
 4. **17.4–24.6 · The reveal** — AI Assignments in the composer beside Essay / Problem set / Quiz (the one floating window).
-5. **24.6–45.4 · The dictation** — the teacher's words type straight onto the paper, no chrome; the Agent Rubric assembles as a flat hairline ledger, row by row, synced to the typing. "Your rubric. Your agent. No two alike."
-6. **45.4–52 · Ship** — the sealed rubric fans to 26 anonymous seats. "Your agent builds the agent your students meet." Personal for each student · every conversation recorded.
+5. **24.6–45.4 · The dictation** — the teacher's words type straight onto the paper, no chrome; the agent takes the instructions and builds the rubric from them; then the line gets its own stage. "Your rubric. Your agent. No two alike."
+6. **45.4–52 · Ship** — the rubric fans to 26 anonymous seats. "Your agent builds the agent your students meet. And works with each one." Personal for each student · every conversation recorded.
 7. **52–67.6 · The student's side** — problem-7 opener, claim, and the agent draws the picture in-chat.
 8. **67.6–73.6 · Friction** — "Cheating a conversation is harder than having one." Ghost of the field painting behind.
 9. **73.6–85.8 · Draft grade** — evidence against the teacher's rubric, a drafted 91, adjust or publish.

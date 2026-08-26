@@ -2,7 +2,6 @@ import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { Line } from "../text/Reveal";
 import { Shimmer } from "../ui/bits";
-import { Plate } from "../ui/Marginalia";
 import { C, PAD_X, T } from "../theme";
 import { clamp, settle, exitIn } from "../ease";
 import { sec } from "../timeline";
@@ -14,7 +13,6 @@ export const S2Problem: React.FC = () => {
   const sheetIn = interpolate(frame, [sec(5.0), sec(5.7)], [0, 1], { ...clamp, easing: settle });
   const sheetOut = interpolate(frame, [sec(11.3), sec(11.8)], [0, 1], { ...clamp, easing: exitIn });
   const float = Math.sin((frame - sec(4.6)) / 52) * 5;
-  const gestOut = interpolate(frame, [sec(10.3), sec(11.4)], [1, 0], { ...clamp, easing: exitIn });
 
   const lineW = [420, 452, 388, 430, 300, 444, 412, 340, 424, 208, 436, 372, 448, 296];
 
@@ -42,10 +40,6 @@ export const S2Problem: React.FC = () => {
           transform: `translateY(${(1 - sheetIn) * 60 + float - sheetOut * 40}px)`,
         }}
       >
-        {/* the thinking, painted, dissolving behind the polished page */}
-        <div style={{ position: "absolute", left: -120, top: 10, opacity: gestOut }}>
-          <Plate name="gestures" at={sec(5.5)} x={0} y={0} w={760} drawFrames={34} opacity={0.65} />
-        </div>
         <div
           style={{
             position: "relative",

@@ -26,8 +26,8 @@ export const VO_AT = {
   v3: s(12.2),
   v4: s(18.0),
   v5: s(25.2),
-  v6: s(32.4),
-  v7: s(41.0),
+  v6: s(39.4),
+  v7: s(43.9),
   v8: s(52.9),
   v9: s(68.2),
   v10: s(74.2),
@@ -39,12 +39,13 @@ export const RAMBLE =
   "Be curious, a little playful. Dissect the topic with them. When someone gets stuck, explain it with analogies the way 3Blue1Brown would, and if it helps, sketch a quick animation so they can see it. Give hints, never the answer. Let them build the intuition first, then lead them the rest of the way. Ask what they are citing, I care that the course readings show up. Push them to apply it to something real, then test their thesis. One more thing. Half the class missed problem 7 on the midterm. If this student was one of them, tell them this connects, and teach it properly this time.";
 
 export const T5 = {
-  typeStart: s(25.6),
-  typeEnd: s(39.6),
-  rows: [s(27.8), s(30.2), s(32.2), s(34.0), s(35.8), s(37.6), s(39.4)],
-  recede: s(40.2), //  dictation recedes, the line lands
-  headline: s(40.6),
-  exit: s(45.3),
+  typeStart: s(25.4),
+  typeEnd: s(38.6),
+  recede: s(38.9), //   the words clear the stage
+  rows: [s(39.3), s(39.6), s(39.9), s(40.2), s(40.5), s(40.8), s(41.1)],
+  ledgerOut: s(43.2), // the rubric clears; the line gets the stage
+  headline: s(43.7),
+  exit: s(45.4),
 } as const;
 
 export const T6 = {
