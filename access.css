@@ -1,0 +1,601 @@
+:root {
+  --access-paper: #f1f4ee;
+  --access-lift: #f8faf6;
+  --access-sink: #e1e9df;
+  --access-wash: #d9eadf;
+  --access-ink: #0a1f19;
+  --access-night: #06110d;
+  --access-soft: #2f4a41;
+  --access-muted: #5f7168;
+  --access-pine: #14543d;
+  --access-mint: #72d49a;
+  --access-line: rgba(10, 31, 25, 0.18);
+  --access-line-dark: rgba(241, 244, 238, 0.18);
+}
+
+.atlas-site {
+  background: var(--access-paper);
+}
+
+.atlas-site.nav-open {
+  overflow: hidden;
+}
+
+.atlas-site .site-header {
+  z-index: 20;
+}
+
+.atlas-site .header-inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+.atlas-site .site-nav {
+  display: flex;
+  justify-self: center;
+  align-items: center;
+  gap: clamp(1.1rem, 2.5vw, 2.4rem);
+}
+
+.atlas-site .site-nav a {
+  color: var(--access-soft);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.atlas-site .site-nav a:hover,
+.atlas-site .site-nav a:focus-visible,
+.atlas-site .site-nav a[aria-current="page"] {
+  color: var(--access-ink);
+}
+
+.atlas-site .nav-toggle {
+  display: none;
+  justify-self: end;
+  border: 0;
+  background: transparent;
+  color: var(--access-ink);
+  padding: 0.55rem;
+  font: inherit;
+  font-size: 0.84rem;
+  cursor: pointer;
+}
+
+.access-page {
+  min-height: 100svh;
+}
+
+.access-workbench {
+  padding-top: 5.5rem;
+}
+
+.access-workbench-shell {
+  min-height: calc(100svh - 5.5rem);
+  display: grid;
+  grid-template-columns: minmax(23rem, 0.72fr) minmax(38rem, 1.28fr);
+  align-items: stretch;
+  max-width: 92rem;
+}
+
+.access-brief {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(2rem, 4vw, 4rem);
+  background: var(--access-night);
+  color: var(--access-paper);
+}
+
+.access-brief h1 {
+  max-width: 9ch;
+  font-size: clamp(3.1rem, 4vw, 4rem);
+  font-weight: 450;
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+}
+
+.access-brief-copy > p:last-child {
+  max-width: 36rem;
+  margin-top: 1.7rem;
+  color: rgba(241, 244, 238, 0.69);
+  font-size: 0.96rem;
+  line-height: 1.65;
+}
+
+.access-brief-art {
+  position: relative;
+  flex: 1;
+  min-height: 19rem;
+  margin-top: clamp(3rem, 8vh, 6rem);
+  overflow: hidden;
+  background: var(--access-mint);
+}
+
+.access-brief-art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(241, 244, 238, 0.22);
+  pointer-events: none;
+}
+
+.access-brief-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 58% center;
+  mix-blend-mode: luminosity;
+  opacity: 0.86;
+}
+
+.access-direct {
+  margin-top: auto;
+  padding-top: 2rem;
+  color: rgba(241, 244, 238, 0.55);
+  font-size: 0.72rem;
+}
+
+.access-direct a {
+  color: var(--access-paper);
+  text-underline-offset: 0.25rem;
+}
+
+.access-form-panel {
+  min-width: 0;
+  padding: clamp(2rem, 4vw, 4rem);
+  background: var(--access-lift);
+}
+
+.access-form {
+  position: relative;
+}
+
+.access-form-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  padding-bottom: 2rem;
+}
+
+.access-form-head h2 {
+  font-size: clamp(2rem, 3.2vw, 3.2rem);
+  font-weight: 490;
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.access-form-head > p {
+  color: var(--access-muted);
+  font-size: 0.68rem;
+}
+
+.access-group {
+  min-width: 0;
+  margin: 0;
+  padding: 2.2rem 0;
+  border: 0;
+  border-top: 1px solid var(--access-line);
+}
+
+.access-group legend {
+  padding: 0;
+  color: var(--access-ink);
+  font-size: 1.08rem;
+  font-weight: 560;
+}
+
+.access-row {
+  display: grid;
+  gap: 1.25rem;
+  padding-top: 1.4rem;
+}
+
+.access-row-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.access-row-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field label {
+  color: var(--access-ink);
+  font-size: 0.72rem;
+  font-weight: 540;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid var(--access-line);
+  border-radius: 3px;
+  background: var(--access-paper);
+  color: var(--access-ink);
+  padding: 0.82rem 0.85rem;
+  font: inherit;
+  font-size: 0.82rem;
+  transition:
+    border-color 160ms linear,
+    background-color 160ms linear;
+}
+
+.field input:hover,
+.field select:hover,
+.field textarea:hover {
+  border-color: rgba(10, 31, 25, 0.32);
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--access-pine);
+  background: #ffffff;
+}
+
+.field input,
+.field select {
+  min-height: 3.1rem;
+}
+
+.field textarea {
+  min-height: 10rem;
+  resize: vertical;
+}
+
+.field textarea::placeholder,
+.field input::placeholder {
+  color: #53655d;
+  opacity: 1;
+}
+
+.access-optional {
+  margin-top: 1.2rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid var(--access-line);
+}
+
+.access-optional summary {
+  cursor: pointer;
+  color: var(--access-ink);
+  font-size: 0.78rem;
+  font-weight: 540;
+}
+
+.access-optional summary span {
+  margin-left: 0.45rem;
+  color: var(--access-muted);
+  font-weight: 400;
+}
+
+.access-current-field {
+  margin-top: 1.3rem;
+}
+
+.access-submit-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2rem;
+  align-items: start;
+  padding-top: 2rem;
+  border-top: 1px solid var(--access-line);
+}
+
+.consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  max-width: 40rem;
+  color: var(--access-soft);
+  font-size: 0.73rem;
+}
+
+.consent input {
+  margin-top: 0.2rem;
+  accent-color: var(--access-pine);
+}
+
+.form-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.7rem;
+}
+
+.form-actions .button {
+  border: 0;
+  cursor: pointer;
+}
+
+.form-actions .button:disabled {
+  cursor: wait;
+  opacity: 0.58;
+}
+
+.form-status {
+  max-width: 22rem;
+  min-height: 1.2rem;
+  color: var(--access-soft);
+  font-size: 0.72rem;
+  text-align: right;
+}
+
+.form-status[data-state="error"] {
+  color: #8e2f20;
+}
+
+.form-status[data-state="success"] {
+  color: var(--access-pine);
+}
+
+.access-success {
+  min-height: 34rem;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 1.5rem;
+  align-content: center;
+  padding: clamp(2rem, 5vw, 5rem);
+  background: var(--access-wash);
+}
+
+.access-success[hidden] {
+  display: none;
+}
+
+.access-success img {
+  margin-top: 0.25rem;
+}
+
+.access-success h2 {
+  font-size: clamp(2.4rem, 5vw, 5rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+}
+
+.access-success p {
+  max-width: 36rem;
+  margin-top: 1rem;
+  color: var(--access-soft);
+}
+
+.access-success .button {
+  margin-top: 2rem;
+}
+
+.access-form[data-complete="true"] > :not(.honeypot):not(.access-success) {
+  display: none;
+}
+
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.atlas-site .site-footer {
+  background: var(--access-ink);
+  color: var(--access-paper);
+}
+
+.atlas-site .site-footer::before {
+  background: rgba(241, 244, 238, 0.18);
+}
+
+.atlas-site .footer-line {
+  color: rgba(241, 244, 238, 0.58);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1.4rem;
+  font-size: 0.72rem;
+}
+
+.footer-links a {
+  color: var(--access-paper);
+  text-decoration: none;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
+/* 404 keeps the same company-shell treatment without loading the form. */
+.atlas-site .not-found {
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  justify-items: stretch;
+  margin: 0;
+  padding-block: 4rem;
+}
+
+.not-found-inner {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.55fr) minmax(0, 1fr);
+  gap: clamp(3rem, 9vw, 9rem);
+  align-items: end;
+}
+
+.not-found-code {
+  color: var(--access-pine);
+  font-size: clamp(7rem, 16vw, 14rem);
+  font-weight: 540;
+  line-height: 0.7;
+  letter-spacing: -0.04em;
+}
+
+.not-found-inner > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.atlas-site .not-found h1 {
+  max-width: 14ch;
+  margin-top: 2.5rem;
+  font-size: clamp(2.5rem, 5.2vw, 5rem);
+  line-height: 0.98;
+  letter-spacing: -0.038em;
+}
+
+.not-found-inner > div > p {
+  max-width: 34ch;
+  margin-top: 1.25rem;
+  color: var(--access-soft);
+}
+
+.not-found-inner .button {
+  margin-top: 2rem;
+}
+
+@media (max-width: 64rem) {
+  .access-workbench-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .access-brief {
+    min-height: auto;
+    display: grid;
+    grid-template-columns: minmax(18rem, 0.8fr) minmax(24rem, 1fr);
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .access-brief-art {
+    margin-top: 0;
+  }
+
+  .access-direct {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 50rem) {
+  .atlas-site .header-inner {
+    grid-template-columns: 1fr auto;
+  }
+
+  .atlas-site .nav-toggle {
+    display: block;
+  }
+
+  .atlas-site .header-cta {
+    display: none;
+  }
+
+  .atlas-site .site-nav {
+    position: absolute;
+    top: 4.3rem;
+    left: var(--edge-l);
+    right: var(--edge-r);
+    width: auto;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.3rem 1rem;
+    border: 1px solid var(--access-line);
+    border-radius: 4px;
+    background: var(--access-lift);
+    justify-self: stretch;
+  }
+
+  .atlas-site .site-nav.is-open {
+    display: flex;
+  }
+
+  .atlas-site .site-nav a {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--access-line);
+  }
+
+  .atlas-site .site-nav a:last-child {
+    border-bottom: 0;
+  }
+
+  .access-brief {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .access-direct {
+    grid-column: 1;
+  }
+
+  .access-row-three,
+  .access-row-two {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 40rem) {
+  .access-workbench {
+    padding-top: 4.5rem;
+  }
+
+  .access-brief,
+  .access-form-panel {
+    padding: 1.25rem;
+  }
+
+  .access-brief h1 {
+    font-size: clamp(3rem, 14vw, 4.4rem);
+  }
+
+  .access-brief-art {
+    min-height: 15rem;
+  }
+
+  .access-form-head {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .access-submit-row {
+    grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    align-items: flex-start;
+  }
+
+  .form-status {
+    text-align: left;
+  }
+
+  .access-success {
+    grid-template-columns: 1fr;
+    min-height: 30rem;
+  }
+
+  .footer-links {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, max-content);
+    justify-content: start;
+    gap: 0.7rem 1.1rem;
+  }
+
+  .not-found-inner {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+  }
+}

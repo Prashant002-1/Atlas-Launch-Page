@@ -1,0 +1,22 @@
+<svg viewBox="0 0 520 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Atlas">
+  <defs>
+    <clipPath id="avatarClip">
+      <circle cx="260" cy="260" r="250"/>
+    </clipPath>
+  </defs>
+  <circle cx="260" cy="260" r="250" fill="#061F1A"/>
+  <g clip-path="url(#avatarClip)">
+    <path d="M260 50 L555 560 H-35 L260 50Z" fill="#FFFFFF"/>
+    <path d="M260 50 L413 560 H107 L260 50Z" fill="#061F1A"/>
+    <path d="M260 50 L329 560 H191 L260 50Z" fill="#FFFFFF"/>
+    <g fill="none" stroke="#FFFFFF" stroke-linecap="butt">
+      <path d="M90 52 V103" stroke-width="8"/>
+      <path d="M140 15 V66" stroke-width="7"/>
+      <path d="M190 -6 V45" stroke-width="7"/>
+      <path d="M330 -6 V45" stroke-width="7"/>
+      <path d="M380 15 V66" stroke-width="7"/>
+      <path d="M430 52 V103" stroke-width="8"/>
+    </g>
+    <path d="M260 -16 V50" fill="none" stroke="#FFFFFF" stroke-width="10" stroke-linecap="butt"/>
+  </g>
+</svg>

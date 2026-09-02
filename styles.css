@@ -56,8 +56,8 @@
   --font-sans: "Geist", system-ui, sans-serif;
   --font-mono: "Geist Mono", monospace;
 
-  /* One enormous moment, then a real drop. The ratio does the work. */
-  --text-hero: clamp(2.9rem, 6vw + 0.4rem, 7.4rem);
+  /* One decisive moment, with enough restraint to leave room for the field. */
+  --text-hero: clamp(3rem, 5.5vw + 0.2rem, 5.9rem);
   --text-h2: clamp(1.9rem, 3vw + 0.8rem, 3.6rem);
   --text-lead: clamp(1.06rem, 0.5vw + 0.92rem, 1.28rem);
   --text-body: 1rem;
@@ -65,7 +65,7 @@
   --text-micro: 0.72rem;
 
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
-  --spring: cubic-bezier(0.34, 1.45, 0.5, 1);
+  --spring: cubic-bezier(0.16, 1, 0.3, 1);
 
   /* Asymmetric shell: a generous left margin, and a right margin that
      leaves room for the instrument edge. */
@@ -87,6 +87,47 @@ html {
 }
 html.has-lenis {
   scroll-behavior: auto;
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+.site-header .brand {
+  view-transition-name: atlas-brand;
+}
+
+.rail {
+  view-transition-name: atlas-rail;
+}
+
+::view-transition-old(root) {
+  animation: 180ms ease-in both atlas-page-out;
+}
+
+::view-transition-new(root) {
+  animation: 420ms var(--ease) 30ms both atlas-page-in;
+}
+
+::view-transition-group(atlas-brand),
+::view-transition-group(atlas-rail) {
+  animation-duration: 420ms;
+  animation-timing-function: var(--ease);
+}
+
+@keyframes atlas-page-out {
+  to {
+    opacity: 0;
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+@keyframes atlas-page-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+    clip-path: inset(2% 0 0 0);
+  }
 }
 
 body {
@@ -427,204 +468,152 @@ html.reduced-motion [data-reveal] {
   animation: lens-breathe 4.5s ease-in-out infinite;
 }
 
-/* ── hero — standalone, immersive ───────────────────────────────────── */
+/* ── hero — quiet center, living frame ───────────────────────────────── */
 .hero {
   position: relative;
   z-index: 1;
   display: grid;
   align-content: center;
-  min-height: min(100svh, 68rem);
-  padding-block: clamp(7rem, 14vh, 10rem) clamp(4.5rem, 8vw, 8.5rem);
+  min-height: min(100svh, 62rem);
+  padding-block: clamp(9rem, 18vh, 12rem) clamp(8rem, 15vh, 10rem);
+  overflow: hidden;
+  isolation: isolate;
 }
 .hero-field {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
-  /* No mask: ink is ink. The seeding itself keeps the words' zone
-     quiet — composition happens in the field, not over it. */
 }
+
 .hero-inner {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  /* Keep the text centered in the compass grid, even on wide screens
+     where the shared shell would otherwise stop at its max width. */
+  max-width: none;
 }
 .hero h1 {
   font-size: var(--text-hero);
-  line-height: 0.97;
+  line-height: 0.98;
   letter-spacing: -0.035em;
-  max-width: 15ch;
+  max-width: 13.5ch;
 }
 .hero-sub {
-  margin-top: 1.9rem;
-  max-width: 44ch;
+  margin-top: 1.8rem;
+  max-width: 57ch;
   font-size: var(--text-lead);
   line-height: 1.58;
   color: var(--ink-soft);
 }
+.atlas-definition {
+  position: relative;
+  display: inline-block;
+}
+.atlas-term {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+  cursor: help;
+}
+.atlas-term sup {
+  position: relative;
+  top: -0.38em;
+  margin-left: 0.08em;
+  font-size: 0.58em;
+  font-weight: 600;
+  line-height: 0;
+}
+.atlas-definition-card {
+  position: absolute;
+  z-index: 4;
+  top: calc(100% + 0.55rem);
+  left: 0;
+  display: block;
+  width: min(20.5rem, calc(100vw - 2.5rem));
+  padding: 1rem 1.1rem 1.05rem;
+  border: 1px solid rgba(10, 31, 25, 0.34);
+  border-radius: 4px;
+  background: var(--paper-lift);
+  box-shadow: 0 10px 28px rgba(10, 31, 25, 0.045);
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  line-height: 1.42;
+  text-wrap: pretty;
+  opacity: 0;
+  visibility: hidden;
+  clip-path: inset(0 0 100% 0);
+  transform-origin: top left;
+  transition:
+    opacity 0.14s linear,
+    clip-path 0.3s var(--ease),
+    visibility 0s linear 0.3s;
+  pointer-events: none;
+}
+.atlas-definition-card::before {
+  content: "";
+  position: absolute;
+  top: -0.38rem;
+  left: 1.25rem;
+  width: 0.68rem;
+  height: 0.68rem;
+  border-top: 1px solid rgba(10, 31, 25, 0.34);
+  border-left: 1px solid rgba(10, 31, 25, 0.34);
+  background: var(--paper-lift);
+  transform: rotate(45deg);
+}
+.atlas-definition-card > span {
+  display: block;
+}
+.definition-head {
+  display: flex !important;
+  align-items: baseline;
+  gap: 0.38rem;
+  color: var(--ink);
+}
+.definition-head strong {
+  font-weight: 620;
+}
+.definition-head em {
+  color: var(--muted);
+  font-style: italic;
+}
+.definition-literal {
+  margin-top: 0.38rem;
+}
+.definition-atlas {
+  margin-top: 0.62rem;
+  max-width: 30ch;
+}
+.atlas-definition.is-open .atlas-definition-card {
+  opacity: 1;
+  visibility: visible;
+  clip-path: inset(-0.75rem -1rem -1rem -1rem);
+  transition-delay: 0s;
+  pointer-events: auto;
+}
 .hero-cta {
-  margin-top: 2.9rem;
+  margin-top: 2.7rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 1.75rem;
   flex-wrap: wrap;
-}
-
-/* ── the sheet — ruled structure below the hero ─────────────────────── */
-.sheet {
-  position: relative;
-}
-/* Words never touch the drawn line: section content steps in from the
-   sheet's left rule, while the rules themselves still span the shell. */
-.sheet .section .shell,
-.sheet .closing .shell {
-  padding-left: clamp(1.5rem, 2.5vw, 2.5rem);
-}
-.frame {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: var(--edge-l);
-  width: 1px;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    var(--line) 0 4px,
-    transparent 4px 9px
-  );
-}
-
-/* Section rules: a solid hairline with a register cross where it meets
-   the left line, and a bare end-cap toward the instrument edge. */
-.rule {
-  position: relative;
-  z-index: 1;
-}
-.rule .shell {
-  display: block;
-  position: relative;
-  height: 1px;
-  background: var(--line);
-}
-.rule .shell::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 11px;
-  height: 11px;
-  transform: translate(-50%, -50%);
-  background:
-    linear-gradient(var(--line-strong), var(--line-strong)) center / 1px 11px
-      no-repeat,
-    linear-gradient(var(--line-strong), var(--line-strong)) center / 11px 1px
-      no-repeat;
-}
-.rule .shell::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 100%;
-  width: 1px;
-  height: 9px;
-  transform: translate(-50%, -50%);
-  background: var(--line-strong);
-}
-
-/* ── shared section rhythm ──────────────────────────────────────────── */
-.section {
-  position: relative;
-  z-index: 1;
-  padding-block: clamp(5rem, 8vw, 9rem);
-}
-.section h2,
-.closing h2 {
-  font-size: var(--text-h2);
-  line-height: 1.08;
-  letter-spacing: -0.025em;
-}
-
-/* ── the three agents ───────────────────────────────────────────────── */
-.layer-head {
-  display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(1.5rem, 5vw, 5rem);
-  align-items: end;
-}
-.layer-head h2 {
-  max-width: 16ch;
-}
-.layer-head p {
-  font-size: var(--text-lead);
-  line-height: 1.55;
-  color: var(--ink-soft);
-  max-width: 38ch;
-}
-
-/* Rule-separated columns rather than boxed cards: three parallel facts
-   should read as one table, not three competing objects. The numeral is
-   a CSS counter — presentation, not content. */
-.agents {
-  list-style: none;
-  counter-reset: agent;
-  margin: clamp(3rem, 6vw, 5rem) 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(1.5rem, 3.5vw, 3.5rem);
-}
-.agents li {
-  display: grid;
-  gap: 0.8rem;
-  align-content: start;
-  padding-top: 1.35rem;
-  border-top: 1px solid var(--line-strong);
-}
-.agents li::before {
-  counter-increment: agent;
-  content: "0" counter(agent);
-  font-family: var(--font-mono);
-  font-size: var(--text-micro);
-  letter-spacing: 0.09em;
-  color: var(--muted);
-}
-.agents h3 {
-  font-size: clamp(1.12rem, 0.8vw + 0.9rem, 1.42rem);
-  line-height: 1.28;
-  letter-spacing: -0.015em;
-}
-.agents p {
-  font-size: var(--text-small);
-  color: var(--ink-soft);
-}
-.agents span {
-  margin-top: 0.3rem;
-  font-family: var(--font-mono);
-  font-size: var(--text-micro);
-  letter-spacing: 0.03em;
-  color: var(--muted);
-}
-
-/* ── closing — large, quiet, left ───────────────────────────────────── */
-.closing {
-  position: relative;
-  z-index: 1;
-  padding-block: clamp(6rem, 10vw, 11rem) clamp(7rem, 11vw, 12rem);
-}
-.closing-mark {
-  width: 48px;
-  height: 48px;
-  margin-bottom: clamp(1.6rem, 3vw, 2.4rem);
-}
-.closing h2 {
-  font-size: clamp(2.3rem, 4.6vw + 0.6rem, 5.4rem);
-  line-height: 1;
-  letter-spacing: -0.034em;
-  max-width: 14ch;
-}
-.closing-cta {
-  margin-top: clamp(2.2rem, 3.5vw, 3.2rem);
 }
 
 /* ── footer ─────────────────────────────────────────────────────────── */
@@ -726,15 +715,6 @@ html.reduced-motion [data-reveal] {
   .rail-lens {
     display: none;
   }
-  .layer-head {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-@media (max-width: 46rem) {
-  .agents {
-    grid-template-columns: minmax(0, 1fr);
-  }
 }
 
 @media (max-width: 40rem) {
@@ -752,8 +732,8 @@ html.reduced-motion [data-reveal] {
     padding-block: 1.05rem;
   }
   .hero {
-    min-height: min(100svh, 46rem);
-    padding-top: 6.5rem;
+    min-height: min(100svh, 48rem);
+    padding-block: 7.8rem 7rem;
   }
   .hero h1 {
     letter-spacing: -0.03em;
@@ -781,5 +761,12 @@ html.reduced-motion [data-reveal] {
   [data-reveal] {
     opacity: 1;
     transform: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-group(atlas-brand),
+  ::view-transition-group(atlas-rail) {
+    animation-duration: 0.001ms !important;
   }
 }

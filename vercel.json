@@ -5,13 +5,18 @@
   "redirects": [
     {
       "source": "/product",
-      "destination": "/",
-      "permanent": false
+      "destination": "/products",
+      "permanent": true
     },
     {
-      "source": "/about",
-      "destination": "/",
-      "permanent": false
+      "source": "/how-it-works",
+      "destination": "/products/ai-assignments",
+      "permanent": true
+    },
+    {
+      "source": "/work-with-us",
+      "destination": "/contact",
+      "permanent": true
     }
   ],
   "headers": [
@@ -20,7 +25,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'none'; connect-src 'self'; font-src 'self'; form-action 'none'; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self'; style-src 'self'; upgrade-insecure-requests"
+          "value": "default-src 'self'; base-uri 'none'; connect-src 'self'; font-src 'self'; form-action 'self'; frame-ancestors 'none'; img-src 'self' data:; media-src 'self'; object-src 'none'; script-src 'self'; style-src 'self'; upgrade-insecure-requests"
         },
         {
           "key": "Cross-Origin-Opener-Policy",

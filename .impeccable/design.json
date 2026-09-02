@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-10T22:30:00-04:00",
+  "title": "Design System: Atlas Launch Site",
+  "extensions": {
+    "colorMeta": {
+      "paper": { "role": "neutral", "displayName": "Course Paper", "canonical": "#f1f4ee" },
+      "ink": { "role": "primary", "displayName": "Atlas Ink", "canonical": "#0a1f19" },
+      "pine": { "role": "primary", "displayName": "Pine Bearing", "canonical": "#14543d" },
+      "mint": { "role": "secondary", "displayName": "Mint Signal", "canonical": "#72d49a" },
+      "clay": { "role": "tertiary", "displayName": "Clay Annotation", "canonical": "#bf5f3b" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "One dominant claim per opening view." },
+      "headline": { "displayName": "Headline", "purpose": "Section and product-stage claims." },
+      "body": { "displayName": "Body", "purpose": "Clear explanatory copy." },
+      "label": { "displayName": "Operational Label", "purpose": "Real state and orientation only." }
+    },
+    "motion": {
+      "ease": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "spring": "cubic-bezier(0.34, 1.45, 0.5, 1)",
+      "rule": "One narrative interaction per page with a reduced-motion fallback."
+    },
+    "breakpoints": {
+      "compactNav": "68rem",
+      "stacked": "54rem",
+      "mobile": "40rem"
+    },
+    "narrative": {
+      "northStar": "The Living Course Map",
+      "rules": [
+        "The homepage is a cinematic argument.",
+        "How it works is a navigable course map.",
+        "Work with us is a collaborative launch workspace.",
+        "Pricing is a scope instrument.",
+        "Access is an intentional application."
+      ]
+    }
+  }
+}

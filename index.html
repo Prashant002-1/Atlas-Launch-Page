@@ -5,49 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Atlas is the agentic LMS where teachers see and shape learning."
+      content="Build AI Assignments, assess the evidence, and run the course around the work with Atlas."
     />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#f1f4ee" />
     <link rel="canonical" href="https://atlas-lms.com/" />
 
     <meta property="og:site_name" content="Atlas" />
-    <meta property="og:title" content="Atlas | Make learning visible" />
+    <meta property="og:title" content="Atlas | The learning system for the AI era" />
     <meta
       property="og:description"
-      content="The agentic LMS where teachers see and shape learning."
+      content="AI Assignments first. Evidence-backed assessment. A complete learning system around the work."
     />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://atlas-lms.com/" />
-    <!-- og:image ships separately: brand/og.png is designed and ready,
-         but binaries can't ride this commit path. Add the file, then:
-         og:image + twitter:image → https://atlas-lms.com/brand/og.png -->
 
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Atlas | Make learning visible" />
+    <meta name="twitter:title" content="Atlas | The learning system for the AI era" />
     <meta
       name="twitter:description"
-      content="The agentic LMS where teachers see and shape learning."
+      content="An AI-native LMS where teachers set the terms and students learn with AI inside the course."
     />
 
-    <title>Atlas | Make learning visible</title>
+    <title>Atlas | The learning system for the AI era</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/brand/atlas-mark.svg" type="image/svg+xml" />
-    <link
-      rel="preload"
-      href="/fonts/geist-sans-variable.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <link rel="preload" href="/fonts/geist-sans-variable.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/vendor/lenis.css" />
-    <link rel="stylesheet" href="/styles.css" />
+    <link rel="stylesheet" href="/styles.css?v=20260901c" />
+    <link rel="stylesheet" href="/product.css?v=20260901f" />
     <script src="/vendor/lenis.min.js" defer></script>
-    <script src="/field.js" defer></script>
-    <script src="/motion.js" defer></script>
+    <script src="/field.js?v=20260901g" defer></script>
+    <script src="/launch-field.js?v=20260901a" defer></script>
+    <script src="/definition.js?v=20260831e" defer></script>
+    <script src="/motion.js?v=20260831e" defer></script>
+    <script src="/site.js?v=20260831e" defer></script>
+    <script src="/product.js?v=20260901f" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
   </head>
-  <body>
+  <body class="product-site">
     <a class="skip-link" href="#main">Skip to content</a>
 
     <div class="site">
@@ -57,40 +54,28 @@
             <img src="/brand/atlas-mark.svg" alt="" width="32" height="32" />
             <span>Atlas</span>
           </a>
-          <a
-            class="header-cta"
-            href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
-          >
-            Launch access
-          </a>
+          <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+            Menu
+          </button>
+          <nav class="site-nav" id="site-nav" aria-label="Primary" data-site-nav>
+            <a href="/products/">Products</a>
+            <a href="/assessment/">Assessment</a>
+            <a href="/about/">Why Atlas</a>
+            <a href="/security/">Security</a>
+            <a href="/pricing/">Pricing</a>
+          </nav>
+          <a class="header-cta" href="/access/?interest=ai-assignments">Request access</a>
         </div>
       </header>
 
-      <!-- The instrument edge: the Atlas mark unrolled down the page. The
-           same degree ticks that sit inside the mark run the full height,
-           and the mark's slender needle rides the damped scroll value with
-           its tip against them. Not navigation — a bearing. On approach
-           the needle opens into a glass loupe showing the mark itself. -->
       <div class="rail" aria-hidden="true">
         <span class="rail-ticks"></span>
         <div class="rail-head">
-          <!-- the mark's needle in the right margin, tip meeting the
-               meridian's free end — tips touching tips, as in the mark -->
-          <svg
-            class="rail-apex"
-            viewBox="0 0 42 40"
-            width="42"
-            height="40"
-          >
+          <svg class="rail-apex" viewBox="0 0 42 40" width="42" height="40">
             <path d="M0 20 L42 0 L42 40 Z" fill="#0a1f19" />
             <path d="M0 20 L42 8.4 L42 31.6 Z" fill="#f1f4ee" />
             <path d="M0 20 L42 15.2 L42 24.8 Z" fill="#0a1f19" />
           </svg>
-          <!-- on approach, glass closes around the head and magnifies it
-               in place: the needle fills the view, the graduations stay
-               on the boundary, and as the head travels the ticks slide
-               through the glass at twice the pace — a true loupe. The
-               tick fringe is drawn by CSS so it can track --ptr-y. -->
           <span class="rail-lens">
             <svg viewBox="0 0 104 104" width="104" height="104">
               <path d="M36 52 L120 12 L120 92 Z" fill="#0a1f19" />
@@ -102,118 +87,216 @@
       </div>
 
       <main id="main">
-        <!-- The hero stands alone: no rules, no frame — just the field and
-             the words. The field is a current of fine strands that parts
-             around the pointer and settles back. -->
-        <section class="hero" id="top" aria-labelledby="hero-title">
+        <section class="hero" aria-labelledby="hero-title">
           <canvas class="hero-field" data-field aria-hidden="true"></canvas>
 
           <div class="shell hero-inner">
-            <h1 id="hero-title" data-reveal>
-              Give every student a personal agent.
-            </h1>
-
+            <h1 id="hero-title" data-reveal>The learning system for the AI era.</h1>
             <p class="hero-sub" data-reveal data-reveal-delay="1">
-              Atlas gives every student and teacher a personal agent. It
-              knows the course, remembers what matters, and stays with the
-              work as people reason, revise, and learn.
+              <span class="atlas-definition" data-definition>
+                <button class="atlas-term" type="button" aria-expanded="false" aria-controls="atlas-definition-card" aria-label="Atlas, show definition">
+                  Atlas<sup>1</sup>
+                </button>
+                <span class="atlas-definition-card" id="atlas-definition-card" role="definition" aria-hidden="true">
+                  <span class="definition-head"><strong>atlas</strong><span>/ˈatləs/</span><em>noun</em></span>
+                  <span class="definition-literal">a collection of maps.</span>
+                  <span class="definition-atlas">A way through every course.</span>
+                </span>
+              </span>
+              gives teachers a way to assign AI, not chase it. Students work with a course-grounded agent, and the reasoning behind the result stays available for feedback and assessment.
             </p>
-
             <div class="hero-cta" data-reveal data-reveal-delay="2">
-              <a
-                class="button button-lg"
-                href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
-              >
-                Request launch access
-              </a>
+              <a class="button button-lg" href="/products/ai-assignments/">Explore AI Assignments</a>
+              <a class="hero-path" href="/access/?interest=ai-assignments">Request pilot access</a>
             </div>
           </div>
         </section>
 
-        <!-- Below the hero, the sheet: ruled structure, left line, register
-             crosses. This is where the composition is drawn. -->
-        <div class="sheet">
-          <div class="frame" aria-hidden="true"></div>
+        <section class="film-world" aria-label="Atlas AI Assignments product film">
+          <div class="shell film-shell">
+            <video
+              controls
+              playsinline
+              preload="metadata"
+              poster="/assets/atlas-ai-assignments-v7-poster.webp"
+            >
+              <source src="/assets/atlas-ai-assignments-v7.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </section>
 
-          <div class="rule" aria-hidden="true"><span class="shell"></span></div>
+        <section class="product-portfolio" aria-labelledby="portfolio-title" data-chapter>
+          <div class="shell portfolio-intro">
+            <h2 id="portfolio-title">Start with the work. Run the course around it.</h2>
+            <p>AI Assignments, a full term of coursework, and the learning system they belong in.</p>
+          </div>
 
-          <section
-            class="section layer"
-            id="agents"
-            aria-labelledby="layer-title"
-          >
-            <div class="shell">
-              <div class="layer-head">
-                <h2 id="layer-title" data-reveal>
-                  A personal Atlas on both sides of the course.
-                </h2>
-                <p data-reveal data-reveal-delay="1">
-                  Each personal agent works for one person. The shared course
-                  agent carries the teacher&rsquo;s materials and teaching
-                  rules to students.
-                </p>
+          <div class="shell product-ledger">
+            <a class="product-entry" href="/products/ai-assignments/">
+              <div class="product-entry-copy">
+                <h3>AI Assignments</h3>
+                <span>Turn a teacher's own words into a guided student session, then return the work as evidence the teacher can review.</span>
               </div>
+              <strong>Explore</strong>
+            </a>
 
-              <ul class="agents" data-reveal-group>
-                <li>
-                  <h3>Work with the full student record.</h3>
-                  <p>
-                    Reads the student&rsquo;s courses, due work, grades,
-                    feedback, and learning profile.
-                  </p>
-                  <span>Works for each student</span>
-                </li>
-                <li>
-                  <h3>Plan and operate the course.</h3>
-                  <p>
-                    Helps with planning, drafting, review, and course work
-                    from the current record.
-                  </p>
-                  <span>Works for each teacher</span>
-                </li>
-                <li>
-                  <h3>Carry the course into student work.</h3>
-                  <p>
-                    Uses selected materials, teaching behavior, and course
-                    rules while students work through problems.
-                  </p>
-                  <span>Configured by the teacher for each course</span>
-                </li>
-              </ul>
+            <a class="product-entry" href="/products/course/">
+              <div class="product-entry-copy">
+                <h3>Atlas Course</h3>
+                <span>Build a sequence of assignments for the whole term, with shared course material, policies, feedback, and grading.</span>
+              </div>
+              <strong>Explore</strong>
+            </a>
+
+            <a class="product-entry" href="/products/lms/">
+              <div class="product-entry-copy">
+                <h3>Atlas LMS</h3>
+                <span>Courses, materials, modules, people, assignments, grades, and agents share one learning record.</span>
+              </div>
+              <strong>Explore</strong>
+            </a>
+          </div>
+        </section>
+
+        <section class="brief-world" aria-label="A teacher brief becoming an AI Assignment" data-brief-story data-chapter>
+          <div class="shell brief-stage">
+            <div class="teacher-voice">
+              <blockquote>
+                “Okay, I want them to figure out why this pricing idea might fail, but do not let Atlas tell them the answer. Make them use the elasticity reading, ask why their assumptions hold, and if they change their mind I want to see what changed. They can use AI, obviously, but the point is that they have to make the call.”
+              </blockquote>
+              <button type="button" data-brief-replay>Replay</button>
             </div>
-          </section>
 
-          <div class="rule" aria-hidden="true"><span class="shell"></span></div>
+            <div class="atlas-reads" aria-live="polite">
+              <ol>
+                <li data-brief-step><strong>Evaluate a pricing strategy with elasticity.</strong></li>
+                <li data-brief-step><strong>Question assumptions. Do not make the decision.</strong></li>
+                <li data-brief-step><strong>Use the Week 2 reading and the class model.</strong></li>
+                <li data-brief-step><strong>Keep the initial claim, challenge, revision, and final rationale.</strong></li>
+              </ol>
+            </div>
+          </div>
+        </section>
 
-          <section class="closing" id="close" aria-labelledby="closing-title">
-            <div class="shell">
-              <img
-                class="closing-mark"
-                src="/brand/atlas-mark.svg"
-                alt=""
-                aria-hidden="true"
-                width="48"
-                height="48"
-                data-reveal
-              />
-              <h2 id="closing-title" data-reveal data-reveal-delay="1">
-                Make learning visible.
-              </h2>
-              <div
-                class="hero-cta closing-cta"
-                data-reveal
-                data-reveal-delay="2"
-              >
-                <a
-                  class="button button-lg"
-                  href="mailto:contact@atlas-lms.com?subject=Atlas%20launch%20access"
-                >
-                  Contact Atlas
-                </a>
+        <section class="pedagogy-world" aria-labelledby="pedagogy-title" data-chapter>
+          <div class="shell pedagogy-intro">
+            <h2 id="pedagogy-title">AI changes the assignment, not just the answer.</h2>
+          </div>
+
+          <div class="shell learning-sequence">
+            <article>
+              <h3>Frame the problem.</h3>
+              <p>Decide what needs to be solved before asking for help. Atlas can ask for precision, but it does not choose the problem.</p>
+            </article>
+            <article>
+              <h3>Use the course.</h3>
+              <p>Bring the relevant reading, concept, or method into the reasoning and keep it attached to the claim.</p>
+            </article>
+            <article>
+              <h3>Revise under challenge.</h3>
+              <p>Test a counterexample, answer a hard question, and show whether the evidence changed the original position.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="assessment-world" aria-labelledby="assessment-title" data-chapter>
+          <div class="shell assessment-heading">
+            <h2 id="assessment-title">Assess the work against your rubric.</h2>
+          </div>
+          <div class="shell rubric-story">
+            <div class="rubric-teacher">
+              <p><strong>Leila teaches first-year composition at a public university.</strong> She loves helping students find their own point of view. She cares less about a polished first answer than whether students can read closely, defend a claim, and revise it honestly.</p>
+              <blockquote>“I want to hear their thinking in the final draft, not a version of what they think I want to hear.”</blockquote>
+            </div>
+            <div class="criterion-review">
+              <h3>Her rubric asks three questions.</h3>
+              <ol>
+                <li><strong>Make a clear claim.</strong><p>Does the student take a specific position that another reader could challenge?</p></li>
+                <li><strong>Use the text.</strong><p>Does the student support the claim with close reading instead of general summary?</p></li>
+                <li><strong>Revise with purpose.</strong><p>When the evidence pushes back, does the final draft show what changed and why?</p></li>
+              </ol>
+              <p class="teacher-review-state">Atlas brings the relevant work to each question. Leila makes the final judgment.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="lms-world" aria-labelledby="lms-title" data-chapter>
+          <div class="shell lms-world-head">
+            <h2 id="lms-title">The assignment belongs to a complete learning system.</h2>
+            <p>Materials, people, assignments, grades, and the agents working across them share the same course record.</p>
+          </div>
+
+          <div class="lms-console shell" role="img" aria-label="Atlas LMS course dashboard showing course navigation, modules, open assignments, and an Atlas briefing">
+            <nav class="console-nav" aria-label="Illustrated course navigation">
+              <div class="console-brand"><img src="/brand/atlas-mark.svg" alt="" width="26" height="26" /><span>Atlas</span></div>
+              <span class="is-current">Course</span>
+              <span>Materials</span>
+              <span>Modules</span>
+              <span>Assignments</span>
+              <span>Grades</span>
+              <span>People</span>
+              <span>Integrations</span>
+            </nav>
+
+            <div class="console-main">
+              <header class="console-top">
+                <div><small>FA · 26 / ECON 241</small><strong>Intermediate Microeconomics</strong></div>
+                <span>Open Atlas</span>
+              </header>
+              <div class="console-body">
+                <div class="course-plan">
+                  <div class="console-label"><span>Course plan</span><i>12 modules</i></div>
+                  <ol>
+                    <li><span>W1</span><b>Demand, supply, equilibrium</b><i>Published</i></li>
+                    <li><span>W2</span><b>Elasticity and total revenue</b><i>Current</i></li>
+                    <li><span>W3</span><b>Costs and market structure</b><i>Draft</i></li>
+                    <li><span>W4</span><b>Pricing strategy</b><i>Draft</i></li>
+                  </ol>
+                </div>
+                <div class="course-work">
+                  <div class="console-label"><span>Open work</span><i>7 assignments</i></div>
+                  <div class="work-strip"><span>Problem set</span><b>Elasticity and revenue</b><i>23 / 31</i></div>
+                  <div class="work-strip is-ai"><span>AI Assignment</span><b>Pricing strategy session</b><i>18 / 31</i></div>
+                  <div class="work-strip"><span>Reading check</span><b>Market structure</b><i>31 / 31</i></div>
+                </div>
               </div>
             </div>
-          </section>
-        </div>
+
+            <aside class="console-rail">
+              <div class="briefing-block"><span>Atlas briefing</span><p>23 submissions are ready. Five students revised their claim after using the elasticity model.</p></div>
+              <div class="people-block"><span>Course</span><strong>31 students</strong><small>1 teacher · 2 assistants</small></div>
+              <div class="record-block"><span>Record</span><dl><div><dt>Materials</dt><dd>18</dd></div><div><dt>Assignments</dt><dd>7</dd></div><div><dt>Grade items</dt><dd>12</dd></div></dl></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="trust-world" aria-labelledby="trust-title" data-chapter>
+          <div class="shell trust-layout">
+            <div>
+              <h2 id="trust-title">Your course data is not the product.</h2>
+              <p>Atlas is being built for real student work. That means clear data boundaries, teacher-reviewed decisions, and an honest account of what is live before a pilot begins.</p>
+            </div>
+            <nav aria-label="Atlas trust and company pages">
+              <a href="/security/"><span>Security</span><strong>How course and student data are handled</strong></a>
+              <a href="/integrations/"><span>Integrations</span><strong>How Atlas fits the systems you already use</strong></a>
+              <a href="/about/"><span>Why Atlas</span><strong>Why learning software has to change now</strong></a>
+              <a href="/pricing/"><span>Pricing</span><strong>What the private pilot includes</strong></a>
+            </nav>
+          </div>
+        </section>
+
+        <section class="launch-world" aria-labelledby="launch-title">
+          <canvas class="launch-field" data-launch-field aria-hidden="true"></canvas>
+          <div class="shell launch-world-inner">
+            <img src="/brand/atlas-mark.svg" alt="" width="54" height="54" />
+            <h2 id="launch-title">Bring the assignment you want students to remember.</h2>
+            <p>Atlas is opening a small private pilot for educators who want to design coursework around the reality of AI.</p>
+            <div class="launch-actions">
+              <a class="button button-lg" href="/access/?interest=ai-assignments">Request pilot access</a>
+              <a href="/products/">See every Atlas product</a>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer class="site-footer">
@@ -222,12 +305,10 @@
             <img src="/brand/atlas-mark.svg" alt="" width="26" height="26" />
             <span>Atlas</span>
           </a>
-          <p class="footer-line">
-            Agentic LMS where teachers see and shape learning.
-          </p>
-          <a class="footer-contact" href="mailto:contact@atlas-lms.com">
-            contact@atlas-lms.com
-          </a>
+          <p class="footer-line">The learning system for the AI era.</p>
+          <div class="footer-actions">
+            <a href="/products/">Products</a><a href="/assessment/">Assessment</a><a href="/about/">About</a><a href="/security/">Security</a><a href="/pricing/">Pricing</a><a href="/notes/">Notes</a><a href="/contact/">Contact</a>
+          </div>
         </div>
       </footer>
     </div>

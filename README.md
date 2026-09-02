@@ -1,75 +1,74 @@
 # Atlas Launch Page
 
-The temporary public launch page for Atlas. It is deliberately isolated from
-the authenticated Atlas-LMS application.
+The public product site for Atlas, an AI-native learning management system.
 
-## What lives here
+## Product order
 
-- A dependency-free static site
-- One public page with the launch hero, personal layer, and closing contact
-- The fixed Atlas mark and vendored brand fonts
-- The field (`field.js`): the hero is one quiet halftone surface (15°
-  print screen); ink pools are a state of that surface — dots swell and
-  take muted pigment where a pool lives. Pools are thrown, break under
-  the pointer, re-form around their living centroid, defect unevenly to
-  neighbors, mix pigment in OKLab, and ride a homing tide back to their
-  thrown composition. Loudness dials live in the pass-B shader: pigment
-  mute (0.62), ink peak alpha (0.48), resting grid alpha (0.27)
-- The instrument edge: full-height ticks with the mark's needle riding the
-  reader's position, opening into a glass tile of the mark on approach
-- A locally vendored Lenis 1.3.25 scroll layer with reduced-motion support
-- Privacy-friendly Vercel Web Analytics for page views and visitors
-- Vercel routing and security headers
-- Launch-ready metadata, sitemap, 404 handling, and accessible navigation
-- No application source, APIs, environment variables, or secrets
+1. AI Assignments
+2. Evidence-backed assessment
+3. Full-course coursework and Atlas LMS
 
-## Design language
+## Routes
 
-The page is one sheet composed left of an instrument edge. All content
-hangs from a generous left margin; a full-height column of ticks is the
-right border; the hero stands alone and immersive while the ruled
-structure (left line, section rules, register crosses) carries the body.
+- `/` presents the complete product story.
+- `/products/` introduces AI Assignments, Atlas Course, and Atlas LMS.
+- `/products/ai-assignments/` shows the assignment workflow and the V7 product film.
+- `/products/course/` shows the full-term coursework layer.
+- `/products/lms/` shows the complete learning system.
+- `/assessment/` explains evidence-linked teacher review.
+- `/integrations/` separates planned connection points from current product truth.
+- `/about/`, `/pricing/`, `/security/`, `/notes/`, and `/contact/` cover the company.
+- `/privacy/` and `/terms/` cover the public site and access form.
+- `/access/` collects a private pilot request.
 
-Type is Geist — sans for everything, mono for micro-labels. Emphasis
-comes from scale, weight, and placement, never from style changes.
+## Visual system
 
-Palette (brand plus documented field extensions):
+The homepage uses a quiet centered hero framed by two bounded particle fields. It does not use an orbit, node graph, system map, or full-screen interaction diagram.
 
-| Token   | Value     | Use                                            |
-| ------- | --------- | ---------------------------------------------- |
-| paper   | `#f1f4ee` | the sheet                                      |
-| ink     | `#0a1f19` | text, linework at full strength                |
-| pine    | `#14543d` | deep brand green — the dominant ink pigment    |
-| mint    | `#72d49a` | brand light accent — selection highlights      |
-| wash    | `#e6eee6` | glass-green fill for quiet surfaces            |
-| clay    | `#bf5f3b` | warm counterpoint — never for text             |
+The product story uses a small number of decisive visuals:
 
-The ink field mixes pigments from a wider family (pine, sea, moss, clay,
-deep ink) held close in value so every blend still reads as ink on this
-paper. Reactive work is code; the strict CSP (`script-src 'self'`) stays
-intact — no CDNs, no inline scripts.
+- the V7 AI Assignments film;
+- a physical editorial artwork about revision and evidence;
+- a raw teacher instruction becoming assignment structure;
+- an evidence review surface;
+- the Atlas LMS dashboard.
+
+Labels are reserved for real navigation, form fields, criteria, and product state. Explanatory micro-labels are not part of the visual language.
 
 ## Local preview
 
 ```sh
-python3 -m http.server 4173
+npm run dev
 ```
 
-Then open `http://localhost:4173`.
+Open `http://localhost:4173`.
 
-The only public product route is `/`. Previous `/product` and `/about` links
-redirect to the launch page.
+For the function route, use `npx vercel dev` with:
 
-The full multi-page draft is archived locally at
-`../Atlas-Launch-Page-Archive-2026-07-28`.
+```sh
+RESEND_API_KEY=
+ATLAS_ACCESS_RECIPIENT=
+ATLAS_ACCESS_FROM=
+```
 
-## Production
+## Verification
 
-This directory is linked locally to the Vercel project
-`atlas-lms-coming-soon`. The intended custom domains are `atlas-lms.com` and
-`www.atlas-lms.com`.
+```sh
+npm run verify
+```
 
-The private GitHub repository is connected to Vercel. Pushes and merges to
-`main` deploy to production, while other branches receive preview deployments.
+This runs the access-form tests, HTML validation, CSS validation, and a local reference audit for every public asset and route.
 
-Lenis is vendored under its MIT license in `vendor/LENIS-LICENSE`.
+Pull requests and pushes to `main` run the same gate in GitHub Actions. Production remains a separate release action so a merge is never mistaken for a verified deployment.
+
+## Release operations
+
+The production project is `atlas-lms-coming-soon`, serving `atlas-lms.com`. Preview, production, verification, and rollback steps are documented in [docs/RELEASING.md](docs/RELEASING.md).
+
+The access form requires these Vercel environment variables in Preview and Production:
+
+- `RESEND_API_KEY`
+- `ATLAS_ACCESS_RECIPIENT`
+- `ATLAS_ACCESS_FROM`
+
+Variable names belong in documentation. Values never belong in Git.

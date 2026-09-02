@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><style>html,body{margin:0;background:transparent}</style></head>
+<body>
+<script src="../node_modules/p5.brush/dist/brush.js"></script>
+<script>
+const W = 820, H = 820;
+brush.createCanvas(W, H);
+brush.angleMode(brush.DEGREES);
+brush.scaleBrushes(1.6);
+
+const INK = "#0a1f19", CLAY = "#bf5f3b", SOFT = "#2f4a41";
+
+// helpers -------------------------------------------------------------
+const st = (name, color, w) => () => brush.set(name, color, w);
+const seg = (x1, y1, x2, y2) => () => brush.line(x1, y1, x2, y2);
+const fdot = (x, y, r, col) => () => {
+  brush.fill(col, 205);
+  brush.circle(x, y, r);
+  brush.noFill();
+};
+const shape = (pts, curv) => () => {
+  brush.beginShape(curv ?? 0.4);
+  for (const [x, y] of pts) brush.vertex(x, y);
+  brush.endShape();
+};
+const closedShape = (pts, curv) => () => {
+  brush.beginShape(curv ?? 0.45);
+  for (const [x, y] of pts) brush.vertex(x, y);
+  brush.endShape(brush.CLOSE ?? "close");
+};
+const dot = (x, y, r) => () => brush.circle(x, y, r);
+const dashedArc = (cx, cy, r, a0, a1, n, col, w) => {
+  const ops = [];
+  for (let i = 0; i < n; i++) {
+    const t0 = a0 + ((a1 - a0) * i) / n;
+    const t1 = t0 + ((a1 - a0) / n) * 0.55;
+    const p0 = [cx + r * Math.cos((t0 * Math.PI) / 180), cy + r * Math.sin((t0 * Math.PI) / 180)];
+    const p1 = [cx + r * Math.cos((t1 * Math.PI) / 180), cy + r * Math.sin((t1 * Math.PI) / 180)];
+    ops.push(st("cpencil", col, w), seg(p0[0], p0[1], p1[0], p1[1]));
+  }
+  return ops;
+};
+const leaf = (cx, cy, ang, len, wdt) => {
+  const rad = (ang * Math.PI) / 180;
+  const ux = Math.cos(rad), uy = Math.sin(rad);
+  const px = -uy, py = ux;
+  const tip = [cx + ux * len, cy + uy * len];
+  const s1 = [cx + ux * len * 0.5 + px * wdt, cy + uy * len * 0.5 + py * wdt];
+  const s2 = [cx + ux * len * 0.5 - px * wdt, cy + uy * len * 0.5 - py * wdt];
+  return { outline: closedShape([[cx, cy], s1, tip, s2], 0.6), vein: shape([[cx, cy], [cx + ux * len * 0.86, cy + uy * len * 0.86]], 0) };
+};
+
+// plates -- abstract marks, not objects ------------------------------
+const PLATES = {};
+
+{ // flow -- a field painting: a bent current of many strokes, dense at the
+  // base, dissolving upward. Ink majority, clay minority, never shouting.
+  let sd = 7;
+  const rnd = () => { sd = (sd * 16807) % 2147483647; return sd / 2147483647; };
+  const ang = (x, y) => -Math.PI / 2 + 0.42 * Math.sin(y * 0.0042 + x * 0.002) + 0.24 * Math.sin(x * 0.0063 - 1.3);
+  const strokePts = (x0, y0, steps, step) => {
+    const pts = [[x0, y0]];
+    let x = x0, y = y0;
+    for (let j = 0; j < steps; j++) {
+      const a = ang(x, y);
+      x += Math.cos(a) * step;
+      y += Math.sin(a) * step;
+      pts.push([x, y]);
+    }
+    return pts;
+  };
+  const ops = [];
+  const N = 128;
+  for (let i = 0; i < N; i++) {
+    const u = rnd();
+    const x0 = 90 + u * 640 + rnd() * 40;
+    // denser low, sparser high
+    const y0 = 780 - Math.pow(rnd(), 1.7) * 260;
+    const steps = 7 + Math.floor(rnd() * 6);
+    const step = 34 + rnd() * 26;
+    const r = rnd();
+    if (r < 0.08) ops.push(st("cpencil", CLAY, 1.5 + rnd() * 0.9));
+    else if (r < 0.3) ops.push(st("2H", SOFT, 1.1 + rnd() * 0.7));
+    else ops.push(st("charcoal", INK, 1.0 + rnd() * 1.1));
+    ops.push(shape(strokePts(x0, y0, steps, step), 0.5));
+  }
+  PLATES.flow = ops;
+}
+
+{ // hatchfield -- an irregular hatched patch, two angles crossing
+  const blob = (cx, cy, r, n, k) => {
+    const pts = [];
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2;
+      const rr = r * (0.72 + 0.28 * Math.sin(a * k + 1.2));
+      pts.push([cx + rr * Math.cos(a), cy + rr * Math.sin(a)]);
+    }
+    return pts;
+  };
+  PLATES.hatchfield = [
+    () => { brush.noStroke(); brush.setHatch("2H", INK, 1.4); brush.hatch(17, 42, { rand: 0.12, continuous: false, gradient: 0.25 }); brush.polygon(blob(410, 410, 250, 22, 3)); brush.noHatch(); },
+    () => { brush.noStroke(); brush.setHatch("2H", SOFT, 1.1); brush.hatch(26, 118, { rand: 0.18 }); brush.polygon(blob(430, 430, 195, 20, 4)); brush.noHatch(); },
+    () => { brush.noStroke(); brush.setHatch("cpencil", CLAY, 1.5); brush.hatch(30, 74, { rand: 0.2 }); brush.polygon(blob(350, 350, 105, 16, 5)); brush.noHatch(); },
+    st("2H", INK, 1.8),
+    shape([[168, 560], [255, 610], [380, 640]], 0.5),
+  ];
+}
+
+{ // arcs -- compass fragments, no full circle resolves
+  const arcPts = (r, a0, a1, n = 14) => {
+    const pts = [];
+    for (let j = 0; j <= n; j++) {
+      const a = ((a0 + ((a1 - a0) * j) / n) * Math.PI) / 180;
+      pts.push([410 + r * Math.cos(a), 430 + r * Math.sin(a)]);
+    }
+    return pts;
+  };
+  const ticks = [];
+  for (let i = 0; i < 7; i++) {
+    const a = ((-150 + i * 18) * Math.PI) / 180;
+    ticks.push(seg(410 + 236 * Math.cos(a), 430 + 236 * Math.sin(a), 410 + 258 * Math.cos(a), 430 + 258 * Math.sin(a)));
+  }
+  PLATES.arcs = [
+    st("charcoal", INK, 2.6), shape(arcPts(250, -168, -60), 0.3),
+    st("charcoal", INK, 2.6), shape(arcPts(250, -34, 40), 0.3),
+    st("HB", SOFT, 2.2), shape(arcPts(196, -140, -96), 0.3),
+    st("HB", SOFT, 2.2), shape(arcPts(196, -60, 30), 0.3),
+    st("cpencil", CLAY, 2.8), shape(arcPts(140, -120, 10), 0.3),
+    st("HB", INK, 2.0),
+    ...ticks,
+    st("marker", CLAY, 1.4),
+    fdot(410 + 140 * Math.cos(-0.9), 430 + 140 * Math.sin(-0.9), 9, CLAY),
+  ];
+}
+
+{ // scatter -- a constellation with a thin meander through it
+  const pts = [];
+  let sx = 1;
+  const rnd = (n) => { sx = (sx * 16807) % 2147483647; return (sx / 2147483647) * n; };
+  const ops = [];
+  const anchors = [];
+  for (let i = 0; i < 14; i++) {
+    const x = 150 + rnd(520), y = 150 + rnd(520);
+    anchors.push([x, y]);
+  }
+  ops.push(st("marker", INK, 1.5));
+  anchors.forEach(([x, y], i) => {
+    if (i === 3 || i === 9) ops.push(fdot(x, y, 9, CLAY));
+    else ops.push(fdot(x, y, 4 + (i % 3) * 2, INK));
+  });
+  ops.push(st("HB", SOFT, 2.0));
+  ops.push(shape([anchors[1], anchors[4], anchors[7], anchors[10], anchors[12]], 0.65));
+  PLATES.scatter = ops;
+}
+
+{ // gestures -- loose pencil thinking (for the problem sheet)
+  PLATES.gestures = [
+    st("cpencil", SOFT, 3.4),
+    shape([[60, 240], [220, 140], [420, 300], [620, 180], [760, 250]], 0.7),
+    shape([[80, 460], [260, 380], [430, 520], [640, 420], [750, 480]], 0.7),
+    shape([[70, 660], [240, 590], [450, 700], [630, 610], [745, 665]], 0.7),
+    st("cpencil", CLAY, 2.6),
+    shape([[540, 260], [600, 230], [640, 265]], 0.5),
+    shape([[300, 560], [350, 530]], 0),
+  ];
+}
+
+// bake API -------------------------------------------------------------
+window.plateNames = Object.keys(PLATES);
+window.plateOps = Object.fromEntries(Object.entries(PLATES).map(([k, v]) => [k, v.length]));
+window.bake = (name, k) => {
+  brush.seed(4127);
+  brush.noiseSeed(9311);
+  brush.clear();
+  brush.push();
+  brush.translate(-W / 2, -H / 2);
+  const ops = PLATES[name];
+  for (let i = 0; i < Math.min(k, ops.length); i++) { try { ops[i](); } catch (e) { console.log('op-fail', name, i, String(e)); } }
+  brush.pop();
+  brush.render();
+  return true;
+};
+window.ready = true;
+</script>
+</body>
+</html>
