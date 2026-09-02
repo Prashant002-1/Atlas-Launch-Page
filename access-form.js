@@ -9,12 +9,20 @@
   const organizationType = form.querySelector("[data-organization-type]");
   const institution = form.querySelector("[data-institution]");
   const institutionRequired = form.querySelector("[data-institution-required]");
+  const institutionField = institution?.closest(".field");
+  const interestControl = form.querySelector("[data-interest]");
+  const success = form.querySelector("[data-access-success]");
+  const successTitle = form.querySelector("[data-access-success-title]");
+  const successCopy = form.querySelector("[data-access-success-copy]");
+  const resetRequest = form.querySelector("[data-access-reset]");
 
   const syncInstitution = () => {
     if (!organizationType || !institution) return;
     const required = organizationType.value !== "Individual";
     institution.required = required;
     if (institutionRequired) institutionRequired.hidden = !required;
+    if (institutionField) institutionField.hidden = organizationType.value === "Individual";
+    if (organizationType.value === "Individual") institution.value = "";
   };
 
   if (organizationType) {
@@ -24,33 +32,19 @@
 
   const interestMap = {
     "ai-assignments": "AI Assignments",
-    "bring-course": "Bring Your Course",
-    "full-lms": "Full LMS",
-    "product-demo": "Product demo",
-    "course-pilot": "Bring Your Course",
-    institution: "Full LMS",
+    assessment: "Assessment workflow",
+    connector: "LMS connector",
+    "full-system": "Atlas LMS",
+    conversation: "Product conversation",
+    "course-pilot": "Atlas Course",
+    institution: "Atlas LMS",
     individual: "AI Assignments",
   };
   const requestedKey = new URLSearchParams(window.location.search).get("interest");
   const requestedInterest = interestMap[requestedKey];
   if (requestedInterest) {
-    const interestControl = form.querySelector('[name="interests"]');
     if (interestControl) interestControl.value = requestedInterest;
 
-    const path = form.querySelector("[data-access-path]");
-    const pathLabel = form.querySelector("[data-access-path-label]");
-    const pathCopy = form.querySelector("[data-access-path-copy]");
-    const pathCopyByInterest = {
-      "ai-assignments": "Start with one governed agent session inside a course you already teach.",
-      "bring-course": "Bring the materials, structure, and teaching approach of a real course.",
-      "full-lms": "Evaluate institution setup, course operations, records, and the agent layer together.",
-      "product-demo": "We will prepare the product surface that best answers your question.",
-    };
-    if (path && pathLabel && pathCopy) {
-      pathLabel.textContent = requestedInterest;
-      pathCopy.textContent = pathCopyByInterest[requestedKey] || "We will prepare the right first scope.";
-      path.hidden = false;
-    }
   }
 
   function setStatus(message, state) {
@@ -75,7 +69,7 @@
 
     form.setAttribute("aria-busy", "true");
     submit.disabled = true;
-    setStatus("Sending your request…", "");
+    setStatus("Sending your request...", "");
 
     try {
       const response = await fetch("/api/launch-access", {
@@ -89,12 +83,13 @@
         throw new Error(result.error || "We could not send the request.");
       }
 
-      form.reset();
-      syncInstitution();
-      setStatus(
-        "Received. We will review the fit and reply directly.",
-        "success",
-      );
+      setStatus("Received. We will review the fit and reply directly.", "success");
+      form.dataset.complete = "true";
+      if (success) success.hidden = false;
+      if (successCopy) {
+        successCopy.textContent = `We will review the fit and reply directly to ${payload.email}.`;
+      }
+      successTitle?.focus();
     } catch (error) {
       setStatus(
         error.message || "We could not send the request. Please try again.",
@@ -104,5 +99,14 @@
       form.setAttribute("aria-busy", "false");
       submit.disabled = false;
     }
+  });
+
+  resetRequest?.addEventListener("click", () => {
+    delete form.dataset.complete;
+    if (success) success.hidden = true;
+    form.reset();
+    syncInstitution();
+    setStatus("", "");
+    interestControl?.focus();
   });
 })();

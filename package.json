@@ -3,10 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "dev": "python3 -m http.server 4173",
     "test": "node --test tests/*.test.mjs",
-    "validate:html": "html-validate '*.html' 'how-it-works/*.html' 'work-with-us/*.html' 'pricing/*.html' 'access/*.html'",
+    "validate:html": "html-validate '*.html' 'access/*.html' 'about/*.html' 'pricing/*.html' 'security/*.html' 'notes/*.html' 'privacy/*.html' 'terms/*.html' 'products/*.html' 'products/*/*.html' 'assessment/*.html' 'integrations/*.html' 'contact/*.html'",
     "validate:css": "csstree-validator .",
-    "verify": "npm test && npm run validate:html && npm run validate:css"
+    "validate:refs": "node scripts/check-local-refs.mjs",
+    "verify": "npm test && npm run validate:html && npm run validate:css && npm run validate:refs"
   },
   "devDependencies": {
     "csstree-validator": "^4.0.1",

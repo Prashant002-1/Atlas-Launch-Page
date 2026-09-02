@@ -1,4 +1,5 @@
 .git
+.github
 .gitignore
 .DS_Store
 node_modules
@@ -7,12 +8,19 @@ node_modules
 README.md
 PRODUCT.md
 DESIGN.md
+docs
+scripts
 .impeccable
 design-qa.md
 .htmlvalidate.json
 qa
 hyperframes
+remotion
+brand/atlas-avatar.png
+brand/atlas-avatar.svg
+brand/atlas-mark.png
 tests
+package-lock.json
 art/accumulated-context.webp
 art/orientation.webp
 art/revision.webp

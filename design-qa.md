@@ -1,54 +1,43 @@
-# Atlas course-map hero design QA
+# Atlas product-site QA
 
-Date: 2026-08-07
+Date: 2026-09-02
 
-## Selected reference
+## Direction now in the product
 
-`Screenshot 2026-08-07 at 7.37.29 PM.png`
+- The story starts with AI Assignments, moves to assessment, then expands to Atlas Course and Atlas LMS.
+- The homepage hero is centered and quiet. Color is limited to two bounded particle bands rather than a full-page interaction map.
+- There are no solar systems, orbit diagrams, connected balls, or node maps.
+- Decorative labels that explained obvious interface objects were removed. Labels remain only where they carry real state, criteria, form meaning, or course data.
+- The V7 AI Assignments film is the only product film in use.
+- Products, About, Notes, LMS, and Access use distinct low-contrast editorial artwork. The homepage does not reuse it.
+- Product links lead to real pages. Pricing, security, integrations, contact, company, notes, privacy, terms, access, and not-found routes are present.
+- Pricing and security distinguish what is public now from what must be scoped before a student-data pilot.
 
-The selected direction connects the halftone ink pools into course-map regions
-with quiet contour rings, dashed paths, and waypoints. The dictionary card is
-attached to `Atlas¹` in the hero body rather than the header logo.
+## Visual review
 
-## Visual comparison
+- Homepage reviewed at 1280 by 900 and 390 by 844.
+- AI Assignments, Atlas Course, Atlas LMS, Assessment, Integrations, About, Security, Pricing, Notes, Contact, and Access were reviewed at desktop width.
+- Products, AI Assignments, Assessment, About, Access, and the homepage closing section were reviewed at 390 by 844.
+- Homepage hero, V7 film, product ledger, teacher-language transformation, editorial image, assessment review, and LMS dashboard were reviewed in sequence.
+- The LMS dashboard keeps the dark course navigation, white course work area, and green Atlas briefing rail visible together.
+- Access was simplified after review: the mirrored pilot brief and its status labels were removed, leaving one editorial image and the necessary form.
+- Contact was simplified after review: category labels and action hints were removed from already-clickable choices.
+- No horizontal overflow was found in the reviewed routes at 858 pixels.
+- The responsive CSS retains single-column product layouts, a compact navigation, and bounded horizontal dashboard treatment below the desktop breakpoints.
 
-- Compared the selected reference and the implementation side by side at a
-  1640 by 960 viewport.
-- Preserved the approved deployed hero composition, typography, ink-field
-  density, instrument edge, and cursor physics.
-- Added two restrained route paths across the upper-right and lower field.
-- Added contour rings only to larger pools, outside the primary copy area.
-- Anchored the definition card directly below `Atlas¹` in the body copy. It is
-  intentionally allowed to cover nearby copy while open.
-- Added a small top-border notch that points back to the definition trigger.
-- The card reveals from its top edge downward rather than rising into place.
-- Kept the trigger at the surrounding paragraph weight and used an underline
-  as its only persistent emphasis.
-- Kept the Atlas header logo unchanged.
+## Interaction review
 
-## Interaction and accessibility
-
-- Hover opens the definition card and pointer exit closes it.
-- Click pins the card; outside click and Escape close it.
-- Keyboard activation opens the card and Escape returns focus to the trigger.
-- The trigger is a native button with `aria-expanded` and `aria-controls`.
-- The card uses `role="definition"` and keeps `aria-hidden` synchronized.
-- Touch uses the same click disclosure without relying on hover.
-
-## Responsive and motion checks
-
-- Desktop: 1640 by 960, passed.
-- Mobile: 390 by 844, passed with no horizontal overflow.
-- Mobile card becomes a contained fixed disclosure at the bottom edge.
-- Reduced-motion styling removes transition duration, while the field's
-  existing reduced-motion path renders a still map frame.
-- Browser console: no errors.
+- The compact navigation opens, changes its accessible name to Close, and dismisses with Escape.
+- The Access product query selects the matching scope, including Atlas Course.
+- Selecting Individual removes the institution requirement; organizational paths restore it.
+- The V7 film uses explicit native playback, loads its poster, and is the only film referenced by the public site.
+- The teacher brief can be replayed, while reduced-motion visitors receive the complete static result.
+- The hero and closing WebGL fields pause when hidden; reduced-motion visitors receive a still frame.
 
 ## Verification
 
-- `node --check field.js`
-- `node --check definition.js`
-- `git diff --check`
-- Local HTTP response and exact definition-copy checks
-
-final result: passed
+- The reference gate validates 505 local links and assets across 23 HTML/CSS files.
+- Five API tests, HTML validation, CSS validation, JavaScript syntax checks, and `git diff --check` pass.
+- `npm audit` reports no known dependency vulnerabilities.
+- `npx vercel build --yes` completes a local preview build successfully.
+- Production release evidence is recorded separately in the pull request and deployment inspection.

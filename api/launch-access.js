@@ -7,11 +7,11 @@ const ORGANIZATION_TYPES = new Set([
 ]);
 const INTERESTS = new Set([
   "AI Assignments",
-  "Bring Your Course",
-  "Full LMS",
-  "Product demo",
-  "Research or conversation",
-  "Product updates",
+  "Atlas Course",
+  "Assessment workflow",
+  "LMS connector",
+  "Atlas LMS",
+  "Product conversation",
 ]);
 
 function text(value, max = 2_000) {

@@ -39,7 +39,7 @@ test("requires an institution for organizational requests", async () => {
         email: "jordan@example.edu",
         role: "Teacher or professor",
         organizationType: "Course team",
-        interests: ["Bring Your Course"],
+        interests: ["AI Assignments"],
         courseContext: "ECON-241, 31 undergraduate students",
         useCase: "Bring the course into Atlas for a bounded evaluation.",
         consent: "yes",
@@ -72,7 +72,7 @@ test("rejects cross-site and non-consenting submissions", async () => {
         email: "jordan@example.edu",
         role: "Student",
         organizationType: "Individual",
-        interests: ["Product demo"],
+        interests: ["Product conversation"],
         courseContext: "Undergraduate economics",
         useCase: "Inspect a student assignment session.",
         consent: "no",
@@ -105,7 +105,7 @@ test("does not accept a request when delivery is not configured", async () => {
           email: "jordan@example.edu",
           role: "Student",
           organizationType: "Individual",
-          interests: ["Product demo"],
+          interests: ["Product conversation"],
           courseContext: "Undergraduate economics",
           useCase: "Inspect a student assignment session.",
           consent: "yes",
@@ -160,7 +160,7 @@ test("delivers an individual request without optional context", async () => {
           email: "jordan@example.edu",
           role: "Student",
           organizationType: "Individual",
-          interests: ["Product demo", "AI Assignments"],
+          interests: ["Atlas Course", "AI Assignments"],
           courseContext: "Undergraduate economics",
           useCase: "Run one governed pricing assignment.",
           consent: "yes",
@@ -176,7 +176,7 @@ test("delivers an individual request without optional context", async () => {
     const providerBody = JSON.parse(providerRequest.options.body);
     assert.equal(providerBody.reply_to, "jordan@example.edu");
     assert.equal(providerBody.subject, "Atlas launch access: Jordan Lee");
-    assert.match(providerBody.text, /Product demo, AI Assignments/);
+    assert.match(providerBody.text, /Atlas Course, AI Assignments/);
     assert.match(providerBody.text, /Course or institutional context:\nUndergraduate economics/);
     assert.match(providerBody.text, /What they want to test:\nRun one governed pricing assignment/);
   } finally {

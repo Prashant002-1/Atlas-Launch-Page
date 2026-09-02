@@ -5,17 +5,17 @@
   "redirects": [
     {
       "source": "/product",
-      "destination": "/how-it-works",
-      "permanent": false
+      "destination": "/products",
+      "permanent": true
     },
     {
-      "source": "/about",
-      "destination": "/",
-      "permanent": false
+      "source": "/how-it-works",
+      "destination": "/products/ai-assignments",
+      "permanent": true
     },
     {
-      "source": "/pricing",
-      "destination": "/access",
+      "source": "/work-with-us",
+      "destination": "/contact",
       "permanent": true
     }
   ],
