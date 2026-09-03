@@ -70,7 +70,11 @@
   /* Asymmetric shell: a generous left margin, and a right margin that
      leaves room for the instrument edge. */
   --edge-l: clamp(2.25rem, 5.5vw, 7.5rem);
-  --rail-inset: 4rem;
+  --rail-apex-width: 42px;
+  --rail-edge-gap: 4px;
+  --rail-inset: calc(var(--rail-apex-width) + var(--rail-edge-gap));
+  --rail-tick-phase: -7px;
+  --rail-lens-tick-phase: -14px;
   --edge-r: calc(var(--rail-inset) + 3rem + clamp(2.5rem, 4vw, 4.5rem));
 }
 
@@ -325,9 +329,9 @@ html.reduced-motion [data-reveal] {
     28px calc(100% + 2.5px),
     22px calc(100% + 2px);
   background-position:
-    left top,
-    left top,
-    left top;
+    left var(--rail-tick-phase),
+    left var(--rail-tick-phase),
+    left var(--rail-tick-phase);
   background-repeat: no-repeat;
 }
 
@@ -356,7 +360,7 @@ html.reduced-motion [data-reveal] {
 }
 .rail-apex {
   display: block;
-  width: 42px;
+  width: var(--rail-apex-width);
   height: 40px;
   max-width: none;
   transition:
@@ -437,9 +441,9 @@ html.reduced-motion [data-reveal] {
     56px 280px,
     44px 56px;
   background-position:
-    -32px calc(52px - var(--ptr-y, 0.5) * 200vh),
-    -32px calc(52px - var(--ptr-y, 0.5) * 200vh),
-    -32px calc(52px - var(--ptr-y, 0.5) * 200vh);
+    -32px calc(52px + var(--rail-lens-tick-phase) - var(--ptr-y, 0.5) * 200vh),
+    -32px calc(52px + var(--rail-lens-tick-phase) - var(--ptr-y, 0.5) * 200vh),
+    -32px calc(52px + var(--rail-lens-tick-phase) - var(--ptr-y, 0.5) * 200vh);
   background-repeat: repeat-y;
 }
 .rail-lens svg {
@@ -696,7 +700,7 @@ html.reduced-motion [data-reveal] {
 /* ── responsive ─────────────────────────────────────────────────────── */
 @media (max-width: 64rem) {
   :root {
-    --rail-inset: 2.4rem;
+    --rail-apex-width: 28px;
     --edge-r: calc(var(--rail-inset) + 1.5rem + 1.1rem);
   }
   .rail {
@@ -709,7 +713,6 @@ html.reduced-motion [data-reveal] {
       15px calc(100% + 2px);
   }
   .rail-apex {
-    width: 28px;
     height: 26px;
   }
   .rail-lens {
