@@ -558,6 +558,7 @@ html.reduced-motion [data-reveal] {
   color: var(--ink-soft);
   font-size: 0.86rem;
   line-height: 1.42;
+  text-align: left;
   text-wrap: pretty;
   opacity: 0;
   visibility: hidden;

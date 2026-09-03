@@ -1,6 +1,6 @@
 # Atlas product-site QA
 
-Date: 2026-09-02
+Date: 2026-09-03
 
 ## Direction now in the product
 
@@ -15,14 +15,16 @@ Date: 2026-09-02
 
 ## Visual review
 
-- Homepage reviewed at 1280 by 900 and 390 by 844.
+- Homepage reviewed at 2048 by 1200, 1440 by 1100, and 390 by 844.
 - AI Assignments, Atlas Course, Atlas LMS, Assessment, Integrations, About, Security, Pricing, Notes, Contact, and Access were reviewed at desktop width.
 - Products, AI Assignments, Assessment, About, Access, and the homepage closing section were reviewed at 390 by 844.
 - Homepage hero, V7 film, product ledger, teacher-language transformation, editorial image, assessment review, and LMS dashboard were reviewed in sequence.
-- The LMS dashboard keeps the dark course navigation, white course work area, and green Atlas briefing rail visible together.
+- The LMS dashboard mirrors the current instructor Overview structure: all 15 destinations appear in source order, the expanded navigation and Atlas rail retain their application scale, and the account uses the dummy identity Maya Chen at Demo University.
+- The dashboard is built from HTML, CSS, and inline SVG rather than a screenshot, so text, icons, and rules remain sharp at every display density.
+- The hero definition card is explicitly left-aligned while retaining its existing disclosure behavior and placement.
 - Access was simplified after review: the mirrored pilot brief and its status labels were removed, leaving one editorial image and the necessary form.
 - Contact was simplified after review: category labels and action hints were removed from already-clickable choices.
-- No horizontal overflow was found in the reviewed routes at 858 pixels.
+- No page-level horizontal overflow was found at 390 pixels. The 1,116-pixel dashboard canvas scrolls only inside its 350-pixel bounded preview.
 - The responsive CSS retains single-column product layouts, a compact navigation, and bounded horizontal dashboard treatment below the desktop breakpoints.
 
 ## Interaction review
