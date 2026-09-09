@@ -97,7 +97,6 @@ export default async function handler(req, res) {
     courseContext: text(body.courseContext, 3_000),
     useCase: text(body.useCase, 4_000),
     source: singleLine(body.source, 180),
-    consent: singleLine(body.consent, 20),
     interests: Array.isArray(body.interests)
       ? body.interests
           .map((item) => singleLine(item, 120))
@@ -113,7 +112,6 @@ export default async function handler(req, res) {
     submission.organizationType,
     submission.courseContext,
     submission.useCase,
-    submission.consent,
   ];
 
   if (required.some((value) => !value) || submission.interests.length === 0) {
@@ -126,10 +124,6 @@ export default async function handler(req, res) {
 
   if (!ORGANIZATION_TYPES.has(submission.organizationType)) {
     return res.status(400).json({ error: "Choose how you are approaching Atlas." });
-  }
-
-  if (submission.consent !== "yes") {
-    return res.status(400).json({ error: "Consent is required to send this request." });
   }
 
   if (submission.organizationType !== "Individual" && !submission.institution) {
