@@ -96,7 +96,6 @@ export default async function handler(req, res) {
     institution: singleLine(body.institution, 200),
     courseContext: text(body.courseContext, 3_000),
     useCase: text(body.useCase, 4_000),
-    currentApproach: text(body.currentApproach, 2_500),
     source: singleLine(body.source, 180),
     consent: singleLine(body.consent, 20),
     interests: Array.isArray(body.interests)
@@ -165,9 +164,6 @@ export default async function handler(req, res) {
     "",
     "What they want to test:",
     submission.useCase,
-    "",
-    "Current approach:",
-    submission.currentApproach || "Not provided",
   ];
 
   const htmlRows = rows

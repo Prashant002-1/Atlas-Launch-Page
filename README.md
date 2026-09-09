@@ -18,8 +18,8 @@ The public product site for Atlas, an AI-native learning management system.
 - `/assessment/` explains evidence-linked teacher review.
 - `/integrations/` separates planned connection points from current product truth.
 - `/about/`, `/pricing/`, `/security/`, `/notes/`, and `/contact/` cover the company.
-- `/privacy/` and `/terms/` cover the public site and access form.
-- `/access/` collects a private pilot request.
+- `/privacy/` and `/terms/` explain the website, access requests, and demo pilot.
+- `/access/` collects a request for the free pilot in a demo environment with sample data and team-provided credentials. Pricing will be announced after the pilot.
 
 ## Visual system
 
@@ -72,3 +72,5 @@ The access form requires these Vercel environment variables in Preview and Produ
 - `ATLAS_ACCESS_FROM`
 
 Variable names belong in documentation. Values never belong in Git.
+
+If request delivery fails, the access form preserves the visitor's entries and offers an email draft addressed to `contact@atlas-lms.com`. The visitor sends that email themselves. A failed delivery is never shown as a received request.

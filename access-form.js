@@ -15,6 +15,7 @@
   const successTitle = form.querySelector("[data-access-success-title]");
   const successCopy = form.querySelector("[data-access-success-copy]");
   const resetRequest = form.querySelector("[data-access-reset]");
+  const emailFallback = form.querySelector("[data-email-fallback]");
 
   const syncInstitution = () => {
     if (!organizationType || !institution) return;
@@ -67,6 +68,24 @@
     const payload = Object.fromEntries(data.entries());
     payload.interests = interests;
 
+    if (emailFallback) {
+      emailFallback.hidden = true;
+      const emailBody = [
+        "I would like to request free pilot access to Atlas.",
+        "",
+        `Name: ${payload.name}`,
+        `Email: ${payload.email}`,
+        `Role: ${payload.role}`,
+        `Organization type: ${payload.organizationType}`,
+        `Institution: ${payload.institution || "Individual"}`,
+        `Interest: ${interests.join(", ")}`,
+        "",
+        `Context: ${payload.courseContext}`,
+        `What I would like to try: ${payload.useCase}`,
+      ].join("\n");
+      emailFallback.href = `mailto:contact@atlas-lms.com?subject=${encodeURIComponent("Atlas free pilot access")}&body=${encodeURIComponent(emailBody)}`;
+    }
+
     form.setAttribute("aria-busy", "true");
     submit.disabled = true;
     setStatus("Sending your request...", "");
@@ -83,18 +102,19 @@
         throw new Error(result.error || "We could not send the request.");
       }
 
-      setStatus("Received. We will review the fit and reply directly.", "success");
+      setStatus("Received. We will email you with the next steps.", "success");
       form.dataset.complete = "true";
       if (success) success.hidden = false;
       if (successCopy) {
-        successCopy.textContent = `We will review the fit and reply directly to ${payload.email}.`;
+        successCopy.textContent = `We will email ${payload.email} with the next steps for your free pilot. Our team will provide your login credentials when your access is ready.`;
       }
       successTitle?.focus();
-    } catch (error) {
+    } catch {
       setStatus(
-        error.message || "We could not send the request. Please try again.",
+        "Your request was not sent. Try again or use the email link below to send it directly.",
         "error",
       );
+      if (emailFallback) emailFallback.hidden = false;
     } finally {
       form.setAttribute("aria-busy", "false");
       submit.disabled = false;
@@ -104,6 +124,10 @@
   resetRequest?.addEventListener("click", () => {
     delete form.dataset.complete;
     if (success) success.hidden = true;
+    if (emailFallback) {
+      emailFallback.hidden = true;
+      emailFallback.href = "mailto:contact@atlas-lms.com";
+    }
     form.reset();
     syncInstitution();
     setStatus("", "");

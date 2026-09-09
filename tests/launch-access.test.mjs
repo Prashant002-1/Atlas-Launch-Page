@@ -132,7 +132,7 @@ test("does not accept a request when delivery is not configured", async () => {
   }
 });
 
-test("delivers an individual request without optional context", async () => {
+test("delivers an individual request and ignores the removed current-approach field", async () => {
   const originalFetch = globalThis.fetch;
   const originalEnv = {
     key: process.env.RESEND_API_KEY,
@@ -163,6 +163,7 @@ test("delivers an individual request without optional context", async () => {
           interests: ["Atlas Course", "AI Assignments"],
           courseContext: "Undergraduate economics",
           useCase: "Run one governed pricing assignment.",
+          currentApproach: "Legacy field that should no longer be collected",
           consent: "yes",
         },
       },
@@ -179,6 +180,8 @@ test("delivers an individual request without optional context", async () => {
     assert.match(providerBody.text, /Atlas Course, AI Assignments/);
     assert.match(providerBody.text, /Course or institutional context:\nUndergraduate economics/);
     assert.match(providerBody.text, /What they want to test:\nRun one governed pricing assignment/);
+    assert.doesNotMatch(providerBody.text, /Current approach|Legacy field/);
+    assert.doesNotMatch(providerBody.html, /Current approach|Legacy field/);
   } finally {
     globalThis.fetch = originalFetch;
     process.env.RESEND_API_KEY = originalEnv.key;
