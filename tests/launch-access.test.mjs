@@ -42,7 +42,6 @@ test("requires an institution for organizational requests", async () => {
         interests: ["AI Assignments"],
         courseContext: "ECON-241, 31 undergraduate students",
         useCase: "Bring the course into Atlas for a bounded evaluation.",
-        consent: "yes",
       },
     },
     res,
@@ -51,7 +50,7 @@ test("requires an institution for organizational requests", async () => {
   assert.equal(res.body.error, "Enter your institution or organization.");
 });
 
-test("rejects cross-site and non-consenting submissions", async () => {
+test("rejects cross-site submissions", async () => {
   const crossSite = responseRecorder();
   await handler(
     {
@@ -62,26 +61,6 @@ test("rejects cross-site and non-consenting submissions", async () => {
     crossSite,
   );
   assert.equal(crossSite.code, 403);
-
-  const noConsent = responseRecorder();
-  await handler(
-    {
-      method: "POST",
-      body: {
-        name: "Jordan Lee",
-        email: "jordan@example.edu",
-        role: "Student",
-        organizationType: "Individual",
-        interests: ["Product conversation"],
-        courseContext: "Undergraduate economics",
-        useCase: "Inspect a student assignment session.",
-        consent: "no",
-      },
-    },
-    noConsent,
-  );
-  assert.equal(noConsent.code, 400);
-  assert.equal(noConsent.body.error, "Consent is required to send this request.");
 });
 
 test("does not accept a request when delivery is not configured", async () => {
@@ -108,7 +87,6 @@ test("does not accept a request when delivery is not configured", async () => {
           interests: ["Product conversation"],
           courseContext: "Undergraduate economics",
           useCase: "Inspect a student assignment session.",
-          consent: "yes",
         },
       },
       res,
@@ -132,7 +110,7 @@ test("does not accept a request when delivery is not configured", async () => {
   }
 });
 
-test("delivers an individual request and ignores the removed current-approach field", async () => {
+test("delivers an individual request without a consent checkbox and ignores removed fields", async () => {
   const originalFetch = globalThis.fetch;
   const originalEnv = {
     key: process.env.RESEND_API_KEY,
@@ -164,7 +142,6 @@ test("delivers an individual request and ignores the removed current-approach fi
           courseContext: "Undergraduate economics",
           useCase: "Run one governed pricing assignment.",
           currentApproach: "Legacy field that should no longer be collected",
-          consent: "yes",
         },
       },
       res,
