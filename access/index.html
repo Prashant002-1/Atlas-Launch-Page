@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Request access to Atlas LMS, starting with an AI Assignment, course, or assessment workflow."
+      content="Try Atlas for free in a demo environment with sample data and login credentials from our team. Pricing will be announced after the pilot."
     />
     <meta name="theme-color" content="#f1f4ee" />
     <meta name="robots" content="index, follow" />
@@ -22,11 +22,11 @@
     />
     <link rel="stylesheet" href="/vendor/lenis.css" />
     <link rel="stylesheet" href="/styles.css?v=20260903a" />
-    <link rel="stylesheet" href="/access.css?v=20260901c" />
+    <link rel="stylesheet" href="/access.css?v=20260909a" />
     <script src="/vendor/lenis.min.js" defer></script>
     <script src="/motion.js?v=20260831e" defer></script>
     <script src="/site.js?v=20260831e" defer></script>
-    <script src="/access-form.js?v=20260901c" defer></script>
+    <script src="/access-form.js?v=20260909a" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
   </head>
@@ -81,11 +81,13 @@
         <div class="shell access-workbench-shell">
           <aside class="access-brief">
             <div class="access-brief-copy">
-              <h1 id="access-title">Bring one real assignment.</h1>
+              <h1 id="access-title">Help us put Atlas to the test.</h1>
               <p>
-                Tell us what students should learn, where AI belongs, and what
-                the teacher needs to assess.
+                Pilot access is free. We will provide login credentials for a
+                demo environment with sample data, so you can explore the features
+                and see whether Atlas fits the way you teach or learn.
               </p>
+              <p>Pricing will be announced after the pilot. No payment details are needed to take part.</p>
             </div>
 
             <div class="access-brief-art" aria-hidden="true">
@@ -103,7 +105,7 @@
             </div>
 
             <header class="access-form-head">
-              <h2>Tell us about the work.</h2>
+              <h2>Request your free pilot.</h2>
               <p>* Required</p>
             </header>
 
@@ -142,7 +144,7 @@
             </fieldset>
 
             <fieldset class="access-group">
-              <legend>Course</legend>
+              <legend>Your context</legend>
               <div class="access-row access-row-two">
                 <div class="field">
                   <label for="courseContext">Course, learner group, or institution *</label>
@@ -155,7 +157,7 @@
                   ></textarea>
                 </div>
                 <div class="field">
-                  <label for="useCase">What should students learn or show? *</label>
+                  <label for="useCase">What would you like to try? *</label>
                   <textarea
                     id="useCase"
                     name="useCase"
@@ -166,17 +168,6 @@
                 </div>
               </div>
 
-              <details class="access-optional">
-                <summary>Current tools or approach <span>Optional</span></summary>
-                <div class="field access-current-field">
-                  <label for="currentApproach">Current tools or approach</label>
-                  <textarea
-                    id="currentApproach"
-                    name="currentApproach"
-                    maxlength="2500"
-                  ></textarea>
-                </div>
-              </details>
             </fieldset>
 
             <fieldset class="access-group access-group-contact">
@@ -187,7 +178,7 @@
                 <input id="name" name="name" type="text" autocomplete="name" maxlength="160" required />
               </div>
               <div class="field">
-                <label for="email">Work email *</label>
+                <label for="email">Email *</label>
                 <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required />
               </div>
               <div class="field">
@@ -216,6 +207,7 @@
               <div class="form-actions">
                 <button class="button" type="submit">Send request</button>
                 <p class="form-status" role="status" aria-live="polite" data-form-status></p>
+                <a class="form-email-fallback" href="mailto:contact@atlas-lms.com" data-email-fallback hidden>Request access by email</a>
               </div>
             </div>
 
@@ -223,7 +215,7 @@
               <img src="/brand/atlas-mark.svg" alt="" width="44" height="44" />
               <div>
                 <h2 tabindex="-1" data-access-success-title>Request received.</h2>
-                <p data-access-success-copy>We will review the fit and reply directly to the email in this request.</p>
+                <p data-access-success-copy>We will email you with the next steps for your free pilot. Our team will provide your login credentials when your access is ready.</p>
                 <button class="button button-quiet" type="button" data-access-reset>Send another request</button>
               </div>
             </div>
