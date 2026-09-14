@@ -12,6 +12,9 @@
 
   const section = canvas.closest(".launch-world");
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const wideGamut =
+    window.matchMedia("(color-gamut: p3)").matches &&
+    window.CSS?.supports("color", "color(display-p3 1 0 0)");
   const gl = canvas.getContext("webgl", {
     alpha: true,
     antialias: false,
@@ -22,8 +25,18 @@
   });
 
   if (!gl) {
-    const context = canvas.getContext("2d");
+    let context;
+    try {
+      context = canvas.getContext("2d", {
+        colorSpace: wideGamut ? "display-p3" : "srgb",
+      });
+    } catch {
+      context = canvas.getContext("2d");
+    }
     if (!context) return;
+    const displayP3 =
+      wideGamut && context.getContextAttributes?.().colorSpace === "display-p3";
+    canvas.dataset.colorSpace = displayP3 ? "display-p3" : "srgb";
 
     const drawFallback = () => {
       const rect = canvas.getBoundingClientRect();
@@ -33,7 +46,12 @@
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
       context.clearRect(0, 0, rect.width, rect.height);
 
-      const colors = ["#72d49a", "#93a99c", "#d2d8cf", "#876d5d"];
+      const colors = [
+        displayP3 ? "color(display-p3 0.50 0.835 0.625)" : "#72d49a",
+        "#93a99c",
+        "#d2d8cf",
+        "#876d5d",
+      ];
       for (let index = 0; index < 150; index += 1) {
         const x = (((index * 47) % 151) / 151) * rect.width;
         const current =
@@ -57,6 +75,17 @@
     window.addEventListener("resize", drawFallback, { passive: true });
     return;
   }
+
+  let displayP3 = false;
+  if (wideGamut && "drawingBufferColorSpace" in gl) {
+    try {
+      gl.drawingBufferColorSpace = "display-p3";
+      displayP3 = gl.drawingBufferColorSpace === "display-p3";
+    } catch {
+      // Keep the original renderer when P3 buffers are unavailable.
+    }
+  }
+  canvas.dataset.colorSpace = displayP3 ? "display-p3" : "srgb";
 
   const vertexSource = `
     attribute vec2 a_position;
@@ -131,7 +160,7 @@
       edgeFade *= smoothstep(0.0, 0.14, 1.0 - uv.x) * smoothstep(0.0, 0.13, 1.0 - uv.y);
 
       vec3 pine = vec3(0.18, 0.45, 0.34);
-      vec3 mint = vec3(0.45, 0.83, 0.60);
+      vec3 mint = ${displayP3 ? "vec3(0.50, 0.835, 0.625)" : "vec3(0.45, 0.83, 0.60)"};
       vec3 paper = vec3(0.80, 0.85, 0.80);
       vec3 rust = vec3(0.50, 0.35, 0.28);
       vec3 color = mix(pine, mint, smoothstep(0.25, 0.78, material));

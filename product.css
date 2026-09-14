@@ -8,12 +8,12 @@
 :root {
   --product-ink: #071712;
   --product-night: #06110d;
-  --product-pine: #103f30;
+  --product-pine: var(--pine-deep);
   --product-paper: #f1f4ee;
   --product-paper-lift: #f8faf6;
   --product-sink: #e2e9e1;
   --product-wash: #d9eadf;
-  --product-mint: #72d49a;
+  --product-mint: var(--mint);
   --product-line: rgba(10, 31, 25, 0.15);
   --product-line-dark: rgba(241, 244, 238, 0.18);
   --product-muted-dark: rgba(241, 244, 238, 0.66);
