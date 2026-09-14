@@ -22,11 +22,11 @@
     />
     <link rel="stylesheet" href="/vendor/lenis.css" />
     <link rel="stylesheet" href="/styles.css?v=20260903a" />
-    <link rel="stylesheet" href="/access.css?v=20260909b" />
+    <link rel="stylesheet" href="/access.css?v=20260909c" />
     <script src="/vendor/lenis.min.js" defer></script>
     <script src="/motion.js?v=20260831e" defer></script>
     <script src="/site.js?v=20260831e" defer></script>
-    <script src="/access-form.js?v=20260909a" defer></script>
+    <script src="/access-form.js?v=20260909c" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
   </head>
@@ -94,11 +94,11 @@
               <img src="/assets/atlas-access-field.webp" alt="" width="1536" height="1024" />
             </div>
 
-            <p class="access-direct">Prefer a direct note? <a href="mailto:contact@atlas-lms.com">contact@atlas-lms.com</a></p>
+            <p class="access-direct">Have a question first? <a href="/contact/">Get in touch</a>.</p>
           </aside>
 
           <div class="access-form-panel">
-            <form class="access-form" data-access-form aria-busy="false">
+            <form class="access-form" method="post" action="/api/launch-access" data-access-form aria-busy="false">
             <div class="honeypot" aria-hidden="true">
               <label for="website">Website</label>
               <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
@@ -202,9 +202,9 @@
             <div class="access-submit-row">
               <p class="access-privacy-note">We don’t sell your information or share it with advertisers. <a href="/privacy/">Privacy policy</a>.</p>
               <div class="form-actions">
-                <button class="button" type="submit">Send request</button>
+                <button class="button" type="submit" disabled>Send request</button>
+                <noscript><p>Please enable JavaScript to send this form.</p></noscript>
                 <p class="form-status" role="status" aria-live="polite" data-form-status></p>
-                <a class="form-email-fallback" href="mailto:contact@atlas-lms.com" data-email-fallback hidden>Request access by email</a>
               </div>
             </div>
 
