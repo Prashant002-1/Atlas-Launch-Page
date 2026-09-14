@@ -20,6 +20,9 @@
   const hero = canvas.closest(".hero");
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
   const coarsePointer = window.matchMedia("(pointer: coarse)");
+  const wideGamut =
+    window.matchMedia("(color-gamut: p3)").matches &&
+    window.CSS?.supports("color", "color(display-p3 1 0 0)");
 
   const T = 0.34;
   const TAU = Math.PI * 2;
@@ -29,6 +32,8 @@
   const IDLE_FRAME_MS = 1000 / 30;
   const ACTIVE_FRAME_MS = 1000 / 60;
 
+  // Using these pigment coordinates in P3 gently expands their chroma.
+  // The neutral halftone is color-matched separately below.
   const PIGMENTS = [
     [0.078, 0.329, 0.239],
     [0.153, 0.371, 0.42],
@@ -315,6 +320,16 @@
     powerPreference: "low-power",
   });
 
+  let displayP3 = false;
+  if (wideGamut && gl && "drawingBufferColorSpace" in gl) {
+    try {
+      gl.drawingBufferColorSpace = "display-p3";
+      displayP3 = gl.drawingBufferColorSpace === "display-p3";
+    } catch {
+      // Some implementations expose the property without supporting P3.
+    }
+  }
+
   let glOK = false;
   let progSplat = null,
     progInk = null,
@@ -419,8 +434,9 @@
         "  float ink = smoothstep(0.04, 0.42, tone);",
         "  vec3 pigment = s.rgb / max(f, 0.0001);",
         // muted: pigment stays in a quiet tonal family, never loud
-        "  pigment = mix(pigment, vec3(0.675, 0.706, 0.682), 0.42);",
-        "  vec3 col = mix(vec3(0.675, 0.706, 0.682), pigment, ink);",
+        `  vec3 neutral = ${displayP3 ? "vec3(0.680676, 0.704994, 0.683589)" : "vec3(0.675, 0.706, 0.682)"};`,
+        "  pigment = mix(pigment, neutral, 0.42);",
+        "  vec3 col = mix(neutral, pigment, ink);",
         "  a *= mix(0.26, 0.54, ink);",
         // the surface dissolves before the page's edges — no hard cut
         "  float dp = uPx / 8.5;",
@@ -609,7 +625,9 @@
       const red = Math.round(particle.cr * 255);
       const green = Math.round(particle.cg * 255);
       const blue = Math.round(particle.cb * 255);
-      ctx2d.fillStyle = `rgba(${red}, ${green}, ${blue}, 0.34)`;
+      ctx2d.fillStyle = displayP3
+        ? `color(display-p3 ${particle.cr} ${particle.cg} ${particle.cb} / 0.34)`
+        : `rgba(${red}, ${green}, ${blue}, 0.34)`;
       const dots = Math.max(2, Math.round(particle.r * 0.65));
       for (let index = 0; index < dots; index += 1) {
         const angle = particle.phase + index * 2.39996;
@@ -775,9 +793,19 @@
 
   glOK = initGL();
   if (!glOK) {
-    ctx2d = canvas.getContext("2d", { alpha: true });
+    try {
+      ctx2d = canvas.getContext("2d", {
+        alpha: true,
+        colorSpace: wideGamut ? "display-p3" : "srgb",
+      });
+    } catch {
+      ctx2d = canvas.getContext("2d", { alpha: true });
+    }
     if (!ctx2d) return;
+    displayP3 =
+      wideGamut && ctx2d.getContextAttributes?.().colorSpace === "display-p3";
   }
+  canvas.dataset.colorSpace = displayP3 ? "display-p3" : "srgb";
 
   if (reduced.matches) requestAnimationFrame(stillFrame);
   else queueFrame();

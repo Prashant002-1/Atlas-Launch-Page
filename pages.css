@@ -6,8 +6,8 @@
   --page-sink: #e1e9df;
   --page-wash: #d6e8dc;
   --page-ink: #0a1f19;
-  --page-pine: #103f30;
-  --page-mint: #72d49a;
+  --page-pine: var(--pine-deep);
+  --page-mint: var(--mint);
   --page-line: rgba(10, 31, 25, 0.16);
   --page-line-dark: rgba(241, 244, 238, 0.19);
   background: var(--page-paper);

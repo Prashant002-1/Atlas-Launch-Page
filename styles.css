@@ -45,6 +45,7 @@
   --muted: #5f7168;
 
   --pine: #14543d;
+  --pine-deep: #103f30;
   --mint: #72d49a;
   --wash: #e6eee6;
   --clay: #bf5f3b;
@@ -76,6 +77,18 @@
   --rail-tick-phase: -7px;
   --rail-lens-tick-phase: -14px;
   --edge-r: calc(var(--rail-inset) + 3rem + clamp(2.5rem, 4vw, 4.5rem));
+}
+
+/* Keep the sRGB palette above as the default. Only the brand greens gain
+   chroma on wide-gamut displays; paper, text and quiet surfaces stay fixed. */
+@supports (color: color(display-p3 1 0 0)) {
+  @media (color-gamut: p3) {
+    :root {
+      --pine: color(display-p3 0.078 0.329 0.239);
+      --pine-deep: color(display-p3 0.063 0.247 0.188);
+      --mint: color(display-p3 0.50 0.835 0.625);
+    }
+  }
 }
 
 *,
