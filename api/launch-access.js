@@ -13,6 +13,13 @@ const INTERESTS = new Set([
   "Atlas LMS",
   "Product conversation",
 ]);
+const CONTACT_TOPICS = new Set([
+  "General question",
+  "Integrations",
+  "Privacy request",
+  "Security concern",
+  "Support or feedback",
+]);
 
 function text(value, max = 2_000) {
   if (typeof value !== "string") return "";
@@ -84,6 +91,16 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "The request could not be read." });
   }
 
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
+    return res.status(400).json({ error: "The request could not be read." });
+  }
+
+  const kind = body.kind ?? "access";
+  if (kind !== "access" && kind !== "contact") {
+    return res.status(400).json({ error: "Choose a valid request type." });
+  }
+  const isContact = kind === "contact";
+
   if (text(body.website, 200)) {
     return res.status(200).json({ ok: true });
   }
@@ -91,6 +108,8 @@ export default async function handler(req, res) {
   const submission = {
     name: singleLine(body.name, 160),
     email: singleLine(body.email, 254).toLowerCase(),
+    topic: singleLine(body.topic, 120),
+    message: text(body.message, 4_000),
     role: singleLine(body.role, 120),
     organizationType: singleLine(body.organizationType, 120),
     institution: singleLine(body.institution, 200),
@@ -105,7 +124,12 @@ export default async function handler(req, res) {
       : [singleLine(body.interests, 120)].filter((item) => INTERESTS.has(item)),
   };
 
-  const required = [
+  const required = isContact ? [
+    submission.name,
+    submission.email,
+    submission.topic,
+    submission.message,
+  ] : [
     submission.name,
     submission.email,
     submission.role,
@@ -114,7 +138,7 @@ export default async function handler(req, res) {
     submission.useCase,
   ];
 
-  if (required.some((value) => !value) || submission.interests.length === 0) {
+  if (required.some((value) => !value) || (!isContact && submission.interests.length === 0)) {
     return res.status(400).json({ error: "Complete the required fields." });
   }
 
@@ -122,11 +146,15 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Enter a valid email address." });
   }
 
-  if (!ORGANIZATION_TYPES.has(submission.organizationType)) {
+  if (isContact && !CONTACT_TOPICS.has(submission.topic)) {
+    return res.status(400).json({ error: "Choose a valid topic." });
+  }
+
+  if (!isContact && !ORGANIZATION_TYPES.has(submission.organizationType)) {
     return res.status(400).json({ error: "Choose how you are approaching Atlas." });
   }
 
-  if (submission.organizationType !== "Individual" && !submission.institution) {
+  if (!isContact && submission.organizationType !== "Individual" && !submission.institution) {
     return res
       .status(400)
       .json({ error: "Enter your institution or organization." });
@@ -143,8 +171,17 @@ export default async function handler(req, res) {
     });
   }
 
-  const subject = `Atlas launch access: ${submission.name}`;
-  const rows = [
+  const subject = isContact
+    ? `Atlas contact (${submission.topic}): ${submission.name}`
+    : `Atlas launch access: ${submission.name}`;
+  const rows = isContact ? [
+    line("Name", submission.name),
+    line("Email", submission.email),
+    line("Topic", submission.topic),
+    "",
+    "Message:",
+    submission.message,
+  ] : [
     line("Name", submission.name),
     line("Email", submission.email),
     line("Role", submission.role),

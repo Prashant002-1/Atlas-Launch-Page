@@ -73,4 +73,12 @@ The access form requires these Vercel environment variables in Preview and Produ
 
 Variable names belong in documentation. Values never belong in Git.
 
-If request delivery fails, the access form preserves the visitor's entries and offers an email draft addressed to `contact@atlas-lms.com`. The visitor sends that email themselves. A failed delivery is never shown as a received request.
+Both `/access/` and `/contact/` submit to `/api/launch-access`. The contact form accepts general questions, integrations, privacy requests, security concerns, and support without requiring pilot or institution details. All public contact links stay on the site.
+
+Resend sends each submission to the private inbox in `ATLAS_ACCESS_RECIPIENT`. Set this to a working inbox you monitor. The notification includes the visitor's message and uses their email as `Reply-To`, so replying reaches the visitor. The recipient and sender are server-only configuration and are never returned to the browser. Replying from your inbox will reveal that inbox's sender address to the visitor.
+
+`ATLAS_ACCESS_FROM` must be an address on a Resend-verified sending domain. Sending through Resend is separate from a Google Workspace mailbox subscription. Keep the Resend domain's DNS verification valid. `RESEND_API_KEY` authorizes the delivery call. See [Resend domain verification](https://resend.com/docs/dashboard/domains/introduction).
+
+There is no submission database or admin inbox in this site. Resend acceptance produces the on-page confirmation; it is not proof of inbox delivery. Check delivery status in Resend and notifications in the recipient inbox. Until all three variables are configured and deployed, forms return an unavailable response.
+
+If delivery fails, the form preserves the visitor's entries on the current page for retry. It does not offer an email fallback or report success. Entries are not saved across reloads. JavaScript is required; without it, submission is disabled so personal details cannot fall through to a URL query string.

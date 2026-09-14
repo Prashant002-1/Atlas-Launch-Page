@@ -161,8 +161,91 @@ test("delivers an individual request without a consent checkbox and ignores remo
     assert.doesNotMatch(providerBody.html, /Current approach|Legacy field/);
   } finally {
     globalThis.fetch = originalFetch;
-    process.env.RESEND_API_KEY = originalEnv.key;
-    process.env.ATLAS_ACCESS_RECIPIENT = originalEnv.recipient;
-    process.env.ATLAS_ACCESS_FROM = originalEnv.sender;
+    if (originalEnv.key === undefined) delete process.env.RESEND_API_KEY;
+    else process.env.RESEND_API_KEY = originalEnv.key;
+    if (originalEnv.recipient === undefined) delete process.env.ATLAS_ACCESS_RECIPIENT;
+    else process.env.ATLAS_ACCESS_RECIPIENT = originalEnv.recipient;
+    if (originalEnv.sender === undefined) delete process.env.ATLAS_ACCESS_FROM;
+    else process.env.ATLAS_ACCESS_FROM = originalEnv.sender;
+  }
+});
+
+const contactMessage = {
+  kind: "contact",
+  name: "Jordan Lee",
+  email: "jordan@example.edu",
+  topic: "Privacy request",
+  message: "Please delete my pilot request. <script>alert('test')</script>",
+};
+
+function configureDelivery(t, fetchImpl) {
+  const values = {
+    RESEND_API_KEY: "test-key",
+    ATLAS_ACCESS_RECIPIENT: "private-inbox@example.com",
+    ATLAS_ACCESS_FROM: "Atlas <notifications@example.com>",
+  };
+  const originalEnv = Object.fromEntries(Object.keys(values).map((key) => [key, process.env[key]]));
+  Object.assign(process.env, values);
+  t.mock.method(globalThis, "fetch", fetchImpl);
+  t.after(() => {
+    for (const [key, value] of Object.entries(originalEnv)) {
+      if (value === undefined) delete process.env[key];
+      else process.env[key] = value;
+    }
+  });
+}
+
+test("delivers a contact message without pilot fields to the private configured inbox", async (t) => {
+  let notification;
+  configureDelivery(t, async (url, options) => {
+    assert.equal(url, "https://api.resend.com/emails");
+    notification = JSON.parse(options.body);
+    return { ok: true };
+  });
+  const res = responseRecorder();
+  await handler({ method: "POST", body: { ...contactMessage, to: "override@example.com" } }, res);
+  assert.equal(res.code, 200);
+  assert.deepEqual(res.body, { ok: true });
+  assert.deepEqual(notification.to, ["private-inbox@example.com"]);
+  assert.equal(notification.reply_to, contactMessage.email);
+  assert.equal(notification.subject, "Atlas contact (Privacy request): Jordan Lee");
+  assert.match(notification.text, /Please delete my pilot request/);
+  assert.doesNotMatch(notification.text, /Course or institutional context|What they want to test/);
+  assert.doesNotMatch(notification.html, /<script>/);
+  assert.match(notification.html, /&lt;script&gt;/);
+  assert.doesNotMatch(JSON.stringify(res.body), /@|test-key/);
+});
+
+test("rejects missing messages, unsupported topics, and unknown request types without sending", async (t) => {
+  const send = t.mock.method(globalThis, "fetch", async () => {
+    throw new Error("Invalid input must not reach delivery");
+  });
+  for (const patch of [{ message: " " }, { topic: "Unknown" }, { email: "invalid" }, { kind: "unknown" }]) {
+    const res = responseRecorder();
+    await handler({ method: "POST", body: { ...contactMessage, ...patch } }, res);
+    assert.equal(res.code, 400);
+    assert.equal(res.body.ok, undefined);
+  }
+  assert.equal(send.mock.callCount(), 0);
+});
+
+for (const failure of ["provider rejection", "network failure"]) {
+  test(`does not confirm contact delivery after ${failure}`, async (t) => {
+    configureDelivery(t, async () => {
+      if (failure === "network failure") throw new Error("Offline");
+      return { ok: false, status: 403 };
+    });
+    const res = responseRecorder();
+    await handler({ method: "POST", body: contactMessage }, res);
+    assert.equal(res.code, 502);
+    assert.deepEqual(res.body, { error: "The request could not be delivered." });
+  });
+}
+
+test("rejects non-object JSON without throwing", async () => {
+  for (const body of ["null", "[]", "42"]) {
+    const res = responseRecorder();
+    await handler({ method: "POST", body }, res);
+    assert.equal(res.code, 400);
   }
 });

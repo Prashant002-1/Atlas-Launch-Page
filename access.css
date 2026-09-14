@@ -312,12 +312,6 @@
   color: var(--access-pine);
 }
 
-.form-email-fallback {
-  color: var(--access-pine);
-  font-size: 0.78rem;
-  text-underline-offset: 0.2rem;
-}
-
 .access-success {
   min-height: 34rem;
   display: grid;
