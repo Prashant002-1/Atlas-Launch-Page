@@ -7,7 +7,7 @@
 - [ ] `npm run verify`
 - [ ] Preview deployment inspected
 - [ ] Desktop and mobile routes checked
-- [ ] Access-form API boundaries checked
+- [ ] Inquiry API boundaries checked (if the form or API changed)
 
 ## Release notes
 

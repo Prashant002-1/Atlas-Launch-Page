@@ -2,7 +2,7 @@
 
 ## Position
 
-Atlas is the AI-native learning management system. It changes how assignments, assessment, and course operations work when AI is part of learning.
+Atlas is an exploration of an AI-native learning management system: how assignments, assessment, and course operations change when AI is part of learning. It is an independent project, not a company or a commercial product.
 
 The sequence is deliberate:
 
@@ -30,16 +30,16 @@ Atlas LMS brings courses, materials, modules, people, assignments, grades, integ
 
 ## Connectors
 
-Atlas can run as the LMS. For institutions keeping an existing LMS, roster, role, assignment launch, course material, and teacher-approved grade return are planned connection points. They must not be described as live until verified in the deployment being discussed.
+Atlas can run as the LMS. For a course that keeps an existing LMS, roster, role, assignment launch, course material, and teacher-approved grade return are the connection points the design anticipates. None of them are live, and the site must not describe them as if they were.
 
 ## Public truth
 
-- AI Assignments are the private pilot focus.
-- Public self-serve pricing is not posted.
-- No customer logos, usage numbers, testimonials, certifications, or live integrations are claimed without evidence.
-- The public access form is not for student records or sensitive course data.
-- Product and institutional data controls are resolved in a separate pilot scope before use.
+- Atlas is a project. There is no pilot, no pricing, no service, and nothing for sale.
+- The site describes what was built and why. It does not sell.
+- No customer logos, usage numbers, testimonials, certifications, or live integrations are claimed.
+- The forms collect only what is needed to reply to a visitor. They are not for student records or sensitive course data.
+- Anyone who deploys Atlas owns the data, hosting, and approval decisions for their deployment.
 
 ## Voice
 
-Direct, specific, and intelligent. The page explains the product once and lets the visual object carry the rest.
+Direct, specific, and intelligent. The page explains the idea once and lets the visual object carry the rest. Where the author speaks, it is first person singular. There is no "we".

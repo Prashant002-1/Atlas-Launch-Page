@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Contact Atlas with questions, feedback, integration plans, privacy requests, or security concerns."
+      content="Get in touch about Atlas with a question, feedback, a privacy request, or a security concern."
     />
     <meta name="theme-color" content="#f1f4ee" />
     <meta name="robots" content="index, follow" />
@@ -22,11 +22,11 @@
     />
     <link rel="stylesheet" href="/vendor/lenis.css" />
     <link rel="stylesheet" href="/styles.css?v=20260903a" />
-    <link rel="stylesheet" href="/access.css?v=20260909c" />
+    <link rel="stylesheet" href="/access.css?v=20261019a" />
     <script src="/vendor/lenis.min.js" defer></script>
     <script src="/motion.js?v=20260831e" defer></script>
     <script src="/site.js?v=20260831e" defer></script>
-    <script src="/access-form.js?v=20260909c" defer></script>
+    <script src="/access-form.js?v=20261019a" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
   </head>
@@ -50,11 +50,11 @@
         <nav class="site-nav" id="site-nav" aria-label="Primary" data-site-nav>
           <a href="/products/">Products</a>
           <a href="/assessment/">Assessment</a>
-          <a href="/about/">Why Atlas</a>
+          <a href="/about/">About</a>
           <a href="/security/">Security</a>
-          <a href="/pricing/">Pricing</a>
+          <a href="/notes/">Notes</a>
         </nav>
-        <a class="header-cta" href="/access/">Request access</a>
+        <a class="header-cta" href="/learn-more/">Learn more</a>
       </div>
     </header>
 
@@ -81,8 +81,8 @@
         <div class="shell access-workbench-shell">
           <aside class="access-brief">
             <div class="access-brief-copy">
-              <h1 id="access-title">Talk to Atlas.</h1>
-              <p>Ask a question, share feedback, or tell us what you are working on.</p>
+              <h1 id="access-title">Get in touch.</h1>
+              <p>Ask a question, share feedback, or tell me what you are working on.</p>
               <p>For privacy requests or security concerns, choose the matching topic. A brief description is enough. Please leave out passwords, student records, and other confidential information.</p>
             </div>
 
@@ -90,18 +90,18 @@
               <img src="/assets/atlas-access-field.webp" alt="" width="1536" height="1024" />
             </div>
 
-            <p class="access-direct">Want to try Atlas? <a href="/access/">Request your free pilot</a>.</p>
+            <p class="access-direct">Curious about the project? <a href="/learn-more/">Learn more</a>.</p>
           </aside>
 
           <div class="access-form-panel">
-            <form class="access-form" method="post" action="/api/launch-access" data-access-form data-form-kind="contact" aria-busy="false">
+            <form class="access-form" method="post" action="/api/inquiry" data-access-form data-form-kind="contact" aria-busy="false">
             <div class="honeypot" aria-hidden="true">
               <label for="website">Website</label>
               <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
             </div>
 
             <header class="access-form-head">
-              <h2>Send us a message.</h2>
+              <h2>Send a message.</h2>
               <p>* Required</p>
             </header>
 
@@ -113,14 +113,14 @@
                 <select id="topic" name="topic" required>
                   <option value="">Choose one</option>
                   <option>General question</option>
-                  <option>Integrations</option>
+                  <option>Contributing or forking</option>
                   <option>Privacy request</option>
                   <option>Security concern</option>
-                  <option>Support or feedback</option>
+                  <option>Feedback</option>
                 </select>
               </div>
               <div class="field">
-                <label for="message">How can we help? *</label>
+                <label for="message">Your message *</label>
                 <textarea id="message" name="message" rows="6" maxlength="4000" required></textarea>
               </div>
               </div>
@@ -136,13 +136,13 @@
                 <div class="field">
                   <label for="email">Email *</label>
                   <input id="email" name="email" type="email" autocomplete="email" maxlength="254" aria-describedby="contact-email-note" required />
-                  <p id="contact-email-note" class="access-privacy-note">So we can reply to you.</p>
+                  <p id="contact-email-note" class="access-privacy-note">So I can reply to you.</p>
                 </div>
               </div>
             </fieldset>
 
             <div class="access-submit-row">
-              <p class="access-privacy-note">We don’t sell your information or share it with advertisers. <a href="/privacy/">Privacy policy</a>.</p>
+              <p class="access-privacy-note">Your details are only used to reply to you. <a href="/privacy/">Privacy</a>.</p>
               <div class="form-actions">
                 <button class="button" type="submit" disabled>Send message</button>
                 <noscript><p>Please enable JavaScript to send this form.</p></noscript>
@@ -154,7 +154,7 @@
               <img src="/brand/atlas-mark.svg" alt="" width="44" height="44" />
               <div>
                 <h2 tabindex="-1" data-access-success-title>Message received.</h2>
-                <p data-access-success-copy>Thank you for getting in touch. We will respond using the email you provided.</p>
+                <p data-access-success-copy>Thanks for getting in touch. I will reply using the email you provided.</p>
                 <button class="button button-quiet" type="button" data-access-reset>Send another message</button>
               </div>
             </div>
@@ -171,7 +171,7 @@
           <span>Atlas</span>
         </a>
         <p class="footer-line">The learning system for the AI era.</p>
-        <div class="footer-links"><a href="/products/">Products</a><a href="/assessment/">Assessment</a><a href="/about/">About</a><a href="/security/">Security</a><a href="/pricing/">Pricing</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/contact/">Contact</a></div>
+        <div class="footer-links"><a href="/products/">Products</a><a href="/assessment/">Assessment</a><a href="/about/">About</a><a href="/security/">Security</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/contact/">Contact</a><a href="https://github.com/Prashant002-1/Atlas-Launch-Page">Source</a></div>
       </div>
     </footer>
   </body>

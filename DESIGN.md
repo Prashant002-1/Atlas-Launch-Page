@@ -1,6 +1,6 @@
 ---
 name: Atlas Launch Site
-description: An editorial, product-true site for an AI-native learning system.
+description: An editorial site for an independent, open AI-native learning system project.
 colors:
   paper: "#f1f4ee"
   paper-lift: "#f8faf6"
@@ -17,7 +17,7 @@ typography:
 
 ## Direction
 
-The site should feel like an intelligent editorial product launch, not a diagram of a software ecosystem.
+The site should feel like an intelligent editorial walkthrough of a project, not a sales page or a diagram of a software ecosystem.
 
 Each frame gets one decisive visual event. Large type establishes the claim. A real product surface, film, physical artwork, or readable learning record proves it. Negative space is part of the composition.
 

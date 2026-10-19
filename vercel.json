@@ -17,6 +17,16 @@
       "source": "/work-with-us",
       "destination": "/contact",
       "permanent": true
+    },
+    {
+      "source": "/access",
+      "destination": "/learn-more",
+      "permanent": true
+    },
+    {
+      "source": "/pricing",
+      "destination": "/about",
+      "permanent": true
     }
   ],
   "headers": [
