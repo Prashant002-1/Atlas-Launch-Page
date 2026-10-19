@@ -4,7 +4,7 @@
     <loc>https://atlas-lms.com/</loc>
   </url>
   <url>
-    <loc>https://atlas-lms.com/access/</loc>
+    <loc>https://atlas-lms.com/learn-more/</loc>
   </url>
   <url>
     <loc>https://atlas-lms.com/products/</loc>
@@ -31,18 +31,9 @@
     <loc>https://atlas-lms.com/about/</loc>
   </url>
   <url>
-    <loc>https://atlas-lms.com/pricing/</loc>
-  </url>
-  <url>
     <loc>https://atlas-lms.com/security/</loc>
   </url>
   <url>
     <loc>https://atlas-lms.com/notes/</loc>
-  </url>
-  <url>
-    <loc>https://atlas-lms.com/privacy/</loc>
-  </url>
-  <url>
-    <loc>https://atlas-lms.com/terms/</loc>
   </url>
 </urlset>

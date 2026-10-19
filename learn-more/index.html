@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Try Atlas for free in a demo environment with sample data and login credentials from our team. Pricing will be announced after the pilot."
+      content="Curious about Atlas? Tell me what you are working on and what you would like to know about the project."
     />
     <meta name="theme-color" content="#f1f4ee" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://atlas-lms.com/access/" />
-    <title>Request access | Atlas LMS</title>
+    <link rel="canonical" href="https://atlas-lms.com/learn-more/" />
+    <title>Learn more | Atlas LMS</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" href="/brand/atlas-mark.svg" type="image/svg+xml" />
     <link
@@ -21,12 +21,12 @@
       crossorigin
     />
     <link rel="stylesheet" href="/vendor/lenis.css" />
-    <link rel="stylesheet" href="/styles.css?v=20260903a" />
-    <link rel="stylesheet" href="/access.css?v=20260909c" />
+    <link rel="stylesheet" href="/styles.css?v=20261019b" />
+    <link rel="stylesheet" href="/access.css?v=20261019b" />
     <script src="/vendor/lenis.min.js" defer></script>
     <script src="/motion.js?v=20260831e" defer></script>
     <script src="/site.js?v=20260831e" defer></script>
-    <script src="/access-form.js?v=20260909c" defer></script>
+    <script src="/access-form.js?v=20261019a" defer></script>
     <script src="/analytics.js" defer></script>
     <script src="/_vercel/insights/script.js" defer></script>
   </head>
@@ -50,11 +50,11 @@
         <nav class="site-nav" id="site-nav" aria-label="Primary" data-site-nav>
           <a href="/products/">Products</a>
           <a href="/assessment/">Assessment</a>
-          <a href="/about/">Why Atlas</a>
+          <a href="/about/">About</a>
           <a href="/security/">Security</a>
-          <a href="/pricing/">Pricing</a>
+          <a href="/notes/">Notes</a>
         </nav>
-        <a class="header-cta" href="/access/" aria-current="page">Request access</a>
+        <a class="header-cta" href="/learn-more/" aria-current="page">Learn more</a>
       </div>
     </header>
 
@@ -81,93 +81,90 @@
         <div class="shell access-workbench-shell">
           <aside class="access-brief">
             <div class="access-brief-copy">
-              <h1 id="access-title">Help us put Atlas to the test.</h1>
+              <h1 id="access-title">Want to learn more?</h1>
               <p>
-                Pilot access is free. We will provide login credentials for a
-                demo environment with sample data, so you can explore the features
-                and see whether Atlas fits the way you teach or learn.
+                Atlas is an exploration of what a learning system looks like
+                when AI is part of the course.
               </p>
-              <p>Pricing will be announced after the pilot. No payment details are needed to take part.</p>
+              <p>
+                If you are curious about how it was built, the thinking behind it,
+                or how to use the ideas in your own work, tell me a little about
+                yourself and what you would like to know.
+              </p>
             </div>
 
             <div class="access-brief-art" aria-hidden="true">
               <img src="/assets/atlas-access-field.webp" alt="" width="1536" height="1024" />
             </div>
 
-            <p class="access-direct">Have a question first? <a href="/contact/">Get in touch</a>.</p>
+            <p class="access-direct">Prefer the code? <a href="https://github.com/Prashant002-1/Atlas-Launch-Page">Read the source on GitHub</a>.</p>
           </aside>
 
           <div class="access-form-panel">
-            <form class="access-form" method="post" action="/api/launch-access" data-access-form aria-busy="false">
+            <form class="access-form" method="post" action="/api/inquiry" data-access-form aria-busy="false">
             <div class="honeypot" aria-hidden="true">
               <label for="website">Website</label>
               <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
             </div>
 
             <header class="access-form-head">
-              <h2>Request your free pilot.</h2>
+              <h2>A short survey.</h2>
               <p>* Required</p>
             </header>
 
             <fieldset class="access-group">
-              <legend>Scope</legend>
-              <div class="access-row access-row-three">
+              <legend>Your interest</legend>
+              <div class="access-row access-row-two">
                 <div class="field">
-                  <label for="interests">What should we start with? *</label>
-                  <select id="interests" name="interests" required data-interest>
+                  <label for="interest">What are you curious about? *</label>
+                  <select id="interest" name="interest" required>
                     <option value="">Choose one</option>
                     <option>AI Assignments</option>
                     <option>Atlas Course</option>
                     <option>Assessment workflow</option>
-                    <option>LMS connector</option>
+                    <option>Integrations</option>
                     <option>Atlas LMS</option>
-                    <option>Product conversation</option>
+                    <option>How it was built</option>
+                    <option>Something else</option>
                   </select>
                 </div>
                 <div class="field">
-                  <label for="organizationType">You are approaching Atlas as *</label>
-                  <select id="organizationType" name="organizationType" required data-organization-type>
+                  <label for="role">You are *</label>
+                  <select id="role" name="role" required>
                     <option value="">Choose one</option>
-                    <option>Institution</option>
-                    <option>Department or program</option>
-                    <option>Course team</option>
-                    <option>Individual</option>
+                    <option>Teacher</option>
+                    <option>Student</option>
+                    <option>Developer</option>
+                    <option>Researcher</option>
+                    <option>Academic leader</option>
+                    <option>IT or operations</option>
+                    <option>Other</option>
                   </select>
-                </div>
-                <div class="field">
-                  <label for="institution">
-                    Institution or organization <span data-institution-required>*</span>
-                  </label>
-                  <input id="institution" name="institution" type="text" autocomplete="organization" maxlength="200" data-institution />
                 </div>
               </div>
             </fieldset>
 
             <fieldset class="access-group">
-              <legend>Your context</legend>
+              <legend>Your question</legend>
               <div class="access-row access-row-two">
                 <div class="field">
-                  <label for="courseContext">Course, learner group, or institution *</label>
+                  <label for="question">What would you like to know? *</label>
                   <textarea
-                    id="courseContext"
-                    name="courseContext"
-                    maxlength="3000"
+                    id="question"
+                    name="question"
+                    maxlength="4000"
                     required
-                    data-course-context
                   ></textarea>
                 </div>
                 <div class="field">
-                  <label for="useCase">What would you like to try? *</label>
+                  <label for="context">What are you working on?</label>
                   <textarea
-                    id="useCase"
-                    name="useCase"
-                    maxlength="4000"
-                    required
-                    data-use-case
+                    id="context"
+                    name="context"
+                    maxlength="3000"
                   ></textarea>
                 </div>
               </div>
-
             </fieldset>
 
             <fieldset class="access-group access-group-contact">
@@ -182,17 +179,8 @@
                 <input id="email" name="email" type="email" autocomplete="email" maxlength="254" required />
               </div>
               <div class="field">
-                <label for="role">Your role *</label>
-                <select id="role" name="role" required>
-                  <option value="">Choose one</option>
-                  <option>Teacher</option>
-                  <option>Academic leader</option>
-                  <option>School or district leader</option>
-                  <option>IT or operations</option>
-                  <option>Student</option>
-                  <option>Researcher</option>
-                  <option>Other</option>
-                </select>
+                <label for="organization">Organization</label>
+                <input id="organization" name="organization" type="text" autocomplete="organization" maxlength="200" />
               </div>
               </div>
             </fieldset>
@@ -200,9 +188,9 @@
             <input id="source" name="source" type="hidden" value="Atlas website" />
 
             <div class="access-submit-row">
-              <p class="access-privacy-note">We don’t sell your information or share it with advertisers. <a href="/privacy/">Privacy policy</a>.</p>
+              <p class="access-privacy-note">Your details are only used to reply to you.</p>
               <div class="form-actions">
-                <button class="button" type="submit" disabled>Send request</button>
+                <button class="button" type="submit" disabled>Send</button>
                 <noscript><p>Please enable JavaScript to send this form.</p></noscript>
                 <p class="form-status" role="status" aria-live="polite" data-form-status></p>
               </div>
@@ -211,9 +199,9 @@
             <div class="access-success" data-access-success hidden>
               <img src="/brand/atlas-mark.svg" alt="" width="44" height="44" />
               <div>
-                <h2 tabindex="-1" data-access-success-title>Request received.</h2>
-                <p data-access-success-copy>We will email you with the next steps for your free pilot. Our team will provide your login credentials when your access is ready.</p>
-                <button class="button button-quiet" type="button" data-access-reset>Send another request</button>
+                <h2 tabindex="-1" data-access-success-title>Thanks.</h2>
+                <p data-access-success-copy>I will reply using the email you provided.</p>
+                <button class="button button-quiet" type="button" data-access-reset>Send another</button>
               </div>
             </div>
             </form>
@@ -229,7 +217,7 @@
           <span>Atlas</span>
         </a>
         <p class="footer-line">The learning system for the AI era.</p>
-        <div class="footer-links"><a href="/products/">Products</a><a href="/assessment/">Assessment</a><a href="/about/">About</a><a href="/security/">Security</a><a href="/pricing/">Pricing</a><a href="/privacy/">Privacy</a><a href="/terms/">Terms</a><a href="/contact/">Contact</a></div>
+        <div class="footer-links"><a href="/products/">Products</a><a href="/assessment/">Assessment</a><a href="/about/">About</a><a href="/security/">Security</a><a href="/notes/">Notes</a><a href="/contact/">Contact</a><a class="footer-github" href="https://github.com/Prashant002-1/Atlas-Launch-Page" aria-label="Atlas on GitHub"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></a></div>
       </div>
     </footer>
   </body>

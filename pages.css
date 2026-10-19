@@ -180,30 +180,32 @@
 
 .note-summary {
   display: grid;
-  grid-template-columns: 4rem minmax(15rem, 0.5fr) minmax(20rem, 1fr) auto 2.25rem;
+  grid-template-columns: 4rem minmax(16rem, 0.6fr) minmax(16rem, 1fr) 2.25rem;
   gap: clamp(1.25rem, 3vw, 3rem);
   align-items: center;
-  min-height: 11rem;
+  min-height: 7.5rem;
   padding-block: 1.5rem;
 }
 
-.note-summary > span,
-.note-summary > time {
+.note-summary > span:not(.note-deck) {
   color: var(--muted);
   font-family: var(--font-mono);
   font-size: 0.64rem;
 }
 
 .note-summary h2 {
-  font-size: clamp(1.55rem, 3vw, 2.8rem);
-  line-height: 1;
-  letter-spacing: -0.035em;
+  font-size: clamp(1.25rem, 1.9vw, 1.75rem);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
 }
 
 .note-summary .note-deck {
-  max-width: 42rem;
+  max-width: 34rem;
   color: var(--ink-soft);
+  font-family: var(--font-sans);
   font-size: 0.86rem;
+  line-height: 1.5;
 }
 
 .note-summary::after {
@@ -448,10 +450,6 @@
   .note-summary .note-deck {
     grid-column: 2 / -1;
     grid-row: 2;
-  }
-
-  .note-summary > time {
-    display: none;
   }
 
   .note-summary::after {

@@ -1,24 +1,18 @@
 const MAX_BODY_BYTES = 48_000;
-const ORGANIZATION_TYPES = new Set([
-  "Institution",
-  "Department or program",
-  "Course team",
-  "Individual",
-]);
 const INTERESTS = new Set([
   "AI Assignments",
   "Atlas Course",
   "Assessment workflow",
-  "LMS connector",
+  "Integrations",
   "Atlas LMS",
-  "Product conversation",
+  "How it was built",
+  "Something else",
 ]);
 const CONTACT_TOPICS = new Set([
   "General question",
-  "Integrations",
-  "Privacy request",
+  "Contributing or forking",
   "Security concern",
-  "Support or feedback",
+  "Feedback",
 ]);
 
 function text(value, max = 2_000) {
@@ -95,12 +89,13 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "The request could not be read." });
   }
 
-  const kind = body.kind ?? "access";
-  if (kind !== "access" && kind !== "contact") {
+  const kind = body.kind ?? "inquiry";
+  if (kind !== "inquiry" && kind !== "contact") {
     return res.status(400).json({ error: "Choose a valid request type." });
   }
   const isContact = kind === "contact";
 
+  // Honeypot: bots that fill the hidden field get a quiet success.
   if (text(body.website, 200)) {
     return res.status(200).json({ ok: true });
   }
@@ -111,34 +106,18 @@ export default async function handler(req, res) {
     topic: singleLine(body.topic, 120),
     message: text(body.message, 4_000),
     role: singleLine(body.role, 120),
-    organizationType: singleLine(body.organizationType, 120),
-    institution: singleLine(body.institution, 200),
-    courseContext: text(body.courseContext, 3_000),
-    useCase: text(body.useCase, 4_000),
+    interest: singleLine(body.interest, 120),
+    organization: singleLine(body.organization, 200),
+    context: text(body.context, 3_000),
+    question: text(body.question, 4_000),
     source: singleLine(body.source, 180),
-    interests: Array.isArray(body.interests)
-      ? body.interests
-          .map((item) => singleLine(item, 120))
-          .filter((item) => INTERESTS.has(item))
-          .slice(0, 12)
-      : [singleLine(body.interests, 120)].filter((item) => INTERESTS.has(item)),
   };
 
-  const required = isContact ? [
-    submission.name,
-    submission.email,
-    submission.topic,
-    submission.message,
-  ] : [
-    submission.name,
-    submission.email,
-    submission.role,
-    submission.organizationType,
-    submission.courseContext,
-    submission.useCase,
-  ];
+  const required = isContact
+    ? [submission.name, submission.email, submission.topic, submission.message]
+    : [submission.name, submission.email, submission.role, submission.interest, submission.question];
 
-  if (required.some((value) => !value) || (!isContact && submission.interests.length === 0)) {
+  if (required.some((value) => !value)) {
     return res.status(400).json({ error: "Complete the required fields." });
   }
 
@@ -150,14 +129,8 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Choose a valid topic." });
   }
 
-  if (!isContact && !ORGANIZATION_TYPES.has(submission.organizationType)) {
-    return res.status(400).json({ error: "Choose how you are approaching Atlas." });
-  }
-
-  if (!isContact && submission.organizationType !== "Individual" && !submission.institution) {
-    return res
-      .status(400)
-      .json({ error: "Enter your institution or organization." });
+  if (!isContact && !INTERESTS.has(submission.interest)) {
+    return res.status(400).json({ error: "Choose what you are curious about." });
   }
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -166,36 +139,36 @@ export default async function handler(req, res) {
 
   if (!apiKey || !recipient || !sender) {
     return res.status(503).json({
-      error:
-        "The request form is not configured yet. Please try again shortly.",
+      error: "The form is not configured yet. Please try again shortly.",
     });
   }
 
   const subject = isContact
     ? `Atlas contact (${submission.topic}): ${submission.name}`
-    : `Atlas launch access: ${submission.name}`;
-  const rows = isContact ? [
-    line("Name", submission.name),
-    line("Email", submission.email),
-    line("Topic", submission.topic),
-    "",
-    "Message:",
-    submission.message,
-  ] : [
-    line("Name", submission.name),
-    line("Email", submission.email),
-    line("Role", submission.role),
-    line("Organization type", submission.organizationType),
-    line("Institution", submission.institution),
-    line("Interests", submission.interests.join(", ")),
-    line("How they found Atlas", submission.source),
-    "",
-    "Course or institutional context:",
-    submission.courseContext,
-    "",
-    "What they want to test:",
-    submission.useCase,
-  ];
+    : `Atlas inquiry (${submission.interest}): ${submission.name}`;
+  const rows = isContact
+    ? [
+        line("Name", submission.name),
+        line("Email", submission.email),
+        line("Topic", submission.topic),
+        "",
+        "Message:",
+        submission.message,
+      ]
+    : [
+        line("Name", submission.name),
+        line("Email", submission.email),
+        line("Role", submission.role),
+        line("Organization", submission.organization),
+        line("Curious about", submission.interest),
+        line("Source", submission.source),
+        "",
+        "What they are working on:",
+        submission.context || "Not provided",
+        "",
+        "What they want to know:",
+        submission.question,
+      ];
 
   const htmlRows = rows
     .map((row) => (row ? `<p>${escapeHtml(row)}</p>` : "<br>"))
@@ -219,15 +192,11 @@ export default async function handler(req, res) {
       }),
     });
   } catch {
-    return res
-      .status(502)
-      .json({ error: "The request could not be delivered." });
+    return res.status(502).json({ error: "The message could not be delivered." });
   }
 
   if (!response.ok) {
-    return res
-      .status(502)
-      .json({ error: "The request could not be delivered." });
+    return res.status(502).json({ error: "The message could not be delivered." });
   }
 
   return res.status(200).json({ ok: true });

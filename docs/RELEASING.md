@@ -1,6 +1,6 @@
-# Releasing Atlas Launch Page
+# Releasing the Atlas site
 
-The GitHub repository is the durable source record. Vercel project `atlas-lms-coming-soon` serves `atlas-lms.com`.
+The GitHub repository is the durable source record. The site is served by a Vercel project with a custom domain. Production is a deliberate release action, so a merge is never mistaken for a verified deployment.
 
 ## Release contract
 
@@ -15,17 +15,15 @@ The GitHub repository is the durable source record. Vercel project `atlas-lms-co
 
 A commit, push, merge, deployment, and public-domain verification are separate states. Record each one in the pull request.
 
-## Required environments
+## Required environment
 
-The access form needs these variables in Preview and Production:
+The forms need these variables in Preview and Production:
 
 - `RESEND_API_KEY`
 - `ATLAS_ACCESS_RECIPIENT`
 - `ATLAS_ACCESS_FROM`
 
-Never commit their values. Confirm names with `vercel env ls` before release.
-
-Both access and contact forms use this configuration. The recipient must be a working private inbox, and the sender must use a Resend-verified domain. Setting variables does not update an existing deployment: redeploy afterward. No Google Workspace mailbox is required for the server to send through Resend. See the README for notification and reply behavior.
+Never commit their values. Confirm names with `vercel env ls` before release. Setting variables does not update an existing deployment: redeploy afterward. See the README for notification and reply behavior.
 
 ## Local gate
 
@@ -36,7 +34,7 @@ npm run verify
 git diff --check
 ```
 
-`npm run verify` covers API tests, HTML, CSS, and local route/asset references.
+`npm run verify` covers API tests, HTML, CSS, and local route and asset references.
 
 ## Preview
 
@@ -48,15 +46,14 @@ vercel deploy --prebuilt --yes
 
 Inspect the returned deployment, then verify:
 
-- `/`, `/products/`, `/products/ai-assignments/`, `/assessment/`, and `/access/` return `200`.
-- The V7 poster and video return `200` and support byte ranges.
-- Legacy `/product`, `/how-it-works`, and `/work-with-us` routes redirect to their current destinations.
+- `/`, `/products/`, `/products/ai-assignments/`, `/assessment/`, `/learn-more/`, and `/contact/` return `200`.
+- The film poster and video return `200` and support byte ranges.
+- Legacy `/access`, `/pricing`, `/product`, `/how-it-works`, and `/work-with-us` routes redirect to their current destinations.
 - Security headers match `vercel.json`.
-- `GET /api/launch-access` returns `405`.
-- An incomplete same-origin `POST /api/launch-access` returns `400`.
-- A valid delivery test succeeds only when the three required variables are configured and an approved test address is used.
-- Verify both a pilot request and a contact message, including actual receipt in the private inbox and the visitor's `Reply-To`. A provider success response alone does not prove inbox delivery.
-- Check that contact links, privacy requests, security concerns, and retry states stay on the site without publishing an email address. On failure, entries remain editable and no success confirmation appears.
+- `GET /api/inquiry` returns `405`.
+- An incomplete same-origin `POST /api/inquiry` returns `400`.
+- A delivery test succeeds only when the three required variables are configured. Confirm actual receipt in the private inbox and the visitor's `Reply-To`; a provider success response alone does not prove inbox delivery.
+- On failure, entries remain editable and no success confirmation appears.
 - Preview error logs are clean.
 
 Add the preview URL and verification result to the pull request before merging.
@@ -73,7 +70,7 @@ vercel build --prod
 vercel deploy --prebuilt --prod --yes
 ```
 
-Record the deployment ID, URL, commit SHA, and prior production deployment. Verify `https://atlas-lms.com` and `https://www.atlas-lms.com` independently.
+Record the deployment ID, URL, commit SHA, and prior production deployment. Verify the custom domain with and without `www` independently.
 
 ## Rollback
 

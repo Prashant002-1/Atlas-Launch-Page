@@ -611,7 +611,7 @@
   font-weight: 520;
 }
 
-/* Company, trust, and pilot pages */
+/* Project, trust, and legal pages */
 .state-panel {
   background: var(--page-ink);
   color: var(--page-paper);
@@ -638,29 +638,6 @@
   line-height: 1.65;
 }
 
-.pilot-offer {
-  min-height: clamp(25rem, 42vw, 36rem);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: clamp(2rem, 5vw, 5rem);
-  background: var(--page-mint);
-  color: var(--page-ink);
-}
-
-.pilot-offer strong {
-  max-width: 9ch;
-  font-size: clamp(2.4rem, 5vw, 4.8rem);
-  line-height: 0.94;
-  letter-spacing: -0.045em;
-  font-weight: 470;
-}
-
-.pilot-offer p {
-  max-width: 32ch;
-  font-size: 0.92rem;
-  line-height: 1.6;
-}
 
 .plain-essay {
   display: grid;
