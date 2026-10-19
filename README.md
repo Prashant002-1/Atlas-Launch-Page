@@ -2,7 +2,7 @@
 
 The public site for Atlas, an open exploration of what a learning management system looks like when AI is part of the course.
 
-Live at [atlas-lms.com](https://atlas-lms.com).
+Live at [atlas-lms.com](https://atlas-lms.com). The application itself lives in [Atlas-LMS](https://github.com/Prashant002-1/Atlas-LMS); this repository is only the site.
 
 The site walks through the idea in three layers:
 
@@ -10,7 +10,7 @@ The site walks through the idea in three layers:
 2. **Assessment**: claims, revisions, sources, and the teacher's criteria stay connected, and the teacher makes the final judgment.
 3. **Atlas Course and Atlas LMS**: the same context carried across a term, then across a whole learning record.
 
-Fork it, borrow the concepts, or use it as a reference for a static product site with a small serverless form. Design decisions are written down in [DESIGN.md](DESIGN.md) and [PRODUCT.md](PRODUCT.md).
+Fork it, borrow the concepts, or use it as a reference for a static site with a small serverless form. Design decisions are written down in [DESIGN.md](DESIGN.md) and [PRODUCT.md](PRODUCT.md).
 
 ## Routes
 
