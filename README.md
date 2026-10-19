@@ -1,6 +1,6 @@
 # Atlas Launch Page
 
-The public site for Atlas, an independent project exploring what a learning management system looks like when AI is part of the course. It is a portfolio project, not a company or a commercial product. Nothing is sold, priced, or offered as a service.
+The public site for Atlas, an open exploration of what a learning management system looks like when AI is part of the course.
 
 Live at [atlas-lms.com](https://atlas-lms.com).
 
@@ -68,5 +68,3 @@ Each submission is sent to the recipient inbox with the visitor's email as `Repl
 ## License
 
 Code is released under the [MIT License](LICENSE). The Atlas name and mark, the editorial artwork, and the film identify this project; please credit the source if you reuse them. Lenis is included under its own license in `vendor/`.
-
-Built by Prashant Shah.

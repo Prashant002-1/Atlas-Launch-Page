@@ -2,7 +2,7 @@
 
 ## Position
 
-Atlas is an exploration of an AI-native learning management system: how assignments, assessment, and course operations change when AI is part of learning. It is an independent project, not a company or a commercial product.
+Atlas is an exploration of an AI-native learning management system: how assignments, assessment, and course operations change when AI is part of learning.
 
 The sequence is deliberate:
 
@@ -34,8 +34,7 @@ Atlas can run as the LMS. For a course that keeps an existing LMS, roster, role,
 
 ## Public truth
 
-- Atlas is a project. There is no pilot, no pricing, no service, and nothing for sale.
-- The site describes what was built and why. It does not sell.
+- The site describes what was built and why. It does not sell anything.
 - No customer logos, usage numbers, testimonials, certifications, or live integrations are claimed.
 - The forms collect only what is needed to reply to a visitor. They are not for student records or sensitive course data.
 - Anyone who deploys Atlas owns the data, hosting, and approval decisions for their deployment.
