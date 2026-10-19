@@ -66,8 +66,8 @@ const contactMessage = {
   kind: "contact",
   name: "Jordan Lee",
   email: "jordan@example.edu",
-  topic: "Privacy request",
-  message: "Please delete my inquiry. <script>alert('test')</script>",
+  topic: "Feedback",
+  message: "Loved the film. <script>alert('test')</script>",
 };
 
 test("rejects non-POST requests", async () => {
@@ -182,8 +182,8 @@ test("delivers a contact message without inquiry fields", async (t) => {
   assert.equal(res.code, 200);
   assert.deepEqual(res.body, { ok: true });
   assert.equal(notification.reply_to, contactMessage.email);
-  assert.equal(notification.subject, "Atlas contact (Privacy request): Jordan Lee");
-  assert.match(notification.text, /Please delete my inquiry/);
+  assert.equal(notification.subject, "Atlas contact (Feedback): Jordan Lee");
+  assert.match(notification.text, /Loved the film/);
   assert.doesNotMatch(notification.text, /Curious about|What they want to know/);
   assert.doesNotMatch(notification.html, /<script>/);
   assert.match(notification.html, /&lt;script&gt;/);

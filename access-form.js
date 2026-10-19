@@ -35,7 +35,6 @@
   const topicMap = {
     general: "General question",
     contribute: "Contributing or forking",
-    privacy: "Privacy request",
     security: "Security concern",
     feedback: "Feedback",
   };

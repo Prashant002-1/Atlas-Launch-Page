@@ -27,6 +27,16 @@
       "source": "/pricing",
       "destination": "/about",
       "permanent": true
+    },
+    {
+      "source": "/privacy",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/terms",
+      "destination": "/",
+      "permanent": true
     }
   ],
   "headers": [

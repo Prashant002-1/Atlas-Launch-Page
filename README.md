@@ -21,8 +21,7 @@ Fork it, borrow the concepts, or use it as a reference for a static product site
 - `/integrations/` describes the connection points the design anticipates, none of which are live.
 - `/about/`, `/security/`, and `/notes/` cover why the project exists, how the design treats data, and working notes.
 - `/learn-more/` is a short survey for anyone curious about the project or how it was built.
-- `/contact/` takes questions, feedback, privacy requests, and security concerns.
-- `/privacy/` and `/terms/` cover the website and its forms.
+- `/contact/` takes questions, feedback, and security concerns.
 
 Both forms post to `/api/inquiry`, a single Vercel function that validates the submission and forwards it by email. There is no database.
 

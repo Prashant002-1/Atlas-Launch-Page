@@ -11,7 +11,6 @@ const INTERESTS = new Set([
 const CONTACT_TOPICS = new Set([
   "General question",
   "Contributing or forking",
-  "Privacy request",
   "Security concern",
   "Feedback",
 ]);
